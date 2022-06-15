@@ -1,5 +1,12 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "projects": {}
+  "projects": {
+    "material": "libs/material",
+    "messenger": "apps/messenger",
+    "olaz-web": "apps/olaz-web",
+    "olaz-web-e2e": "apps/olaz-web-e2e",
+    "task-management": "apps/task-management",
+    "video-call": "apps/video-call"
+  }
 }
