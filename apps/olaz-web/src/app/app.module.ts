@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -11,13 +11,30 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { ExampleComponent } from './components/example/example.component';
+import { DialogFowardComponent } from './pages/message/components/dialog-foward/dialog-foward.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [
+    AppComponent,
+    NxWelcomeComponent,
+    ExampleComponent,
+    DialogFowardComponent,
+    DialogFriendComponent,
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
     BrowserAnimationsModule,
     MaterialModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatListModule,
     StoreModule.forRoot(
       {},
       {
@@ -34,5 +51,6 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
