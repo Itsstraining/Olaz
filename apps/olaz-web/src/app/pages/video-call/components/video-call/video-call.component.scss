@@ -1,0 +1,171 @@
+
+mat-toolbar-row{
+  width: 100%;
+  justify-content: flex-end;
+}
+.btn-call1 {
+  color: #9756e2;
+  margin: 1% 0 0 0;
+  z-index: 1000;
+}
+
+#user2video {
+  position: absolute;
+  z-index: -1;
+}
+
+#user1video {
+  z-index: 1;
+  position: absolute;
+  width: 20%;
+  height: 40%;
+  background-color: white;
+  margin: 2% 2% 1% 2%;
+  @media screen and (max-width: 400px) {
+    width: 35%;
+    height: 25%;
+    background-color: #113ed1;
+  }
+}
+
+::ng-deep .mat-menu-panel.menuItem {
+  max-width: 100vw;
+  max-height: none;
+  min-height: none;
+  height: 500px;
+  // .menu1 {
+  //   position: absolute;
+  //   top: 0;
+
+  //   width: 100%;
+  // }
+  button {
+    color: #9756e2;
+    display: block;
+    right: 0%;
+    margin: 10px 0;
+  }
+}
+
+#btn-call-end {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  margin: 0 auto;
+  background-color: red;
+  color: white;
+}
+
+.icon {
+  font-size: 100%;
+}
+
+#back_ground {
+  position: absolute;
+  z-index: 10;
+  background-color: #b0bec5;
+  width: 20%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 2% 2% 1% 2%;
+  border-radius: 10px;
+  @media screen and (max-width: 1180px) {
+    width: 30%;
+    height: 50%;
+
+    background-color: #9756e2;
+  }
+  @media screen and (max-width: 400px) {
+    width: 35%;
+    height: 25%;
+    background-color: #113ed1;
+  }
+  // @media screen and (max-width: 275px) {
+  //   // width: 40%;
+  //   // height: 30%;
+  //   background-color: #e2b156;
+  // }
+
+  #img {
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+  }
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  // display: flex;
+  // box-sizing: border-box;
+  padding: 0 0;
+  // width: 100%;
+  // flex-direction: row;
+  // align-items: center;
+  // white-space: nowrap;
+  // right:0
+}
+
+// @media only  screen and (max-width: 1600px) {
+//   .btn-call{
+//     left: 97.5%;
+//   }
+// }
+
+// @media only  screen and (max-width: 1180px) {
+//   .btn-call{
+//     right: 96.3%;
+//   }
+// }
+.menu1 {
+  background-color: red;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.menuItem1{
+  display:flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+// @media only screen and (max-width: 800px) {
+//   .btn-call{
+//     right: 1.7%;
+//   }
+// }
+
+// @media only screen and (max-width: 700px) {
+//   .btn-call{
+//     right: 1.7%;
+//   }
+// }
+
+// @media only screen and (max-width: 600px) {
+//   .btn-call{
+//     left: 92.5%;
+//   }
+// }
+
+// @media only screen and (max-width: 500px) {
+//   .btn-call{
+//     left: 90.7%;
+//   }
+// }
+
+// @media only screen and (max-width: 400px) {
+//   .btn-call{
+//     right: 0.7%;
+//   }
+// }
+
+// @media only screen and (max-width: 370px) {
+//   .btn-call{
+//     left: 87%;
+//   }
+// }
