@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,10 +10,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+
 @NgModule({
   imports: [
-    CommonModule,
-    FlexLayoutModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
@@ -23,13 +22,14 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
+    MatDialogModule,
     MatProgressSpinnerModule,
     MatMenuModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule,
   ],
   exports: [
-    FlexLayoutModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
@@ -37,10 +37,12 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
+    MatDialogModule,
     MatProgressSpinnerModule,
     MatMenuModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule,
   ]
 })
 export class MaterialModule { }
