@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { RouterModule } from '@angular/router';
+// import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Added
 import { MaterialModule } from '@olaz/material';
 import { StoreModule } from '@ngrx/store';
@@ -13,11 +13,19 @@ import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ExampleComponent } from './components/example/example.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DialogFowardComponent } from './pages/message/components/dialog-foward/dialog-foward.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
-    ExampleComponent
+    ExampleComponent,
+    DialogFowardComponent,
+    DialogFriendComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +33,10 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatListModule,
     StoreModule.forRoot(
       {},
       {
@@ -42,6 +54,5 @@ import { AppRoutingModule } from './app-routing.module';
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-
 })
-export class AppModule { }
+export class AppModule {}
