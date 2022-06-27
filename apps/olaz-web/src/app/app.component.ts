@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +15,13 @@ export class AppComponent {
   title = 'olaz-web';
   panelOpenState = false;
   constructor(public dialog: MatDialog) { }
-
+  isSideNavCollapsed =  false;
+  screenWidth = 0;
+  isOpened(data: any):void{
+    this.screenWidth=data.screenWidth;
+    this.collapsed = data.collapsed;
+  }
+  collapsed = false;
   openDialog(): void {
     this.dialog.open(DialogComponent, {
       width: '250px',

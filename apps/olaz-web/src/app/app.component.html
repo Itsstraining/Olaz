@@ -1,10 +1,6 @@
-<button mat-icon-button (click)="openDialog()">
-  <mat-icon>home</mat-icon>
-</button>
-<button mat-icon-button (click)="openDialogFw()">
-  <mat-icon>home  </mat-icon>
-</button>
-<button mat-icon-button (click)="openDialogAddFr()">
-  <mat-icon>android</mat-icon>
-</button>
-<router-outlet></router-outlet>
+<mat-drawer-container class="container">
+  <mat-drawer ><app-sidebar (isOpened)="isOpened($event)"></app-sidebar></mat-drawer>
+  <app-body [collapsed]="isSideNavCollapsed"
+            [screenWidth]="screenWidth"></app-body>
+  <mat-drawer-content><app-nav></app-nav></mat-drawer-content>
+</mat-drawer-container>

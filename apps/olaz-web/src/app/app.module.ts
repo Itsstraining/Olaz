@@ -11,20 +11,24 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { ExampleComponent } from './components/example/example.component';
 import { DialogFowardComponent } from './pages/message/components/dialog-foward/dialog-foward.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { BodyComponent } from './components/body/body.component';
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
-    ExampleComponent,
     DialogFowardComponent,
     DialogFriendComponent,
+    NavbarComponent,
+    SidebarComponent,
+    BodyComponent,
   ],
   imports: [
     BrowserModule,
