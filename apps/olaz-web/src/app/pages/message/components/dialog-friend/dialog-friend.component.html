@@ -7,7 +7,7 @@
             <form class="example-form">
                 <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input matInput placeholder="Enter an email here...">
+                    <input matInput placeholder="Enter an email here..."  name="first" [(ngModel)]="email" (keydown)="onKeydown($event)">
                   </mat-form-field>
             </form>
             <mat-list>
@@ -19,7 +19,7 @@
                             <p matLine>
                               <span> lamborghin1@email </span>
                             </p>
-                            <mat-icon>person_add</mat-icon>
+                            <button onclick="addFriend()"><mat-icon>person_add</mat-icon></button>
                           </mat-list-item>
                     <!-- </mat-list-option> -->
                     <!-- <mat-list-option> -->
@@ -28,7 +28,7 @@
                             <p matLine>
                               <span> lamborghin2@email </span>
                             </p>
-                            <mat-icon>person_add</mat-icon>
+                            <button><mat-icon>person_add</mat-icon></button>
                           </mat-list-item>
                     <!-- </mat-list-option>    -->
                     <!-- <mat-list-option> -->
@@ -37,7 +37,7 @@
                             <p matLine>
                               <span> lamborghin3@email </span>
                             </p>
-                            <mat-icon>person_add</mat-icon>
+                            <button><mat-icon>person_add</mat-icon></button>
                           </mat-list-item>
                     <!-- </mat-list-option> -->
                 </mat-selection-list>

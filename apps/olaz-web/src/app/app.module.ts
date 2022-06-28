@@ -19,10 +19,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
+import { FormsModule } from '@angular/forms';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,7 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
     MatDialogModule,
     MatInputModule,
     MatListModule,
+    FormsModule,
     StoreModule.forRoot(
       {},
       {
