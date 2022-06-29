@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogFowardComponent } from '../message/components/dialog-foward/dialog-foward.component';
 import { DialogFriendComponent } from '../message/components/dialog-friend/dialog-friend.component';
 import { UserService } from '../../services/user.service';
+import { RejectAddComponent } from './components/reject-add/reject-add.component';
 @Component({
   selector: 'olaz-message',
   templateUrl: './message.component.html',
@@ -36,6 +37,15 @@ export class MessageComponent implements OnInit {
   openDialogAddFr() {
     const dialogRef = this.dialog.open(DialogFriendComponent, {
       width: '50%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  openDialogAddRj(){
+    const dialogRef = this.dialog.open(RejectAddComponent,{
+      width: '50%', height:'350px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
