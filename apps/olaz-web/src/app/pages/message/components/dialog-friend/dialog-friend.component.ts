@@ -3,8 +3,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, OnInit } from '@angular/core';
-// import { collection, collectionData, addDoc, Firestore, getDoc, doc, setDoc} from '@angular/fire/firestore'
-// import { updateDoc } from '@firebase/firestore';
+import { UserService } from '../../../../services/user.service';
+import { collection, collectionData, addDoc, Firestore, getDoc, doc, setDoc, arrayUnion} from '@angular/fire/firestore'
+import { updateDoc } from '@firebase/firestore';
 
 @Component({
   selector: 'olaz-dialog-friend',
@@ -12,54 +13,36 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dialog-friend.component.scss'],
 })
 export class DialogFriendComponent implements OnInit {
-  constructor() {}
+  constructor( private userService: UserService, public fireStore: Firestore ) {}
 
   ngOnInit(): void {}
   
-  email= "";
 
-  users = [
-    {
-      email: "ford@gmail.com"
-    },
-    {
-      email: "lexus@gmail.com"
-    },
-    {
-      email: "honda@gmail.com"
-    },
-    {
-      email: "kia@gmail.com"
+ 
+  email!: string;
+  listOfEmail: Array<any> = []; 
+
+  findUser() {
+    
+     this.userService.getUsers().subscribe(
+      res => {
+        // console.log(res)
+        this.listOfEmail = [];
+        res.map(user=> {
+          if(user.email == this.email){
+            console.log(user);
+            this.listOfEmail.push(user);
+          }        
+        })
+      }
+    );
+  }
+  
+  onKeydown(event:any){
+    if(event.key=="Enter"){
+      this.findUser()
     }
-  ]
-
-  // findUser() {
-  //   for(let i =0; i<= this.users.length;i++){
-  //     if( )
-  //   }
-  // }
-
-  // users:any = [
-  //   {
-  //     id: 1,
-  //     email: "trong@gmail.com",
-  //     requests: []
-      
-  //   },
-  //   {
-  //     id: 2,
-  //     email: "dat@gmail.com",
-  //     requests: []
-  //   },
-  //   {
-  //     id: 3,
-  //     email: "tin@gmail.com",
-  //     requests: []
-  //   }
-  // ];
-  // public email!: string;
-
-
+  }
   // findUser(){
   //   for(let i=0; i<this.users.length;i++){
   //     if(this.users[i].email == this.email){
@@ -81,13 +64,6 @@ export class DialogFriendComponent implements OnInit {
   //     })
   //   }
   // }
-  // onKeydown(event:any){
-  //   if(event.key=="Enter"){
-  //     this.findUser()
-  //   }
-  // }
-  // addFriend(){
-  // }
 
   // findUserId(id:string){
   //   for(let i=0; i<this.users.length;i++){
@@ -96,5 +72,14 @@ export class DialogFriendComponent implements OnInit {
   //     }
   //   }
   // }
+  myID = "mi10EPz75Hdf128XpNwe";
+  addFriend(frID:string){
+    console.log("myID::::::::" + this.myID);
+    console.log("frID::::::::" + frID);
+    updateDoc(doc(this.fireStore,'users', frID),{
+      requests: arrayUnion(this.myID)
+    })
+  }
+
 
 }
