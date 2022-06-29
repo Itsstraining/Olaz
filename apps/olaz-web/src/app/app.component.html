@@ -1,7 +1,7 @@
 <mat-drawer-container class="container">
   <mat-drawer><olaz-sidebar (isOpened)="isOpened($event)"></olaz-sidebar></mat-drawer>
   <!-- <olaz-body [collapsed]="isSideNavCollapsed" -->
-            <!-- [screenWidth]="sc  reenWidth"></olaz-body> -->
+            <!-- [screenWidth]="screenWidth"></olaz-body> -->
   <mat-drawer-content class="body-content" [ngClass]="getBodyClass()">
     <olaz-navbar></olaz-navbar>
     <router-outlet></router-outlet>

@@ -3,11 +3,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'olaz-todo',
-  templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.scss']
+  selector: 'olaz-call',
+  templateUrl: './call.component.html',
+  styleUrls: ['./call.component.scss']
 })
-export class TodoComponent implements OnInit {
+export class CallComponent implements OnInit {
 
   constructor() { }
 

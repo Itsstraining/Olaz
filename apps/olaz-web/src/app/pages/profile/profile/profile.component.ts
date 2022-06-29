@@ -3,11 +3,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'olaz-task',
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss']
+  selector: 'olaz-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class TaskComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   constructor() { }
 

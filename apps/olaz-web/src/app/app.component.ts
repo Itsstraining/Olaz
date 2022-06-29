@@ -26,14 +26,15 @@ export class AppComponent {
   isOpened(data: any):void{
     this.screenWidth=data.screenWidth;
     this.collapsed = data.collapsed;
+    console.log(data.screenWidth)
   }
   collapsed = false;
 
   getBodyClass():string{
     let styleClass ='';
-    if(this.collapsed && this.screenWidth > 768 ){
+    if(this.collapsed == true){
       styleClass = 'body-trimmed';
-    }else if(this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0 ){
+    }else if(this.collapsed ==false){
       styleClass = 'body-md-screen'
     }
     return styleClass;

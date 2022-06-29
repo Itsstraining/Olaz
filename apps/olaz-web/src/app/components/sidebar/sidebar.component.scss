@@ -14,7 +14,7 @@
       padding: 0.938rem 0.938rem 0 0.938rem;
       width: 100%;
       .logo {
-        // background: #fff;
+        background: #5a3e9e;
         text-align: center;
         width: 3rem;
         height: 4rem;
@@ -137,4 +137,10 @@
     align-items: center;
     border-radius: 50%;
   }
-  
+  .uil-angle-double-right{
+    color: #fff;
+    font-size: 30px;
+  }
+  .uil-angle-double-left{
+    font-size: 40px;
+  }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
 
 const routes: Routes = [
     // { path: '', component: AppComponent },
@@ -8,12 +7,15 @@ const routes: Routes = [
     { path: 'task', loadChildren: () => import('./pages/task/task/task.module').then(m => m.TaskModule) },
     {
         path:'',
-        redirectTo: '/todo', pathMatch: 'full'
-    }
+        redirectTo: '/m', pathMatch: 'full'
+    },
+    { path: 'm', loadChildren: () => import('./pages/message/message.module').then(m => m.MessageModule) },
+    { path: 'call', loadChildren: () => import('./pages/video-call/call/call.module').then(m => m.CallModule) },
+    { path: 'profile', loadChildren: () => import('./pages/profile/profile/profile.module').then(m => m.ProfileModule) }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' })],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

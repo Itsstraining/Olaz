@@ -1,21 +1,22 @@
 <div class="side" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
     <div class="logo-container">
       <button class="logo" (click)="toggleCollapse()" [ngStyle]="{display: collapsed ? 'none':'block' }">
-        <i class="uil uil-angle-double-right"></i>
+        <i class="uil uil-angle-double-right" matTooltip="Open sidebar" matTooltipPosition="after"></i>
       </button>
       <img [ngStyle]="{display: collapsed ? 'block':'none' }" src="../../../assets/white-logo.png" alt="" style="width:80px; height: 15;">
       <div class="logo-text" *ngIf="collapsed">Olaz</div>
       <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
-        <i class="uil uil-angle-double-left"></i>
+        <i class="uil uil-angle-double-left" style="font-size: 30px;"></i>
       </button>
     </div>
     <ul class="sidenav">
       <li class="sidenav-item" *ngFor="let data of navData">
-        <a href="" class="sidenav-link" [routerLink]="[data.routeLink]"  [matTooltip]="collapsed ?'' : data.Label" matTooltipPosition="after"
+        <a href="" class="sidenav-link" [routerLink]="[data.routeLink]"  [matTooltip]="collapsed ?'' : data.Label"   matTooltipPosition="after"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{exact : true}"
         >
           <i class="sidenav-link-icon" [class]="data.icon" ></i>
+          <!-- <span class="icon-button__badge">4</span> -->
           <span class="sidenav-link-text" *ngIf="collapsed">{{
             data.Label
           }}</span>

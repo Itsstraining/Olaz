@@ -8,12 +8,12 @@ interface SideNavToggle{
 }
 export const navbarData = [
   {
-    routeLink: 'home',
+    routeLink: 'm',
     icon: 'uil uil-comments' ,
-    Label: 'Chat',
+    Label: 'Message',
   },
   {
-    routeLink: 'invitation',
+    routeLink: 'call',
     icon: 'uil uil-video',
     Label: 'Meeting',
   },
