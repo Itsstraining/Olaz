@@ -14,7 +14,10 @@
         "tsConfig": "apps/olaz-web/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/olaz-web/src/favicon.ico", "apps/olaz-web/src/assets"],
-        "styles": ["apps/olaz-web/src/styles.scss"],
+        "styles": [
+          "apps/olaz-web/src/styles.scss",
+          "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+        ],
         "scripts": []
       },
       "configurations": {
