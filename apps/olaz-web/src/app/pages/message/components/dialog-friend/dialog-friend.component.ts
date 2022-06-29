@@ -14,7 +14,7 @@ export class DialogFriendComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  users:any = [
+  public users:any = [
     {
       id: 1,
       email: "trong@gmail.com",
