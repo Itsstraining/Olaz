@@ -1,6 +1,8 @@
 <div>
+  <input placeholder="offer" [(ngModel)]="inputCall" />
+  <input placeholder="answer" [(ngModel)]="inputAnswer" />
   <div>
-    <video *ngIf="checkScreen" id="user1video"></video>
+    <video id="user1video" autoplay></video>
     <div *ngIf="!checkScreen" id="back_ground">
       <img
         id="img"
@@ -8,11 +10,11 @@
       />
     </div>
   </div>
-  <video controls style="width:100%;height:100%" id="user2video"></video>
+  <video style="width: 100%; height: 100%" autoplay id="user2video"></video>
 
   <div id="toolbar">
     <mat-toolbar>
-      <mat-toolbar-row style="padding: 0;">
+      <mat-toolbar-row style="padding: 0">
         <button
           class="btn-call1"
           mat-icon-button
@@ -24,13 +26,13 @@
       </mat-toolbar-row>
     </mat-toolbar>
   </div>
-  <button id="btn-call-end" mat-fab>
+  <button id="btn-call-end" mat-fab (click)="startCall()">
     <i class="uil uil-phone-slash" style="font-size: 150%"></i>
   </button>
 </div>
 <mat-menu #menu="matMenu" class="menuItem">
   <div class="menuItem1">
-    <button class="btn-call" mat-icon-button>
+    <button class="btn-call" mat-icon-button (click)="answerCall()">
       <i class="uil uil-signout" style="font-size: 150%"></i>
     </button>
     <button class="btn-call" mat-icon-button (click)="screenOff()">
@@ -41,12 +43,23 @@
       ></i>
       <i *ngIf="!checkScreen" class="uil uil-video" style="font-size: 150%"></i>
     </button>
-
-    <button class="btn-call" mat-icon-button (click)="micOff()">
-      <i *ngIf="checkMic" class="uil uil-microphone-slash" style="font-size: 150%"></i>
-      <i *ngIf="!checkMic" class="uil uil-microphone" style="font-size: 150%"></i>
+    <button class="btn-call" mat-icon-button (click)="onOff()">
+      <i *ngIf="!onOffScreen" class="uuil uil-eye" style="font-size: 150%"></i>
+      <i *ngIf="onOffScreen" class="uil uil-eye-slash" style="font-size: 150%"></i>
     </button>
-    <button class="btn-call" mat-icon-button>
+    <button class="btn-call" mat-icon-button (click)="micOff()">
+      <i
+        *ngIf="checkMic"
+        class="uil uil-microphone-slash"
+        style="font-size: 150%"
+      ></i>
+      <i
+        *ngIf="!checkMic"
+        class="uil uil-microphone"
+        style="font-size: 150%"
+      ></i>
+    </button>
+    <button class="btn-call" mat-icon-button (click)="input()">
       <i class="uil uil-users-alt" style="font-size: 150%"></i>
     </button>
     <button class="btn-call" mat-icon-button>
@@ -55,5 +68,6 @@
     <button class="btn-call" mat-icon-button>
       <i class="uil uil-setting" style="font-size: 150%"></i>
     </button>
+    
   </div>
 </mat-menu>
