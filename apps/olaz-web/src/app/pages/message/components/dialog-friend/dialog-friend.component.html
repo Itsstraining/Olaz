@@ -12,34 +12,17 @@
             </form>
             <mat-list>
                 <mat-selection-list>
-                    <!-- <mat-list-option> -->
-                       
+                    <!-- <mat-list-option> -->   
+                      <div *ngFor="let usr of listOfEmail">
                         <mat-list-item>
-                            <img matListAvatar src="https://icdn.dantri.com.vn/thumb_w/770/2022/04/13/612130-1649843704671.jpg" >
-                            <p matLine>
-                              <span> lamborghin1@email </span>
-                            </p>
-                            <button class="btn" onclick="addFriend()"><i class="uil uil-user-plus"></i></button>
-                          </mat-list-item>
-                    <!-- </mat-list-option> -->
-                    <!-- <mat-list-option> -->
-                        <mat-list-item>
-                            <img matListAvatar src="https://giaxeoto.vn/admin/upload/images/resize/640-ngoai-that-lamborghini-huracan-evo.jpg" >
-                            <p matLine>
-                              <span> lamborghin2@email </span>
-                            </p>
-                            <button class="btn"><i class="uil uil-user-plus"></i></button>
-                          </mat-list-item>
-                    <!-- </mat-list-option>    -->
-                    <!-- <mat-list-option> -->
-                        <mat-list-item>
-                            <img matListAvatar src="https://vcdn1-vnexpress.vnecdn.net/2020/07/09/lamborghini-sian-roadster-VNE-9_1594277287.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=eCx8Xh-m-3iXk90r5-7F4A" >
-                            <p matLine>
-                              <span> lamborghin3@email </span>
-                            </p>
-                            <button class="btn"><i class="uil uil-user-plus"></i></button>
-                          </mat-list-item>
-                    <!-- </mat-list-option> -->
+                          <img matListAvatar src="https://icdn.dantri.com.vn/thumb_w/770/2022/04/13/612130-1649843704671.jpg" >
+                          <p matLine>
+                            <span> {{usr.email}} </span>
+                          </p>
+                          <button (click)="addFriend(usr.id)"><mat-icon>person_add</mat-icon></button>
+                        </mat-list-item>
+                      </div>                    
+
                 </mat-selection-list>
                 <!-- <mat-icon>person_add</mat-icon> -->
               </mat-list>
