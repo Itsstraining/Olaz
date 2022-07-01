@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { VideoCallComponent } from './pages/video-call/components/video-call/video-call.component';
 
 const routes: Routes = [
     // { path: '', component: AppComponent },
