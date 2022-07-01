@@ -30,6 +30,7 @@
     "@ngrx/router-store": "~13.2.0",
     "@ngrx/store": "~13.2.0",
     "@nrwl/angular": "^14.3.3",
+    "@tfarras/nestjs-firebase-admin": "^2.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",

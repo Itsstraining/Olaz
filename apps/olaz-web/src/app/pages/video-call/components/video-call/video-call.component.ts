@@ -63,6 +63,7 @@ export class VideoCallComponent implements OnInit {
   onOff() {
     this.onOffScreen = !this.onOffScreen;
   }
+  
   async init() {
     let localvideo = <HTMLVideoElement>document.getElementById('user1video');
     let remoteVideo = <HTMLVideoElement>document.getElementById('user2video');

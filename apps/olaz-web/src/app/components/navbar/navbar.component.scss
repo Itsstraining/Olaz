@@ -1,0 +1,145 @@
+:root {
+    --purple: #5a3e9e;
+  }
+  
+  .khung {
+    background-color: #5a3e9e;
+    height: 50px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+  
+  .uil {
+    font-size: 30px;
+    color: #ffffff;
+    padding: 0px 10px;
+    cursor: pointer;
+  }
+  .uil-signout {
+    color: #000000;
+  }
+  .nav-icons {
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+    display: flex;
+  }
+  img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    // margin: 0 40px 0 10px;
+  }
+  .pic {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 30px 0 10px;
+    cursor: pointer;
+  }
+  .user-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 10px 0;
+  }
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: normal;
+  }
+  h4 {
+    margin: 0;
+    font-size: 14px;
+    line-height: normal;
+  }
+  
+  .small-ava {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .name-email {
+    margin-left: 5px;
+  }
+  hr {
+    margin: 0 15px;
+  }
+  
+  .icon-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #5a3e9e;
+    // background: #dddddd;
+    border: none;
+    outline: none;
+  }
+  
+  .icon-button:hover {
+    cursor: pointer;
+    // background-color: #ffffff;
+    border-bottom: 5px solid white;
+  }
+  
+  .icon-button:active {
+    background: #5a3e9e;
+  }
+  
+  .icon-button__badge {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.3rem;
+    width: 18px;
+    height: 18px;
+    background: red;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+  // .uil-bell:hover{
+  //   background-color: #ffffff;
+  //   color: #000000;
+  //   border-radius: 50%;
+  // }
+  // .uil-users-alt:hover{
+  //   background-color: #ffffff;
+  //   color: #000000;
+  //   border-radius: 50%;
+  // }
+  // .pic:hover{
+  //   background-color: #ffffff;
+  //   color:#000000;
+  
+  // }
+  .icon {
+    align-items: center;
+    display: flex;
+    .uil-signout {
+      padding: 0 10px;
+    }
+    .logout {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: normal;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: #000000;
+      display: inline-block;
+      margin: 0;
+    }
+  }
+  

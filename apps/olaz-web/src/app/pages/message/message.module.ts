@@ -12,11 +12,13 @@ import { MatListModule } from '@angular/material/list';
 import { MaterialModule } from '@olaz/material';
 import { MessageComponent } from './message.component';
 import { MatIconModule } from '@angular/material/icon';
+import { RejectAddComponent } from './components/reject-add/reject-add.component';
 @NgModule({
   declarations: [
     MessageComponent,
     DialogFowardComponent,
     DialogFriendComponent,
+    RejectAddComponent,
   ],
   imports: [
     CommonModule,
@@ -30,4 +32,4 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,
   ],
 })
-export class MessageModule { }
+export class MessageModule {}
