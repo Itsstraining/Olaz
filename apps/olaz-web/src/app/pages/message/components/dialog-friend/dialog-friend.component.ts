@@ -17,13 +17,10 @@ export class DialogFriendComponent implements OnInit {
 
   ngOnInit(): void {}
   
-
- 
   email!: string;
   listOfEmail: Array<any> = []; 
 
   findUser() {
-    
      this.userService.getUsers().subscribe(
       res => {
         // console.log(res)
@@ -37,6 +34,10 @@ export class DialogFriendComponent implements OnInit {
       }
     );
   }
+
+  // getMyListFriend(){
+  //   getDoc(doc())
+  // }
   
   onKeydown(event:any){
     if(event.key=="Enter"){

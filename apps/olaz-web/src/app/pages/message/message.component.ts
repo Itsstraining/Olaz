@@ -61,7 +61,5 @@ export class MessageComponent implements OnInit {
   }
 
   myID="hnbBbNtPTMIBxsLCBLJj"
-  async toggleRequest(){
-    await this.UserService.toggleRequest(true,'mi10EPz75Hdf128XpNwe','hnbBbNtPTMIBxsLCBLJj')
-  }
+
 }
