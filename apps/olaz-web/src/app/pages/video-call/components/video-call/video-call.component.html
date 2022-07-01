@@ -1,6 +1,5 @@
 <div>
-  <input placeholder="offer" [(ngModel)]="inputCall" />
-  <input placeholder="answer" [(ngModel)]="inputAnswer" />
+
   <div>
     <video id="user1video" autoplay></video>
     <div *ngIf="!checkScreen" id="back_ground">
@@ -12,7 +11,7 @@
   </div>
   <video style="width: 100%; height: 100%" autoplay id="user2video"></video>
 
-  <div id="toolbar">
+  <!-- <div id="toolbar">
     <mat-toolbar>
       <mat-toolbar-row style="padding: 0">
         <button
@@ -25,7 +24,7 @@
         </button>
       </mat-toolbar-row>
     </mat-toolbar>
-  </div>
+  </div> -->
   <button id="btn-call-end" mat-fab (click)="startCall()">
     <i class="uil uil-phone-slash" style="font-size: 150%"></i>
   </button>

@@ -11,31 +11,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-<<<<<<< HEAD
-import { ExampleComponent } from './components/example/example.component';
-import { VideoCallComponent } from './pages/video-call/components/video-call/video-call.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-=======
 import { AppRoutingModule } from './app-routing.module';
 
->>>>>>> 7b64e65c8caf8860024ee004a295ca8d59b12cd7
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-<<<<<<< HEAD
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { AppRoutingModule } from './app-routing.module';
-
-
-import { MatDialogModule } from '@angular/material/dialog';
-
-=======
 import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
->>>>>>> 7b64e65c8caf8860024ee004a295ca8d59b12cd7
 import { FormsModule } from '@angular/forms';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -45,17 +28,20 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 
 import { LayoutModule } from '@angular/cdk/layout';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
-
-    VideoCallComponent,
     NavbarComponent,
     SidebarComponent,
+    
   ],
   imports: [
     BrowserModule,
