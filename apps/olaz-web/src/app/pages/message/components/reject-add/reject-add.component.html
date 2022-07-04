@@ -21,20 +21,21 @@
         </mat-form-field>
       </form> -->
       <mat-list>
-        <mat-selection-list>    
-            <mat-list-item>
+        <mat-selection-list>  
+     
+            <mat-list-item  *ngFor="let user of request">
               <img
                 matListAvatar
                 src="https://icdn.dantri.com.vn/thumb_w/770/2022/04/13/612130-1649843704671.jpg"
               />
               <p matLine>
-                <span> lamborghin1@email </span>
+                <span> {{user.email}} </span>
               </p>
-              <button class="btn" (click)="clickAdd()"><i class="uil uil-user-check"></i></button>
-              <button class="btn" (click)="clickReject()"><i class="uil uil-user-times"></i></button>
+              <button (click)="toggleRequest(true, user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
+              <button (click)="toggleRequest(false , user.id )" class="btn"><i class="uil uil-user-times"></i></button>
             </mat-list-item>
           
-            <mat-list-item>
+            <!-- <mat-list-item>
               <img
                 matListAvatar
                 src="https://giaxeoto.vn/admin/upload/images/resize/640-ngoai-that-lamborghini-huracan-evo.jpg"
@@ -58,7 +59,7 @@
             
               <button class="btn"><i class="uil uil-user-times"></i></button>
               
-            </mat-list-item>
+            </mat-list-item> -->
           <!-- <mat-list-option>
                       <mat-list-item>
                           <img matListAvatar src="https://giaxeoto.vn/admin/upload/images/resize/640-ngoai-that-lamborghini-huracan-evo.jpg" >

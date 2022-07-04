@@ -3,23 +3,25 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleAuthProvider, getAuth, signInWithPopup, authState, Auth, signOut } from '@angular/fire/auth';
 import { catchError } from 'rxjs';
-import { User } from './user'; 
-import {doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove} from '@angular/fire/firestore'
+import { User } from './user';
+import { doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore'
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
+  loggedIn = false
+  user!: User
+  userTodo: any;
   constructor(
-    private db: Firestore, private auth: Auth
+    private fs: Firestore, private auth: Auth
   ) {
     authState(this.auth).subscribe(async (user) => {
-      let userDoc = doc(collection(this.db, 'users'), user!.uid)
+      let userDoc = doc(collection(this.fs, 'users'), user!.uid)
       let todoCollection = collection(userDoc, 'Todo');
       let todoID;
 
       if (user) {
-        this.userTodo = collection(this.db, "todo");
+        this.userTodo = collection(this.fs, "todo");
         this.loggedIn = true;
         this.user = {
           id: user.uid,
@@ -35,44 +37,66 @@ export class UserService {
         console.log(this.user)
         if (await this.userFirstLogin() == false) {
 
-          await setDoc(doc(this.db, "users", this.user.id), this.user)
+          await setDoc(doc(this.fs, "users", this.user.id), this.user)
           todoID = await (await addDoc(todoCollection, { content: 'This is todo', status: 'Done' }))
         }
       }
     })
-   }
+  }
 
-  private readonly refUser = collection(this.db, 'users');
+  private readonly refUser = collection(this.fs, 'users');
 
   //
   public getUsers(): Observable<Array<any>> {
     return collectionData(this.refUser);
   }
 
-  public notifyCount(myID:string){
-    return docData(doc(collection(this.db, 'users'), myID));
+  public notifyCount(myID: string) {
+    return docData(doc(collection(this.fs, 'users'), myID));
   }
 
-  async toggleRequest(check:boolean, frID: string, myID: string){
-    if(check){
-      await updateDoc(doc(this.db, 'users', myID), {
+  public async toggleRequest(check: boolean, frID: string, myID: string) {
+    if (check) {
+      const roomId = Date.now().toString();
+      const myUpdate = updateDoc(doc(this.fs, 'users', myID), {
         friends: arrayUnion(frID),
-        requests: arrayRemove(frID)
+        requests: arrayRemove(frID),
+        rooms: arrayUnion(roomId)
+      });
+      const frUpdate = updateDoc(doc(this.fs, 'users', frID), {
+        friends: arrayUnion(myID),
+        requests: arrayRemove(myID),
+        rooms: arrayUnion(roomId)
       })
-    }else{
-      //do something here...
+      const createRoom = setDoc(doc(this.fs, 'rooms', roomId), {
+        id: roomId,
+        messages: [],
+        users: [frID, myID],
+        name: ""
+      })
+      await Promise.all([
+        myUpdate,
+        frUpdate,
+        createRoom
+      ])
+    }
+    else {
+      await updateDoc(doc(this.fs, 'users', myID), {
+        requests: arrayRemove(frID),
+      });
+      await updateDoc(doc(this.fs, 'users', frID), {
+        requests: arrayRemove(myID),
+      });
     }
   }
 
-  loggedIn = false
-  user!: User
-  userTodo: any;
+
 
   async userFirstLogin() {
     if (!this.user) {
       return false
     } else {
-      let exists = await getDoc(doc(this.db, "users", this.user.id))
+      let exists = await getDoc(doc(this.fs, "users", this.user.id))
       return exists.exists();
     }
   }
@@ -94,5 +118,9 @@ export class UserService {
     } catch (e) {
       alert('Logout Failed !')
     }
+
+  }
+  async getUserByID(id: string) {
+    return await getDoc(doc(this.fs, 'users', id))
   }
 }
