@@ -26,9 +26,9 @@ export class MessageComponent implements OnInit {
     // this.UserService.getUsers().subscribe(
     //   res => console.log(res)
     // );
-    this.UserService.notifyCount(this.myID).subscribe(
-      (user:any) => console.log(user.requests.length)
-    )
+    // this.UserService.notifyCount(this.myID).subscribe(
+    //   (user:any) => console.log(user.requests.length)
+    // )
   }
 
   openDialogFw() {

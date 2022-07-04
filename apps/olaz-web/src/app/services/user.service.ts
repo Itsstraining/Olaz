@@ -30,6 +30,9 @@ export class UserService {
   public notifyCount(myID: string) {
     return docData(doc(collection(this.fs, 'users'), myID));
   }
+  public messCount(myIDMessage: string) {
+    return docData(doc(collection(this.fs, 'rooms'),myIDMessage))
+  }
 
   public async toggleRequest(check: boolean, frID: string, myID: string) {
     if (check) {
