@@ -20,6 +20,10 @@ export class VideoCallComponent implements OnInit {
 
   }
 
+  myFunction() {
+    document.getElementById("menuBtnCalls")!.classList.toggle("menu-items");
+  }
+
   onOffScreen = true;
   checkScreen = true;
   checkMic = false;
@@ -52,8 +56,6 @@ export class VideoCallComponent implements OnInit {
       let localvideo = <HTMLVideoElement>document.getElementById('user1video');
       localvideo.style.display = 'none';
     }
-
-
   }
 
   micOff() {
@@ -91,7 +93,6 @@ export class VideoCallComponent implements OnInit {
     this.pc.onicecandidate = (event) => {
       event.candidate && addDoc(this.offerDocRef, event.candidate.toJSON());
     }
-
     await this.pc.setLocalDescription(offerDescription);
     const offer = {
       sdp: offerDescription.sdp,

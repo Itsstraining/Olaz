@@ -26,13 +26,13 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { LoginComponent } from './pages/video-call/components/login/login.component';
 
 
 @NgModule({
@@ -41,6 +41,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     NxWelcomeComponent,
     NavbarComponent,
     SidebarComponent,
+    LoginComponent,
     
   ],
   imports: [
