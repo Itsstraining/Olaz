@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { GoogleAuthProvider, getAuth, signInWithPopup, authState, Auth, signOut } from '@angular/fire/auth';
 import { catchError } from 'rxjs';
 import { User } from './user';
-import { doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore'
+import { doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove, collectionChanges } from '@angular/fire/firestore'
 @Injectable({
   providedIn: 'root',
 })
@@ -12,6 +12,14 @@ export class UserService {
   loggedIn = false
   user!: User
   userTodo: any;
+
+  callRef: any;
+  offerDocRef: any;
+  ansDocRef: any;
+  opponentId!: any;
+  ownerId!: any;
+
+
   constructor(
     private fs: Firestore, private auth: Auth
   ) {
@@ -19,6 +27,8 @@ export class UserService {
       let userDoc = doc(collection(this.fs, 'users'), user!.uid)
       let todoCollection = collection(userDoc, 'Todo');
       let todoID;
+
+      this.callRef = collection(this.fs, 'calls');
 
       if (user) {
         this.userTodo = collection(this.fs, "todo");
@@ -34,7 +44,21 @@ export class UserService {
 
           rooms: []
         }
-        console.log(this.user)
+        console.log(this.user);
+
+        collectionChanges(this.callRef).subscribe((data) => {
+          data.forEach((doc) => {
+            if (doc.type === 'added' && doc.doc.data()['opponentId'] === this.user.id) {
+              let text = "Incoming Call...";
+              if (confirm(text) == true) {
+                text = "Accept!";
+              } else {
+                text = "Denied!";
+              }
+            }
+          })
+        })
+
         if (await this.userFirstLogin() == false) {
 
           await setDoc(doc(this.fs, "users", this.user.id), this.user)
@@ -89,8 +113,6 @@ export class UserService {
       });
     }
   }
-
-
 
   async userFirstLogin() {
     if (!this.user) {

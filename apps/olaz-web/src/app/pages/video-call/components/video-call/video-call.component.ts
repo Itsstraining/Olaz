@@ -106,6 +106,7 @@ export class VideoCallComponent implements OnInit {
         const answerDescription = new RTCSessionDescription(data.answer);
         this.pc.setRemoteDescription(answerDescription);
       }
+      
       collectionChanges(this.ansDocRef).subscribe((data) => {
         data.forEach((doc) => {
           if (doc.type === 'added') {
