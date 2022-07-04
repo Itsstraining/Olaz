@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-empty-function */
@@ -7,8 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogFowardComponent } from '../message/components/dialog-foward/dialog-foward.component';
 import { DialogFriendComponent } from '../message/components/dialog-friend/dialog-friend.component';
 import { UserService } from '../../services/user.service';
-import {doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc} from '@angular/fire/firestore'
+import {doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion} from '@angular/fire/firestore'
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
+
 @Component({
   selector: 'olaz-message',
   templateUrl: './message.component.html',
@@ -60,6 +63,46 @@ export class MessageComponent implements OnInit {
     });
   }
 
+roomId = "1656682165468"
+ async sendMessage(content: string, image:string, type: string){
+    const messId = Date.now().toString() 
+     setDoc(
+        doc(this.fireStore, 'messages', messId),
+        {
+          userId: this.myID,
+          id: messId,
+          content: content,
+          image: image,
+          type: type,
+          createdTime: messId
+        });  
+        updateDoc(doc(this.fireStore, 'rooms', this.roomId), {
+          messages: arrayUnion(messId)
+        })    
+        await Promise.all([
+          setDoc,
+          updateDoc
+        ])
+}
+
+content = "";
+image = "";
+  onKeydown(event:any){
+    if(event.key=="Enter"){
+      let type: string= "";
+
+      if(this.content){
+        type = "text"
+      }
+      else{
+        type = "url"
+      }
+
+      this.sendMessage(this.content, this.image, type);
+      this.content = "";
+      this.image = "";
+    }
+  }
   myID="hnbBbNtPTMIBxsLCBLJj"
 
 }

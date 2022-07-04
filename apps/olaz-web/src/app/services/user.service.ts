@@ -14,17 +14,26 @@ import {
   arrayUnion,
   arrayRemove,
 } from '@angular/fire/firestore';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private fs: Firestore) {}
+  constructor(
+    private fs: Firestore,
+    private http:HttpClient
+    ) {}
 
   private readonly refUser = collection(this.fs, 'users');
 
   //
   public getUsers(): Observable<Array<any>> {
     return collectionData(this.refUser);
+  }
+
+  //new fuction with server
+  public getUserByEmail(email: string){
+    return this.http.get(`http://localhost:3333/api/user/get-all?email=${email}`);
   }
 
   public notifyCount(myID: string) {
