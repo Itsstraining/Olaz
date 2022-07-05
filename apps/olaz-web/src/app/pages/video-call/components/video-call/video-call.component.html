@@ -1,5 +1,4 @@
 <div>
-
   <div>
     <video id="user1video" autoplay></video>
     <div *ngIf="!checkScreen" id="back_ground">
@@ -10,63 +9,65 @@
     </div>
   </div>
   <video style="width: 100%; height: 100%" autoplay id="user2video"></video>
-
-  <!-- <div id="toolbar">
-    <mat-toolbar>
-      <mat-toolbar-row style="padding: 0">
-        <button
-          class="btn-call1"
-          mat-icon-button
-          mat-button
-          [matMenuTriggerFor]="menu"
-        >
-          <i class="uil uil-ellipsis-v" style="font-size: 150%"></i>
-        </button>
-      </mat-toolbar-row>
-    </mat-toolbar>
-  </div> -->
   <button id="btn-call-end" mat-fab (click)="startCall()">
     <i class="uil uil-phone-slash" style="font-size: 150%"></i>
   </button>
 </div>
-<mat-menu #menu="matMenu" class="menuItem">
-  <div class="menuItem1">
-    <button class="btn-call" mat-icon-button (click)="answerCall()">
-      <i class="uil uil-signout" style="font-size: 150%"></i>
+
+<div>
+  <div class="menuItems">
+    <button
+      mat-icon-button
+      class="btn-menu"
+      mat-icon-button
+    >
+      <i class="uil uil-ellipsis-v" style="font-size: 150%"></i>
     </button>
-    <button class="btn-call" mat-icon-button (click)="screenOff()">
-      <i
-        *ngIf="checkScreen"
-        class="uil uil-video-slash"
-        style="font-size: 150%"
-      ></i>
-      <i *ngIf="!checkScreen" class="uil uil-video" style="font-size: 150%"></i>
-    </button>
-    <button class="btn-call" mat-icon-button (click)="onOff()">
-      <i *ngIf="!onOffScreen" class="uuil uil-eye" style="font-size: 150%"></i>
-      <i *ngIf="onOffScreen" class="uil uil-eye-slash" style="font-size: 150%"></i>
-    </button>
-    <button class="btn-call" mat-icon-button (click)="micOff()">
-      <i
-        *ngIf="checkMic"
-        class="uil uil-microphone-slash"
-        style="font-size: 150%"
-      ></i>
-      <i
-        *ngIf="!checkMic"
-        class="uil uil-microphone"
-        style="font-size: 150%"
-      ></i>
-    </button>
-    <button class="btn-call" mat-icon-button (click)="input()">
-      <i class="uil uil-users-alt" style="font-size: 150%"></i>
-    </button>
-    <button class="btn-call" mat-icon-button>
-      <i class="uil uil-grin" style="font-size: 150%"></i>
-    </button>
-    <button class="btn-call" mat-icon-button>
-      <i class="uil uil-setting" style="font-size: 150%"></i>
-    </button>
-    
   </div>
-</mat-menu>
+    <div id="menuBtnCalls" class="menu-items">
+      <button class="btn-call" mat-icon-button>
+        <i class="uil uil-signout" style="font-size: 150%"></i>
+      </button>
+      <button class="btn-call" mat-icon-button (click)="screenOff()">
+        <i
+          *ngIf="checkScreen"
+          class="uil uil-video-slash"
+          style="font-size: 150%"
+        ></i>
+        <i
+          *ngIf="!checkScreen"
+          class="uil uil-video"
+          style="font-size: 150%"
+        ></i>
+      </button>
+      <button class="btn-call" mat-icon-button (click)="onOff()">
+        <i *ngIf="!onOffScreen" class="uil uil-eye" style="font-size: 150%"></i>
+        <i
+          *ngIf="onOffScreen"
+          class="uil uil-eye-slash"
+          style="font-size: 150%"
+        ></i>
+      </button>
+      <button class="btn-call" mat-icon-button (click)="micOff()">
+        <i
+          *ngIf="checkMic"
+          class="uil uil-microphone-slash"
+          style="font-size: 150%"
+        ></i>
+        <i
+          *ngIf="!checkMic"
+          class="uil uil-microphone"
+          style="font-size: 150%"
+        ></i>
+      </button>
+      <button class="btn-call" mat-icon-button (click)="input()">
+        <i class="uil uil-users-alt" style="font-size: 150%"></i>
+      </button>
+      <button class="btn-call" mat-icon-button>
+        <i class="uil uil-grin" style="font-size: 150%"></i>
+      </button>
+      <button class="btn-call" mat-icon-button>
+        <i class="uil uil-setting" style="font-size: 150%"></i>
+      </button>
+    </div>
+</div>

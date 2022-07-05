@@ -23,11 +23,11 @@ import { CallComponent } from './call.component';
 import { environment } from 'apps/olaz-web/src/environments/environment';
 import { CommonModule } from '@angular/common';
 import { CallRoutingModule } from './call-routing.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     CallComponent,
-   
     VideoCallComponent,
   ],
   imports: [
@@ -44,6 +44,7 @@ import { CallRoutingModule } from './call-routing.module';
     MatMenuModule,
     MatToolbarModule,
     MatExpansionModule,
+    FormsModule
   ],
   providers: [],
 
