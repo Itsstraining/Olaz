@@ -1,16 +1,19 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleAuthProvider, getAuth, signInWithPopup, authState, Auth, signOut } from '@angular/fire/auth';
-import { catchError } from 'rxjs';
 import { User } from './user';
-import { doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove, collectionChanges } from '@angular/fire/firestore'
-import { Router } from '@angular/router';
+
+import { doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore'
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+
   loggedIn = false
   user!: User
   userTodo: any;
@@ -23,7 +26,11 @@ export class UserService {
 
 
   constructor(
-    private fs: Firestore, private auth: Auth ,private route:Router) {
+
+    private fs: Firestore, private auth: Auth,
+    private http:HttpClient
+  ) {
+
     authState(this.auth).subscribe(async (user) => {
       let userDoc = doc(collection(this.fs, 'users'), user!.uid)
       let todoCollection = collection(userDoc, 'Todo');
@@ -80,6 +87,11 @@ export class UserService {
   //
   public getUsers(): Observable<Array<any>> {
     return collectionData(this.refUser);
+  }
+
+  //new fuction with server
+  public getUserByEmail(email: string){
+    return this.http.get(`http://localhost:3333/api/user/get-all?email=${email}`);
   }
 
   public notifyCount(myID: string) {
