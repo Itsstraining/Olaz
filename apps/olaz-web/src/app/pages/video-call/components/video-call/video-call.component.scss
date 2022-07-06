@@ -1,12 +1,29 @@
-
-mat-toolbar-row{
-  width: 100%;
-  justify-content: flex-end;
-}
-.btn-call1 {
+.btn-menu {
   color: #9756e2;
   margin: 1% 0.8% 0 0;
   z-index: 1000;
+}
+
+.btn-call {
+  color: #9756e2;
+  margin: 1% 0.8% 0 0;
+  z-index: 1000;
+}
+
+.menuItems{
+  color: #9756e2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0 0.8% 0 0;
+}
+
+.menu-items{
+  color: #9756e2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0 0.8% 0 0;
 }
 
 #user2video {
@@ -18,27 +35,9 @@ mat-toolbar-row{
   z-index: 1;
   position: absolute;
   width: 20%;
-  height: 40%;
+  height: 50%;
   background-color: white;
   margin: 2% 2% 1% 2%;
-  @media screen and (max-width: 400px) {
-    width: 35%;
-    height: 25%;
-    background-color: #113ed1;
-  }
-}
-
-::ng-deep .mat-menu-panel.menuItem {
-  max-width: 100%;
-  max-height: none;
-  min-height: none;
-  height: 500px;
-  button {
-    color: #9756e2;
-    display: block;
-    right: 0%;
-    margin: 10px 0;
-  }
 }
 
 #btn-call-end {
@@ -51,93 +50,24 @@ mat-toolbar-row{
   color: white;
 }
 
-.icon {
-  font-size: 100%;
-}
-
 #back_ground {
   position: absolute;
   z-index: 10;
   background-color: #b0bec5;
   width: 20%;
-  height: 40%;
+  height: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   margin: 2% 2% 1% 2%;
   border-radius: 10px;
-  @media screen and (max-width: 1180px) {
-    width: 30%;
-    height: 50%;
-
-    background-color: #9756e2;
-  }
-  @media screen and (max-width: 400px) {
-    width: 35%;
-    height: 25%;
-    background-color: #113ed1;
-  }
-  // @media screen and (max-width: 275px) {
-  //   // width: 40%;
-  //   // height: 30%;
-  //   background-color: #e2b156;
-  // }
-
-  #img {
-    position: absolute;
-    width: 60%;
-    height: 60%;
-    border-radius: 50%;
-  }
 }
 
-.menu1 {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+#img {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
 }
 
-.menuItem1{
-  display:flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin: 0 0.8% 0 0;
-}
-
-// @media only screen and (max-width: 800px) {
-//   .btn-call{
-//     right: 1.7%;
-//   }
-// }
-
-// @media only screen and (max-width: 700px) {
-//   .btn-call{
-//     right: 1.7%;
-//   }
-// }
-
-// @media only screen and (max-width: 600px) {
-//   .btn-call{
-//     left: 92.5%;
-//   }
-// }
-
-// @media only screen and (max-width: 500px) {
-//   .btn-call{
-//     left: 90.7%;
-//   }
-// }
-
-// @media only screen and (max-width: 400px) {
-//   .btn-call{
-//     right: 0.7%;
-//   }
-// }
-
-// @media only screen and (max-width: 370px) {
-//   .btn-call{
-//     left: 87%;
-//   }
-// }

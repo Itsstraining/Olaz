@@ -17,26 +17,35 @@ export class DialogFriendComponent implements OnInit {
 
   ngOnInit(): void {}
   
-
- 
   email!: string;
   listOfEmail: Array<any> = []; 
 
   findUser() {
-    
-     this.userService.getUsers().subscribe(
-      res => {
-        // console.log(res)
-        this.listOfEmail = [];
-        res.map(user=> {
-          if(user.email == this.email){
-            console.log(user);
-            this.listOfEmail.push(user);
-          }        
-        })
+    //  this.userService.getUsers().subscribe(
+    //   res => {
+    //     // console.log(res)
+    //     this.listOfEmail = [];
+    //     res.map(user=> {
+    //       if(user.email == this.email){
+    //         console.log(user);
+    //         this.listOfEmail.push(user);
+    //       }        
+    //     })
+    //   }
+    // );
+    this.userService.getUserByEmail(this.email).subscribe(
+      user=>{
+        console.log(user);
+      },
+      err => {
+        console.log(err.error.text)
       }
-    );
+    )
   }
+
+  // getMyListFriend(){
+  //   getDoc(doc())
+  // }
   
   onKeydown(event:any){
     if(event.key=="Enter"){

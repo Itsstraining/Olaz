@@ -5,7 +5,7 @@
 <button mat-icon-button (click)="openDialogAddFr()">
     <mat-icon>android</mat-icon>
 </button>
-<button (click)="toggleRequest()">Accept</button>
 <button mat-icon-button (click)="openDialogAddRj()">
     <mat-icon>add</mat-icon>
 </button>
+<input placeholder="Type here" [(ngModel)]="content" (keydown)="onKeydown($event)">
