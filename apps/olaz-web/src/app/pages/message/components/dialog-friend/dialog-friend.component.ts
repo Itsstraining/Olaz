@@ -82,6 +82,7 @@ export class DialogFriendComponent implements OnInit {
   //   }
   // }
   myID = "mi10EPz75Hdf128XpNwe";
+  
   addFriend(frID:string){
     console.log("myID::::::::" + this.myID);
     console.log("frID::::::::" + frID);
