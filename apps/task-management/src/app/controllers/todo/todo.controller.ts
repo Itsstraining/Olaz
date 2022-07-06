@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { TodoService } from '../../services/todo/todo.service';
 
 @Controller('todo')
 export class TodoController {
     constructor(private todoService : TodoService){}
-    @Get('all')
-    async getAll(@Body() userId): Promise <any>{
+    @Get('getAll/:userId')
+    async getAll(@Param() {userId}): Promise <any>{
         return this.todoService.getAll(userId);
     }
     @Post()
     async create(@Body() data: any ){
         try{
-            await this.todoService.create(data);
-            return {message :"create Successful"} 
+            await this.todoService.create(data.newTask, data.userId);
+            return {message :"Create Successful"} 
         }catch(err){
             return {
-                message: "create Faile",
+                message: "Create Failed!",
                 error: err.toString() 
             }
         }
@@ -25,7 +25,7 @@ export class TodoController {
     @Put()
     async update(@Body() body:any){
         try{
-            const result = await this.todoService.update(body.data,body.task);
+            const result = await this.todoService.update(body.updateTask,body.userId,body.taskId);
             return {
                 message: "Successful",
                 retu: result
@@ -38,9 +38,9 @@ export class TodoController {
     }
     }
     @Delete()
-    async delete(@Query() task: any){
-        const result = this.todoService.delete(task);
+    async delete(@Body() data: any){
+        const result = this.todoService.delete(data.userId,data.taskId);
         return result;
-    }
+    }   
 }
 

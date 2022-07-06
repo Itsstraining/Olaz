@@ -13,11 +13,11 @@ import * as admin from 'firebase-admin';
 
 async function bootstrap() {
   const key = JSON.parse(fs.readFileSync(
-    '.apps/task-management/src/key/firebase-admin.json', 'utf8'
+    './keys/firebase-admin.json', 'utf8'
   ));
-  // admin.initializeApp({
-  //   credential: admin.credential.cert(key)
-  // });
+  admin.initializeApp({
+    credential: admin.credential.cert(key)
+  });
 
   const app = await NestFactory.create(AppModule,{bodyParser:true, cors: true});
   const globalPrefix = 'api';
