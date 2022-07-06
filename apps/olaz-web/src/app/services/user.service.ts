@@ -5,6 +5,8 @@ import { GoogleAuthProvider, getAuth, signInWithPopup, authState, Auth, signOut 
 import { catchError } from 'rxjs';
 import { User } from './user';
 import { doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove, collectionChanges } from '@angular/fire/firestore'
+import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,8 +23,7 @@ export class UserService {
 
 
   constructor(
-    private fs: Firestore, private auth: Auth
-  ) {
+    private fs: Firestore, private auth: Auth ,private route:Router) {
     authState(this.auth).subscribe(async (user) => {
       let userDoc = doc(collection(this.fs, 'users'), user!.uid)
       let todoCollection = collection(userDoc, 'Todo');
@@ -46,12 +47,14 @@ export class UserService {
         }
         console.log(this.user);
 
+
         collectionChanges(this.callRef).subscribe((data) => {
           data.forEach((doc) => {
-            if (doc.type === 'added' && doc.doc.data()['opponentId'] === this.user.id) {
+            if (doc.type === 'added' && doc.doc.data()['opponentID'] === this.user.id) {
               let text = "Incoming Call...";
               if (confirm(text) == true) {
-                text = "Accept!";
+
+                this.answerCall(doc.doc.id);
               } else {
                 text = "Denied!";
               }
@@ -66,6 +69,10 @@ export class UserService {
         }
       }
     })
+  }
+  async answerCall(idDoc: any) {
+  this.route.navigate([`call/call/${idDoc}`])
+
   }
 
   private readonly refUser = collection(this.fs, 'users');

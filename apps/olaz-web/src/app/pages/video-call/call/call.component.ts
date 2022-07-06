@@ -1,7 +1,8 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
-import { addDoc, doc, collection, collectionChanges, collectionData, Firestore, setDoc,updateDoc} from '@angular/fire/firestore';
+import { addDoc, doc, collection, collectionChanges, collectionData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 
 
@@ -23,27 +24,19 @@ export class CallComponent implements OnInit {
     ],
     iceCandidatePoolSize: 10,
   }
-  pc = new RTCPeerConnection(this.servers)
-  constructor(public db: Firestore, public UsrSv: UserService) { }
+  pc = new RTCPeerConnection(this.servers);
+  constructor(public db: Firestore, public UsrSv: UserService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  //button call
   async clickCall() {
     this.callRequestRef = collection(this.db, 'calls');
-    await addDoc(this.callRequestRef, {
-      ownerId: this.UsrSv.user.id,
-      opponentId: this.userID
-    }).then(async (data) => {
-      const offerDescription = await this.pc.createOffer();
-      const offer = {
-        sdp: offerDescription.sdp,
-        type: offerDescription.type,
-      }
-      console.log(new Date())
-      let docRef = doc(this.db, `calls/${data.id}`)
-      await updateDoc(docRef, { offer})
-    });
+    await addDoc(this.callRequestRef, { ownerID: this.UsrSv.user.id, opponentID: this.userID }).then((data) => {
+      this.router.navigate([`call/call/${data.id}`])
+    })
+
 
   }
 }

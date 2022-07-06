@@ -1,6 +1,7 @@
 import { Component, OnInit, } from '@angular/core';
 import { doc, Firestore, collection, addDoc, setDoc, docData, getDoc, collectionChanges, updateDoc } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'apps/olaz-web/src/app/services/user.service';
 
 
 @Component({
@@ -9,14 +10,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./video-call.component.scss'],
 })
 export class VideoCallComponent implements OnInit {
-  constructor(public fs: Firestore, private route: ActivatedRoute) { }
+  constructor(public fs: Firestore, private route: ActivatedRoute, public userSrv: UserService) { }
 
   ngOnInit(): void {
     this.init();
     this.route.params.subscribe(params => {
       this.docId = params['id'];
-      this.getData();
+      this.startCall();
     });
+
 
   }
 
@@ -65,7 +67,7 @@ export class VideoCallComponent implements OnInit {
   onOff() {
     this.onOffScreen = !this.onOffScreen;
   }
-  
+
   async init() {
     let localvideo = <HTMLVideoElement>document.getElementById('user1video');
     let remoteVideo = <HTMLVideoElement>document.getElementById('user2video');
@@ -86,49 +88,53 @@ export class VideoCallComponent implements OnInit {
   }
   async startCall() {
     this.callRef = collection(this.fs, 'calls');
-    this.offerDocRef = collection(doc(this.callRef, this.inputCall), 'offerCandidates');
-    this.ansDocRef = collection(doc(this.callRef, this.inputCall), 'answerCandidates');
-
-    const offerDescription = await this.pc.createOffer();
-    this.pc.onicecandidate = (event) => {
-      event.candidate && addDoc(this.offerDocRef, event.candidate.toJSON());
-    }
-    await this.pc.setLocalDescription(offerDescription);
-    const offer = {
-      sdp: offerDescription.sdp,
-      type: offerDescription.type,
-    }
-
-    await setDoc(doc(this.callRef, this.inputCall), { offer });
-
-    docData(doc(this.callRef, this.inputCall)).subscribe((data: any) => {
-      if (!this.pc.currentRemoteDescription && data!.answer) {
-        const answerDescription = new RTCSessionDescription(data.answer);
-        this.pc.setRemoteDescription(answerDescription);
+    let userCallDoc = doc(this.fs, `calls/${this.docId}`)
+    let ownerID = (await getDoc(userCallDoc)).data()!['ownerID']
+    
+    if (this.userSrv.user.id === ownerID) {
+      this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
+      const ansdocRef = collection(userCallDoc, 'answerCandidates');
+      const offerDescription = await this.pc.createOffer();
+      this.pc.onicecandidate = (event) => {
+        event.candidate && addDoc(this.offerDocRef, event.candidate.toJSON());
       }
-      
-      collectionChanges(this.ansDocRef).subscribe((data) => {
+      await this.pc.setLocalDescription(offerDescription);
+      const offer = {
+        sdp: offerDescription.sdp,
+        type: offerDescription.type,
+      }
+      await setDoc(userCallDoc, { offer });
+      docData(userCallDoc).subscribe((data: any) => {
+        if (!this.pc.currentRemoteDescription && data?.answer) {
+          const answerDescription = new RTCSessionDescription(data.answer);
+          this.pc.setRemoteDescription(answerDescription)
+        }
+      });
+
+      collectionChanges(ansdocRef).subscribe((data) => {
         data.forEach((doc) => {
           if (doc.type === 'added') {
             const candidate = new RTCIceCandidate(doc.doc.data());
-            this.pc.addIceCandidate(candidate);
+            this.pc.addIceCandidate(candidate)
           }
         })
       })
-    });
+    } else 
+    {
+      this.answerCall()
+    }
   }
 
   async answerCall() {
     this.callRef = collection(this.fs, 'calls');
-    this.offerDocRef = collection(doc(this.callRef, this.inputAnswer), 'offerCandidates');
-    this.ansDocRef = collection(doc(this.callRef, this.inputAnswer), 'answerCandidates');
-
+    this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
+    this.ansDocRef = collection(doc(this.callRef, this.docId), 'answerCandidates');
     const callRef = collection(this.fs, 'calls');
-    const callDoc = doc(callRef, this.inputAnswer);
-    const ansDocRef = collection(callDoc, 'answerCandidates');
+    const callDoc = doc(callRef, this.docId);
 
+   
     this.pc.onicecandidate = ((event) => {
-      event.candidate && addDoc(ansDocRef, event.candidate.toJSON());
+      event.candidate && addDoc(this.ansDocRef, event.candidate.toJSON());
     });
 
     const callData = ((await getDoc(callDoc)).data());
@@ -156,20 +162,7 @@ export class VideoCallComponent implements OnInit {
     })
   }
 
-  listNAme = doc(collection(this.fs, 'names'))
 
-  input() {
-    setDoc(this.listNAme, {
-      name: "trong"
-    })
-  }
 
-  async getData() {
-    console.log(this.docId);
-    let docRef = doc(collection(this.fs, 'names'), this.docId)
-    await getDoc(docRef).then(data => {
-      console.log(data.data());
-    });
-  }
 }
 
