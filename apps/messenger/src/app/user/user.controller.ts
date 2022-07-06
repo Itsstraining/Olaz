@@ -9,7 +9,7 @@ export class UserController {
         private UserService: UserService
     ) { }
 
-    @Get('get-all')
+    @Get('get-all-users')
     async getUsers() {
         try {
             return await this.UserService.getUsers();
@@ -19,10 +19,20 @@ export class UserController {
     }
 
     @Post('add-friend')
-    async addFriend(@Body() body) {
+    async toggleRequest(@Body() body) {
         try {
             return this.UserService.toggleRequest(body.check, body.frID, body.myID);
         } catch (error) {
+            return new HttpException(error.message, HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @Post('send-request')
+    addFriend(@Body() body){
+        try{
+            return this.UserService.sendRequest(body.frID, body.myID)
+        }
+        catch(error) {
             return new HttpException(error.message, HttpStatus.BAD_REQUEST)
         }
     }
