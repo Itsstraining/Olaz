@@ -5,8 +5,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleAuthProvider, getAuth, signInWithPopup, authState, Auth, signOut } from '@angular/fire/auth';
 import { User } from './user';
+
 import { doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore'
 import { HttpClient } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,14 +17,26 @@ export class UserService {
   loggedIn = false
   user!: User
   userTodo: any;
+
+  callRef: any;
+  offerDocRef: any;
+  ansDocRef: any;
+  opponentId!: any;
+  ownerId!: any;
+
+
   constructor(
+
     private fs: Firestore, private auth: Auth,
     private http:HttpClient
   ) {
+
     authState(this.auth).subscribe(async (user) => {
       let userDoc = doc(collection(this.fs, 'users'), user!.uid)
       let todoCollection = collection(userDoc, 'Todo');
       let todoID;
+
+      this.callRef = collection(this.fs, 'calls');
 
       if (user) {
         this.userTodo = collection(this.fs, "todo");
@@ -38,7 +52,23 @@ export class UserService {
 
           rooms: []
         }
-        console.log(this.user)
+        console.log(this.user);
+
+
+        collectionChanges(this.callRef).subscribe((data) => {
+          data.forEach((doc) => {
+            if (doc.type === 'added' && doc.doc.data()['opponentID'] === this.user.id) {
+              let text = "Incoming Call...";
+              if (confirm(text) == true) {
+
+                this.answerCall(doc.doc.id);
+              } else {
+                text = "Denied!";
+              }
+            }
+          })
+        })
+
         if (await this.userFirstLogin() == false) {
 
           await setDoc(doc(this.fs, "users", this.user.id), this.user)
@@ -46,6 +76,10 @@ export class UserService {
         }
       }
     })
+  }
+  async answerCall(idDoc: any) {
+  this.route.navigate([`call/call/${idDoc}`])
+
   }
 
   private readonly refUser = collection(this.fs, 'users');
@@ -98,8 +132,6 @@ export class UserService {
       });
     }
   }
-
-
 
   async userFirstLogin() {
     if (!this.user) {
