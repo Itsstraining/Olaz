@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put,  } from '@nestjs/common';
 import { TodoService } from '../../services/todo/todo.service';
 
 @Controller('todo')
