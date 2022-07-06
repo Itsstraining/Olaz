@@ -10,8 +10,24 @@ export class UserService {
   constructor() {}
 
   users = [];
-  getUserByEmail() {
-    return this.users;
+  async getUserByEmail() {
+    try {
+      // console.time('loop');
+      if (this.users.length == 0) {
+        const users = await (
+          await firebase.firestore().collection('users').get()
+        )
+          .docChanges()
+          .map((user) => {
+            return user.doc.data();
+          });
+        this.users = users;
+      }
+      // console.timeEnd('loop');
+      return this.users;
+    } catch (error) {
+      return new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
   async getUsers() {

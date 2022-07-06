@@ -15,10 +15,16 @@ import { updateDoc } from '@firebase/firestore';
 export class DialogFriendComponent implements OnInit {
   constructor( private userService: UserService, public fireStore: Firestore ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.user$.subscribe(user=>{
+      this._user = user;
+    })
+  }
+
+  public _user: any;
   
   email!: string;
-  listOfEmail: Array<any> = []; 
+  listOfEmail: any = []; 
 
   findUser() {
     //  this.userService.getUsers().subscribe(
@@ -34,8 +40,9 @@ export class DialogFriendComponent implements OnInit {
     //   }
     // );
     this.userService.getUserByEmail(this.email).subscribe(
-      user=>{
-        console.log(user);
+      users=>{
+        console.log(users);
+        this.listOfEmail = users;
       },
       err => {
         console.log(err.error.text)
@@ -81,14 +88,20 @@ export class DialogFriendComponent implements OnInit {
   //     }
   //   }
   // }
-  myID = "mi10EPz75Hdf128XpNwe";
   
   addFriend(frID:string){
-    console.log("myID::::::::" + this.myID);
-    console.log("frID::::::::" + frID);
-    updateDoc(doc(this.fireStore,'users', frID),{
-      requests: arrayUnion(this.myID)
-    })
+    // const myID = "mi10EPz75Hdf128XpNwe";
+    if(this._user){
+      this.userService.sendRequest(this._user.id, frID).subscribe((response)=>{
+        console.log(response);
+      })
+    }else{
+      console.log("user::: null")
+    }
+    // updateDoc(doc(this.fireStore,'users', frID),{
+    //   requests: arrayUnion(this.myID)
+    // })
+ 
   }
 
 

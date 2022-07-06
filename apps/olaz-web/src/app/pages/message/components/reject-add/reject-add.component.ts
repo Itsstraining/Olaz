@@ -15,15 +15,20 @@ export class RejectAddComponent implements OnInit {
   constructor(public fireStore: Firestore, private UserService:UserService) { }
 
   ngOnInit(): void {
-    this.getAllRequests(this.myID)
+    this.UserService.user$.subscribe(user=>{
+      this.myID = user.id;    
+      this.getAllRequests(this.myID)
+    })
    }
 
-   myID = "hnbBbNtPTMIBxsLCBLJj"
+  public myID: any
   toggleRequest(check: boolean, frID: string){
     // console.log("check:::::" + check)
     // console.log(`myID:::::${myID}`)
     // console.log(`frID::::::${frID}`)
-    this.UserService.toggleRequest(check, frID, this.myID);
+    this.UserService.toggleRequest(check, frID, this.myID).subscribe(res=>{
+      console.log(res)
+    })
   }
 
   public request: any = [];
