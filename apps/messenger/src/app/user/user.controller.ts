@@ -38,8 +38,8 @@ export class UserController {
     }
 
     @Get('get-email')
-    gerUser(@Query('email') email: string) {
-        const users = this.UserService.getUserByEmail()
+    async gerUser(@Query('email') email: string) {
+        const users: any = await this.UserService.getUserByEmail()
         // for(let i = 0; i<users.length; i++){
         //     if(users[i].email == email ){
         //         return users[i];
@@ -47,7 +47,7 @@ export class UserController {
         // }
         // return "Không có kết quả nào!"
         // const newArr =  users.some( ai => ai.email.includes(email));
-        const newArr = users.filter(
+        const newArr =  users.filter(
             (user) => {
                 return user.email
                     .toLocaleLowerCase()
