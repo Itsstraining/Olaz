@@ -1,31 +1,54 @@
 <nav class="khung">
-    <div class="nav-icons">
-      <div type="button" class="icon-button">
-        <span class="uil uil-bell" mat-raised-button
-        matTooltip="Anouncement"
-        matTooltipPosition="below"></span>
-        <span class="icon-button__badge">{{messageCount}}</span>
-      </div>
-      <div type="button" class="icon-button">
-        <span class="uil uil-users-alt" mat-raised-button
-        matTooltip="Add Friend"
-        matTooltipPosition="below"></span>
-        <span class="icon-button__badge">{{count}}</span>
-      </div>
+  <div class="nav-icons">
+    <div type="button" class="icon-button">
+      <span
+        class="uil uil-search"
+        mat-raised-button
+        matTooltip="Search"
+        matTooltipPosition="below"
+        (click)="openDialogAddFr()"
+      ></span>
     </div>
-    <button class="pic" mat-button [matMenuTriggerFor]="menu"><img src="https://vcdn-giaitri.vnecdn.net/2022/04/28/Avatar-2-James-Cameron-5081-1651112580.jpg"/></button>
+    <div type="button" class="icon-button">
+      <span
+        class="uil uil-bell"
+        mat-raised-button
+        matTooltip="Anouncement"
+        matTooltipPosition="below"
+      ></span>
+      <span class="icon-button__badge">{{ messageCount }}</span>
+    </div>
+    <div type="button" class="icon-button">
+      <span
+        class="uil uil-users-alt"
+        mat-raised-button
+        matTooltip="Add Friend"
+        matTooltipPosition="below"
+        (click)="openDialogAddRj()"
+      ></span>
+      <span class="icon-button__badge">{{ count }}</span>
+    </div>
+  </div>
+  <button class="pic" mat-button [matMenuTriggerFor]="menu">
+    <img
+      src="https://vcdn-giaitri.vnecdn.net/2022/04/28/Avatar-2-James-Cameron-5081-1651112580.jpg"
+    />
+  </button>
   <mat-menu #menu="matMenu">
-    <div  class="user-info" mat-menu-item>
-      <img class="small-ava" src="https://vcdn-giaitri.vnecdn.net/2022/04/28/Avatar-2-James-Cameron-5081-1651112580.jpg"/>
+    <div class="user-info" mat-menu-item>
+      <img
+        class="small-ava"
+        src="https://vcdn-giaitri.vnecdn.net/2022/04/28/Avatar-2-James-Cameron-5081-1651112580.jpg"
+      />
       <div class="name-email">
         <h3>Trong Pham</h3>
         <h4>Trong.pdt@gmail.com</h4>
       </div>
     </div>
-    <hr>
-    <button class="icon" mat-menu-item >
+    <hr />
+    <button class="icon" mat-menu-item>
       <i class="uil uil-signout"></i>
-      <p class="logout">Logout</p> </button> 
-    </mat-menu>
-    
-  </nav>
+      <p class="logout">Logout</p>
+    </button>
+  </mat-menu>
+</nav>

@@ -182,4 +182,8 @@ export class UserService {
       frID: frID
     })
   }
+
+  public suggestUsers(){
+    return this.http.get("http://localhost:3333/api/user/suggest-user")
+  }
 }

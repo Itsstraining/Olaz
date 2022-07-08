@@ -19,6 +19,9 @@ export class RejectAddComponent implements OnInit {
       this.myID = user.id;    
       this.getAllRequests(this.myID)
     })
+    this.UserService.suggestUsers().subscribe(user=>{
+      console.log(user)
+    })
    }
 
   public myID: any
