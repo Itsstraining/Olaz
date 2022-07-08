@@ -15,7 +15,7 @@
                     <!-- <mat-list-option> -->   
                       <div *ngFor="let usr of listOfEmail">
                         <mat-list-item>
-                          <img matListAvatar src="https://icdn.dantri.com.vn/thumb_w/770/2022/04/13/612130-1649843704671.jpg" >
+                          <img matListAvatar [src]="usr.photoURL" >
                           <p matLine>
                             <span> {{usr.email}} </span>
                           </p>

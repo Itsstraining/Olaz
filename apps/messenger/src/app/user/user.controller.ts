@@ -9,7 +9,7 @@ export class UserController {
         private UserService: UserService
     ) { }
 
-    @Get('get-all')
+    @Get('get-all-users')
     async getUsers() {
         try {
             return await this.UserService.getUsers();
@@ -19,7 +19,7 @@ export class UserController {
     }
 
     @Post('add-friend')
-    async addFriend(@Body() body) {
+    async toggleRequest(@Body() body) {
         try {
             return this.UserService.toggleRequest(body.check, body.frID, body.myID);
         } catch (error) {
@@ -27,9 +27,19 @@ export class UserController {
         }
     }
 
+    @Post('send-request')
+    addFriend(@Body() body){
+        try{
+            return this.UserService.sendRequest(body.frID, body.myID)
+        }
+        catch(error) {
+            return new HttpException(error.message, HttpStatus.BAD_REQUEST)
+        }
+    }
+
     @Get('get-email')
-    gerUser(@Query('email') email: string) {
-        const users = this.UserService.getUserByEmail()
+    async gerUser(@Query('email') email: string) {
+        const users: any = await this.UserService.getUserByEmail()
         // for(let i = 0; i<users.length; i++){
         //     if(users[i].email == email ){
         //         return users[i];
@@ -37,7 +47,7 @@ export class UserController {
         // }
         // return "Không có kết quả nào!"
         // const newArr =  users.some( ai => ai.email.includes(email));
-        const newArr = users.filter(
+        const newArr =  users.filter(
             (user) => {
                 return user.email
                     .toLocaleLowerCase()
