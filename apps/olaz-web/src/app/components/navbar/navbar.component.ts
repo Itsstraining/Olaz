@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   count = 0;
+  messageCount = 0
   ngOnInit(): void {
     this.UserService.user$.subscribe(user=>{
       if(!user) return
