@@ -4,19 +4,39 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { GoogleAuthProvider, getAuth, signInWithPopup, authState, Auth, signOut } from '@angular/fire/auth';
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  authState,
+  Auth,
+  signOut,
+} from '@angular/fire/auth';
 import { User } from './user';
 
-import { doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion, arrayRemove, collectionChanges } from '@angular/fire/firestore'
+import {
+  doc,
+  collection,
+  collectionData,
+  addDoc,
+  Firestore,
+  getDoc,
+  setDoc,
+  docData,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  collectionChanges,
+} from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MessageService } from './message/message.service';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-
-  loggedIn = false
-  user!: User
+  loggedIn = false;
+  user!: User;
   userTodo: any;
 
   callRef: any;
@@ -25,23 +45,22 @@ export class UserService {
   opponentId!: any;
   ownerId!: any;
 
-
   constructor(
-    private route:Router,
-    private fs: Firestore, private auth: Auth,
-    private http:HttpClient
+    private route: Router,
+    private fs: Firestore,
+    private auth: Auth,
+    private http: HttpClient
   ) {
-
     authState(this.auth).subscribe(async (user) => {
-      if(!user) return
-      let userDoc = doc(collection(this.fs, 'users'), user!.uid)
+      if (!user) return;
+      let userDoc = doc(collection(this.fs, 'users'), user!.uid);
       let todoCollection = collection(userDoc, 'Todo');
       let todoID;
 
       this.callRef = collection(this.fs, 'calls');
 
       if (user) {
-        this.userTodo = collection(this.fs, "todo");
+        this.userTodo = collection(this.fs, 'todo');
         this.loggedIn = true;
         this.user = {
           id: user.uid,
@@ -52,35 +71,38 @@ export class UserService {
           friends: [],
           incall: false,
 
-          rooms: []
-        }
+          rooms: [],
+        };
         this.user$.next(this.user);
 
         collectionChanges(this.callRef).subscribe((data) => {
           data.forEach((doc) => {
-            if (doc.type === 'added' && doc.doc.data()['opponentID'] === this.user.id) {
-              let text = "Incoming Call...";
+            if (
+              doc.type === 'added' &&
+              doc.doc.data()['opponentID'] === this.user.id
+            ) {
+              let text = 'Incoming Call...';
               if (confirm(text) == true) {
-
                 this.answerCall(doc.doc.id);
               } else {
-                text = "Denied!";
+                text = 'Denied!';
               }
             }
-          })
-        })
+          });
+        });
 
-        if (await this.userFirstLogin() == false) {
-
-          await setDoc(doc(this.fs, "users", this.user.id), this.user)
-          todoID = await (await addDoc(todoCollection, { content: 'This is todo', status: 'Done' }))
+        if ((await this.userFirstLogin()) == false) {
+          await setDoc(doc(this.fs, 'users', this.user.id), this.user);
+          todoID = await await addDoc(todoCollection, {
+            content: 'This is todo',
+            status: 'Done',
+          });
         }
       }
-    })
+    });
   }
   async answerCall(idDoc: any) {
-  this.route.navigate([`call/call/${idDoc}`])
-
+    this.route.navigate([`call/call/${idDoc}`]);
   }
 
   public user$ = new BehaviorSubject<any>(null);
@@ -93,12 +115,17 @@ export class UserService {
   }
 
   //new fuction with server
-  public getUserByEmail(email: string){
-    return this.http.get(`http://localhost:3333/api/user/get-email?email=${email}`);
+  public getUserByEmail(email: string) {
+    return this.http.get(
+      `http://localhost:3333/api/user/get-email?email=${email}`
+    );
   }
 
   public notifyCount(myID: string) {
     return docData(doc(collection(this.fs, 'users'), myID));
+  }
+  public messCount(myIDMessage: string) {
+    return docData(doc(collection(this.fs, 'rooms'),myIDMessage))
   }
 
   public toggleRequest(check: boolean, frID: string, myID: string) {
@@ -134,18 +161,18 @@ export class UserService {
     //     requests: arrayRemove(myID),
     //   });
     // }
-   return this.http.post("http://localhost:3333/api/user/add-friend", {
-    check,
-    myID,
-    frID
-   })
+    return this.http.post('http://localhost:3333/api/user/add-friend', {
+      check,
+      myID,
+      frID,
+    });
   }
 
   async userFirstLogin() {
     if (!this.user) {
-      return false
+      return false;
     } else {
-      let exists = await getDoc(doc(this.fs, "users", this.user.id))
+      let exists = await getDoc(doc(this.fs, 'users', this.user.id));
       return exists.exists();
     }
   }
@@ -154,29 +181,32 @@ export class UserService {
     let provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(this.auth, provider);
-      alert('Loggin Success')
+      alert('Loggin Success');
     } catch (e) {
-      alert('Loggin Failed !')
+      alert('Loggin Failed !');
     }
   }
 
   async logout() {
     try {
-      await signOut(this.auth)
-      alert('Logout Success')
+      await signOut(this.auth);
+      alert('Logout Success');
     } catch (e) {
-      alert('Logout Failed !')
+      alert('Logout Failed !');
     }
-
   }
   async getUserByID(id: string) {
-    return await getDoc(doc(this.fs, 'users', id))
+    return await getDoc(doc(this.fs, 'users', id));
   }
 
-  public sendRequest(myID: string ,frID: string){
-    return this.http.post("http://localhost:3333/api/user/send-request", {
+  public sendRequest(myID: string, frID: string) {
+    return this.http.post('http://localhost:3333/api/user/send-request', {
       myID: myID,
-      frID: frID
-    })
+      frID: frID,
+    });
+  }
+
+  public suggestUsers(){
+    return this.http.get("http://localhost:3333/api/user/suggest-user")
   }
 }
