@@ -100,6 +100,9 @@ export class UserService {
   public notifyCount(myID: string) {
     return docData(doc(collection(this.fs, 'users'), myID));
   }
+  public messCount(myIDMessage: string) {
+    return docData(doc(collection(this.fs, 'rooms'),myIDMessage))
+  }
 
   public toggleRequest(check: boolean, frID: string, myID: string) {
     // if (check) {
@@ -178,5 +181,9 @@ export class UserService {
       myID: myID,
       frID: frID
     })
+  }
+
+  public suggestUsers(){
+    return this.http.get("http://localhost:3333/api/user/suggest-user")
   }
 }

@@ -49,6 +49,24 @@ export class UserService {
       return new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
+  async suggestUsers(){
+    try{
+      if (this.users.length == 0) {
+
+        const users = await (
+          await firebase.firestore().collection('users').get()
+        )
+          .docChanges()
+          .map((user) => {
+            return user.doc.data();
+          });
+          this.users = users;
+      }
+      return this.users;
+    } catch (error) {
+      return new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 
   async getUserById(id: string) {
     try {
@@ -184,4 +202,5 @@ export class UserService {
       return new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
+
 }

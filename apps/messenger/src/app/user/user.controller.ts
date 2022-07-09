@@ -1,5 +1,6 @@
 /* eslint-disable no-empty */
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { EmailValidator } from '@angular/forms';
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Query } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 @Controller('user')
@@ -16,6 +17,24 @@ export class UserController {
         } catch (error) {
             return new HttpException(error.message, HttpStatus.BAD_REQUEST)
         }
+    }
+    @Get('suggest-user')
+    async suggestUsers(@Query('email') email: string){
+        const users: any = await this.UserService.suggestUsers()
+        const userSuggests = []
+        for(let i = 0; i<users.length; i++){
+            if(i>4){
+                return userSuggests
+            }
+            userSuggests.push(users[i])
+        }
+        const newArr = users.filter(
+            (user) => {
+                return user.email
+                    .toLocaleLowerCase()
+                    .includes(email.toLocaleLowerCase())
+            })
+            return newArr
     }
 
     @Post('add-friend')
