@@ -19,6 +19,7 @@ export class DialogFriendComponent implements OnInit {
     this.userService.user$.subscribe(user=>{
       this._user = user;
     })
+  
   }
 
   public _user: any;

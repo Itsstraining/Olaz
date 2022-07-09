@@ -7,7 +7,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogFowardComponent } from '../message/components/dialog-foward/dialog-foward.component';
-import { DialogFriendComponent } from '../message/components/dialog-friend/dialog-friend.component';
 import { UserService } from '../../services/user.service';
 import { MessageService } from '../../services/message/message.service';
 import { RoomService } from '../../services/message/room.service';
@@ -30,9 +29,6 @@ export class MessageComponent implements OnInit {
     public myId!: string;
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
-    // this.UserService.getUsers().subscribe(
-    //   res => console.log(res)
-    // );
     this.UserService.user$.subscribe(
       user => {
         console.log(user)
@@ -49,7 +45,6 @@ export class MessageComponent implements OnInit {
     this.RoomService.getRoomById("1657280749904").subscribe(room=>{
       console.log(room)
     })
-  
   }
 
   openDialogFw() {
@@ -62,24 +57,7 @@ export class MessageComponent implements OnInit {
     });
   }
 
-  openDialogAddFr() {
-    const dialogRef = this.dialog.open(DialogFriendComponent, {
-      width: '50%'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  openDialogAddRj(){
-    const dialogRef = this.dialog.open(RejectAddComponent,{
-      width: '50%', height:'350px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+  
 
 roomId = "1657280749904"
  async sendMessage(content: string, image:string, type: string){
