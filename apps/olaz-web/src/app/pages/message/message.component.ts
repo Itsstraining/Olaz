@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogFowardComponent } from '../message/components/dialog-foward/dialog-foward.component';
 import { UserService } from '../../services/user.service';
+import { MessageService } from '../../services/message/message.service';
+import { RoomService } from '../../services/message/room.service';
 import {doc, collection, collectionData, addDoc, Firestore, getDoc, setDoc, docData, updateDoc, arrayUnion} from '@angular/fire/firestore'
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 
@@ -20,17 +22,29 @@ export class MessageComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private UserService: UserService,
-    public fireStore: Firestore
+    public fireStore: Firestore,
+    private MessageService:MessageService,
+    private RoomService:RoomService
   ) { }
-
+    public myId!: string;
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
-    // this.UserService.getUsers().subscribe(
-    //   res => console.log(res)
-    // );
-    // this.UserService.notifyCount(this.myID).subscribe(
-    //   (user:any) => console.log(user.requests.length)
-    // )
+    this.UserService.user$.subscribe(
+      user => {
+        console.log(user)
+        if(!user) return;
+        this.myId = user.id;
+        this.UserService.notifyCount(this.myId).subscribe(
+          (user:any) => {
+            if(!user) return
+            console.log(user.requests.length)
+          }
+        )
+      }
+    )
+    this.RoomService.getRoomById("1657280749904").subscribe(room=>{
+      console.log(room)
+    })
   }
 
   openDialogFw() {
@@ -45,26 +59,32 @@ export class MessageComponent implements OnInit {
 
   
 
-roomId = "1656682165468"
+roomId = "1657280749904"
  async sendMessage(content: string, image:string, type: string){
-    const messId = Date.now().toString() 
-     setDoc(
-        doc(this.fireStore, 'messages', messId),
-        {
-          userId: this.myID,
-          id: messId,
-          content: content,
-          image: image,
-          type: type,
-          createdTime: messId
-        });  
-        updateDoc(doc(this.fireStore, 'rooms', this.roomId), {
-          messages: arrayUnion(messId)
-        })    
-        await Promise.all([
-          setDoc,
-          updateDoc
-        ])
+    // const messId = Date.now().toString() 
+    //  setDoc(
+    //     doc(this.fireStore, 'messages', messId),
+    //     {
+    //       userId: this.myID,
+    //       id: messId,
+    //       content: content,
+    //       image: image,
+    //       type: type,
+    //       createdTime: messId
+    //     });  
+    //     updateDoc(doc(this.fireStore, 'rooms', this.roomId), {
+    //       messages: arrayUnion(messId)
+    //     })    
+    //     await Promise.all([
+    //       setDoc,
+    //       updateDoc
+    //     ])
+    if(!this.myId) return;
+    this.MessageService.sendMessage(content,image,type,this.myId,this.roomId).subscribe(
+      res => {
+        console.log(res);
+      }
+    )
 }
 
 content = "";
@@ -85,6 +105,5 @@ image = "";
       this.image = "";
     }
   }
-  myID="hnbBbNtPTMIBxsLCBLJj"
 
 }
