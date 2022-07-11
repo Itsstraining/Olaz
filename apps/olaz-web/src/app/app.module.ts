@@ -12,7 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AppRoutingModule } from './app-routing.module';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -82,6 +82,7 @@ import { LoginComponent } from './pages/video-call/components/login/login.compon
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    MatSidenavModule,
     MatIconModule,
     LayoutModule,
   ],
