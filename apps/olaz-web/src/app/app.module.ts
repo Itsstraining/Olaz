@@ -32,6 +32,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/video-call/components/login/login.component';
 
 
@@ -54,6 +55,7 @@ import { LoginComponent } from './pages/video-call/components/login/login.compon
     MatDialogModule,
     MatInputModule,
     MatListModule,
+    HttpClientModule,
     FormsModule,
     StoreModule.forRoot(
       {},
