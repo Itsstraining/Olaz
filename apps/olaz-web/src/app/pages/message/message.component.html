@@ -139,7 +139,7 @@
         </div>
 
         <div id="right-center">
-            <div>
+            <!-- <div>
                 <div class="circle-user-one">
 
                     <div class="messager-user">
@@ -171,28 +171,28 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
 
-
-            <div class="cha">
-                <div class="bacham">
-                    <img src="../../../assets/assets/menu-dots (2).png" alt="">
+            <span *ngIf="room">
+                <div  *ngFor="let message of room.messages" class="cha">
+                    <div class="bacham">
+                        <img src="../../../assets/assets/menu-dots (2).png" alt="">
+                    </div>
+    
+                    <div class="tinnhan">
+                        <p class="noidungtinnhan">{{message.content}}</p>
+                        <p class="thoigiantinnhan">{{message.createdTime | date:"short"}}</p>
+                    </div>
+                    <div class="hinhanh">
+                        <img class="hinhanhdaidien" [src]="message.userId?.photoURL" alt="">
+                    </div>
                 </div>
+            </span>
+           
 
-                <div class="tinnhan">
-                    <p class="noidungtinnhan">Vâng anh biết rồi nè</p>
-                    <p class="thoigiantinnhan">15:05 PM</p>
-                </div>
-
-                <div class="hinhanh">
-                    <img class="hinhanhdaidien" src="../../../assets/assets/Anhyeuuu.jpg" alt="">
-                </div>
-
-            </div>
-
-            <div class="cha-1">
+            <!-- <div class="cha-1">
 
                 <div class="bacham-1">
                     <img src="../../../assets/assets/menu-dots (2).png" alt="">
@@ -227,7 +227,7 @@
                 <div class="bacham-2">
                     <img src="../../../assets/assets/menu-dots (2).png" alt="">
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="right-bottom">
@@ -250,8 +250,8 @@
             </div>
 
             <div class="input">
-                <input class="input-kichthuoc" type="text" placeholder="Enter your messages...."
-                    style="text-align: left;">
+                <input class="input-kichthuoc" (keydown)="onKeydown($event)" type="text" [(ngModel)]="content" placeholder="Enter your messages...."
+                    style="text-align: left;"> 
             </div>
         </div>
 

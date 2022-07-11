@@ -32,6 +32,6 @@ export class MessageService {
   }
 
   async getMessageById(messId: string){
-    return await getDoc(doc(this.fs, 'messages', messId))
+    return await (await getDoc(doc(this.fs, 'messages', messId))).data()
   }
 }
