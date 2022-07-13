@@ -11,7 +11,7 @@ const routes: Routes = [
         path:'',
         redirectTo: '/m', pathMatch: 'full'
     },
-    { path: 'm', loadChildren: () => import('./pages/message/message.module').then(m => m.MessageModule) },
+    { path: 'm/:roomId', loadChildren: () => import('./pages/message/message.module').then(m => m.MessageModule) },
     { path: 'call', loadChildren: () => import('./pages/video-call/call/call.module').then(m => m.CallModule) },
     { path: 'profile', loadChildren: () => import('./pages/profile/profile/profile.module').then(m => m.ProfileModule) },
     { path: 'login', component: LoginComponent}
