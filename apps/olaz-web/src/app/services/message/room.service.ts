@@ -17,4 +17,6 @@ export class RoomService {
   getRoomById(roomId: string) {
     return docData(doc(this.fs, 'rooms', roomId));
   }
+
+  
 }

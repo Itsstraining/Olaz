@@ -3,7 +3,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import {
   GoogleAuthProvider,
   getAuth,
@@ -125,7 +125,7 @@ export class UserService {
     return docData(doc(collection(this.fs, 'users'), myID));
   }
   public messCount(myIDMessage: string) {
-    return docData(doc(collection(this.fs, 'rooms'),myIDMessage))
+    return docData(doc(collection(this.fs, 'rooms'), myIDMessage));
   }
 
   public toggleRequest(check: boolean, frID: string, myID: string) {
@@ -195,8 +195,9 @@ export class UserService {
       alert('Logout Failed !');
     }
   }
+
   async getUserByID(id: string) {
-    return await getDoc(doc(this.fs, 'users', id));
+    return await await getDoc(doc(this.fs, 'users', id));
   }
 
   public sendRequest(myID: string, frID: string) {
@@ -206,7 +207,16 @@ export class UserService {
     });
   }
 
-  public suggestUsers(){
-    return this.http.get("http://localhost:3333/api/user/suggest-user")
+  public suggestUsers() {
+    return this.http.get('http://localhost:3333/api/user/suggest-user');
+  }
+
+   getListOfRoomId(userId: string) {
+    const rooms = docData(doc(this.fs, 'users', userId)).pipe(
+      map((user: any) => {
+        return user.rooms;
+      })
+    );
+    return rooms;
   }
 }
