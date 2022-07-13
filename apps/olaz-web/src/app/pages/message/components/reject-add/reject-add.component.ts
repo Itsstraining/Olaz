@@ -16,8 +16,12 @@ export class RejectAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.UserService.user$.subscribe(user=>{
+      // console.log(user)
       this.myID = user.id;    
       this.getAllRequests(this.myID)
+    })
+    this.UserService.suggestUsers().subscribe(user=>{
+      console.log(user)
     })
    }
 
