@@ -1,55 +1,59 @@
-#Layout-parent{
+#Layout-parent {
     width: 100%;
     height: 740px;
     display: flex;
     border-left: 1px solid black;
     border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    // border-bottom: 1px solid black;
 }
 
 /* --------------------------------------------------------------------------- */
 
-#Layout-left{
-    width: 360px;     
+#Layout-left {
+    width: 360px;
     height: 740px;
-    background-color:white; 
+    background-color: white;
     display: flex;
 }
-.Letter-left{
+
+.Letter-left {
     margin-top: 15px;
     margin-left: 10px;
 }
-.Font-user{
+
+.Font-user {
     font-family: 'Times New Roman', Times, serif;
     font-size: 20px;
 }
-.Online-left{
-    display: flex;
-    margin-left: 3px;
-    margin-top: 5px;
+
+.Online-left {
+    margin-left: 10px;
 }
-.Circle-left-one{
+
+.Circle-left-one {
     width: 75px;
     height: 70px;
-    background:grey;
+    background: grey;
     border-radius: 50%;
     margin-left: 15px;
     margin-top: 15px;
 }
-.Circle-green{
-    width: 8%;
+
+.Circle-green {
+    width: 8px;
     height: 8px;
     background: green;
     border: 1px solid green;
     border-radius: 50%;
-    margin-top: -15%;
-    margin-left:10%;
     display: flex;
+    margin-top: 6px;
 }
-#Input-search{
+
+#Input-search {
     margin-top: -5px;
 }
-#Input-search1{
+
+#Input-search1 {
     width: 300px;
     height: 35px;
     color: #9F99B7;
@@ -57,19 +61,22 @@
     margin-left: 20px;
     text-align: center;
 }
-.left-top{
+
+.left-top {
     width: 100%;
     height: auto;
 }
 
 /*------------------------------------------------------------------- */
 
-#Layout-right{
-    width: 1100px;   
-    height: 740px;
-    border-left: 1px solid black ;
+#Layout-right {
+    width: 100%;
+    height: auto;
+    // background-color: gray;
+    border-left: 1px solid black;
 }
-.Icon-user{
+
+.Icon-user {
     width: 20px;
     margin-left: 330px;
     display: flex;
@@ -77,28 +84,39 @@
 
 /*-------------------------------------------------------------------*/
 
-.right-top{
+.right-top {
     width: 100%;
-    height: 65px;
-    // border-bottom: 1px solid black;
+    border-bottom: 1px solid black;
 }
-.right-top-one{
-    width: 100%;
-    margin-right: 500px;
-    margin-top: 5px;
+
+.right-top-one {
+    // margin-right: 500px;
+    // margin-top: 5px;
 }
-.font-user-one{
+
+.font-user-one {
     font-family: time 'Times New Roman', Times, serif;
     font-size: 16pt;
     padding: 5px 10px 10px 10px;
 }
-.online-right{ 
+
+.online-right {
     margin-left: 5px;
 }
-.Circle-top-one{
-    width: 75px;
+
+.icon-nav {
+    padding: 20px;
 }
-.image-message{
+
+.icon-nav:hover {
+    cursor: pointer;
+}
+
+.Circle-top-one {
+    width: 20%;
+}
+
+.image-message {
     width: 60px;
     height: 60px;
     display: block;
@@ -106,69 +124,77 @@
     margin-top: 4px;
     border-radius: 50%;
 }
-.circle-green-top-one{
+
+.circle-green-top-one {
     width: 8px;
     height: 8px;
     background: green;
     border: 1px solid green;
     border-radius: 50%;
     margin-top: 6px;
-    margin-left:8px;
+    margin-left: 8px;
     /* display: flex; */
 }
+
 /*----------------------------------------------------------------------*/
 
-#right-center{
-    height: 550px;
-    background-color: white;
+#right-center {
+    // background-color: rgb(201, 31, 31);
 }
 
-.messager-user-one{
+.messager-user-one {
     width: 450px;
     height: 60px;
     background-color: #dcdcdc;
     border: 1px solid #dcdcdc;
-    border-radius:15px;
+    border-radius: 15px;
     margin-top: 15px;
     margin-left: 100px;
 }
-.content{
+
+.content {
     margin-left: 20px;
     margin-top: 10px;
     font-size: 14pt;
 }
-.content-one{
+
+.content-one {
     margin-left: 20px;
     margin-top: 10px;
     font-size: 14pt;
 }
-.content-two{
+
+.content-two {
     width: 220px;
     height: 5px;
     margin-left: 150px;
     margin-top: 14px;
     font-size: 8pt;
 }
-.content-three{
+
+.content-three {
     width: 220px;
     height: 5px;
     margin-left: 400px;
     margin-top: 14px;
     font-size: 8pt;
 }
-.kich-co-one{
+
+.kich-co-one {
     width: 10px;
     height: 10px;
     margin-left: 20px;
     margin-top: 15px;
 }
-.kich-co-two{
+
+.kich-co-two {
     width: 10px;
     height: 10px;
     margin-left: 475px;
     margin-top: -35px;
 }
-.kick-co-three{
+
+.kick-co-three {
     width: 10px;
     height: 10px;
     margin-left: 400px;
@@ -238,20 +264,23 @@
     margin-right: 20px;
 } */
 
-.cha{
+.cha {
     display: flex;
-    float: right;
+    // float: right;
 }
-.hinhanh{
+
+.hinhanh {
     margin-right: 40px;
     margin-top: 40px;
 }
-.hinhanhdaidien{
+
+.hinhanhdaidien {
     width: 50px;
     height: 50px;
     border-radius: 50px;
 }
-.tinnhan{
+
+.tinnhan {
     width: 200px;
     height: 60px;
     background-color: #5A3E9E;
@@ -260,26 +289,31 @@
     margin-right: 10px;
     margin-top: 39px;
 }
-.noidungtinnhan{
+
+.noidungtinnhan {
     font-size: 14pt;
     margin-left: 20px;
     margin-top: 10px;
     color: white;
 }
-.thoigiantinnhan{
+
+.thoigiantinnhan {
     font-size: 8pt;
     margin-top: 14px;
     margin-left: 150px;
     color: white;
 }
-.bacham{
+
+.bacham {
     margin-top: 60px;
     margin-right: 25px;
 }
-.cha-1{
+
+.cha-1 {
     display: flex;
 }
-.tinnhan-1{
+
+.tinnhan-1 {
     width: 450px;
     height: 60px;
     background-color: #5A3E9E;
@@ -287,38 +321,43 @@
     border-radius: 15px;
     margin-left: 404px;
     margin-top: 113px;
-} 
-.noidungtinnhan-1{
+}
+
+.noidungtinnhan-1 {
     font-size: 14pt;
     margin-left: 20px;
     margin-top: 20px;
     color: white;
 }
-.thoigiantinnhan-1{
+
+.thoigiantinnhan-1 {
     font-size: 8pt;
     margin-left: 398px;
     margin-top: 25px;
     color: white;
 }
-.bacham-1{ 
+
+.bacham-1 {
     width: 10px;
     height: 10px;
-    margin-left: 115px;   
+    margin-left: 115px;
 }
 
 
 
 
-.hinhanh-2{
+.hinhanh-2 {
     margin-left: 40px;
     margin-top: 40px;
 }
-.hinhanhdaidien-2{
+
+.hinhanhdaidien-2 {
     width: 50px;
     height: 50px;
     border-radius: 50px;
 }
-.tinnhan-2{
+
+.tinnhan-2 {
     width: 250px;
     height: 60px;
     background-color: #dcdcdc;
@@ -327,99 +366,108 @@
     margin-left: 10px;
     margin-top: 39px;
 }
-.noidungtinnhan-2{
+
+.noidungtinnhan-2 {
     margin-left: 20px;
     margin-top: 10px;
     font-size: 14pt;
 }
-.thoigiantinnhan-2{
+
+.thoigiantinnhan-2 {
     width: 220px;
     height: 5px;
     margin-left: 200px;
     margin-top: 14px;
     font-size: 8pt;
 }
-.bacham-2{
+
+.bacham-2 {
     margin-left: 20px;
     margin-top: 55px;
 }
 
-.right-bottom{
-    width:100%;
+.right-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    // background-color: red;
     height: 50px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    margin-top:-60px;
 }
 
-.icon{
-  margin-top: -30px;
-  margin-left: 800px;
-  display: flex;
+.icon {
+    margin-top: -30px;
+    margin-left: 800px;
+    display: flex;
 }
 
-.icon-logo{
+.icon-logo {
     margin-left: 20px;
 }
 
 
-.canle{
+.canle {
     display: flex;
 }
-.tatca{
+
+.tatca {
     margin-top: 5px;
     margin-left: 100px;
     font-size: 14pt;
 }
-.dadoc{
+
+.dadoc {
     margin-top: 5px;
     margin-left: 50px;
     font-size: 14pt;
 }
 
-.ngang{
+.ngang {
     width: 340px;
     border: 0.1px solid black;
-    margin-left : 10px ;
+    margin-left: 10px;
     margin-top: 10px;
 }
-.ava{
+
+.ava {
     margin-left: 40px;
     margin-top: 40px;
 }
-.avachat{
+
+.avachat {
     width: 50px;
     height: 50px;
     border: 1px solid black;
     border-radius: 50px;
 }
 
-.ten-1{
+.ten-1 {
     font-size: 18pt;
     margin-top: 38px;
     margin-left: 10px;
 }
-.ten-1-1{
+
+.ten-1-1 {
     margin-top: 2px;
     margin-left: 10px;
 }
-.icon-bottom{
-   margin-right: 20px;
-   margin-top: 15px;
+
+.icon-bottom {
+    margin-right: 20px;
+    margin-top: 15px;
 }
-.icon-logo-bottom{
+
+.icon-logo-bottom {
     height: 20px;
     margin-left: 30px;
     float: right;
     display: flex;
 }
-.input{
-    margin-top: 51.1px;
-    margin-left: 0.1px;
-}
-.input-kichthuoc{
-    width: 90%;
-    height: 80.5px;
+
+.input-kichthuoc {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    height: 50px;
     border: none;
-    outline:none;
+    outline: none;
 }
