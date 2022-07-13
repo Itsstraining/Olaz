@@ -181,6 +181,7 @@ export class UserService {
     let provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(this.auth, provider);
+      this.route.navigate(['/todo'])
       alert('Loggin Success');
     } catch (e) {
       alert('Loggin Failed !');
@@ -190,6 +191,7 @@ export class UserService {
   async logout() {
     try {
       await signOut(this.auth);
+      this.route.navigate(['login'])
       alert('Logout Success');
     } catch (e) {
       alert('Logout Failed !');
