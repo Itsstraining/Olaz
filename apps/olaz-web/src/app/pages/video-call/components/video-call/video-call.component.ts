@@ -98,7 +98,7 @@ export class VideoCallComponent implements OnInit {
 
 
     localvideo.srcObject = this.localStream;
-    remoteVideo.srcObject = this.remoteStream;
+    remoteVideo.srcObject =  this.localStream;
   }
 
   async startCall() {
