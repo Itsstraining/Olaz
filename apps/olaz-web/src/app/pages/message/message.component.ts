@@ -42,6 +42,7 @@ export class MessageComponent implements OnInit {
   public myId!: string;
   public room: any;
   public roomId: string = ''
+  user!: any
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
     this.route.params.subscribe(params =>{
@@ -52,6 +53,7 @@ export class MessageComponent implements OnInit {
     this.UserService.user$.subscribe((user) => {
       console.log(user);
       if (!user) return;
+      this.user=user
       this.myId = user.id;
       this.UserService.notifyCount(this.myId).subscribe((user: any) => {
         if (!user) return;
