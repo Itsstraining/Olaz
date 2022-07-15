@@ -6,7 +6,7 @@
 #Layout-left {
     width: 30%;
     display: flex;
-    background-color: gray;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .Font-user {
@@ -22,7 +22,7 @@
     width: 55px;
     height: 55px;
     border-radius: 50px;
-    margin-left: 10px;
+    margin-left: 25px;
     margin-top: 10px;
 }
 
@@ -35,17 +35,17 @@
     margin-top: 6px;
 }
 
-#Input-search {
-    margin-top: -5px;
-}
+#Input-search {}
 
 #Input-search1 {
+    margin-top: 25px;
     width: 300px;
     height: 35px;
     color: #9F99B7;
     border-radius: 50px;
-    margin-left: 20px;
     text-align: center;
+    display: block;
+    margin: 0 auto;
 }
 
 .left-top {
@@ -104,6 +104,8 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 25px;
 }
 
 .circle-green-top-one {
@@ -119,15 +121,13 @@
 
 /*----------------------------------------------------------------------*/
 
-#right-center {
-    background-color: rgb(201, 31, 31);
-}
+#right-center {}
 
 .messager-user-one {
     width: 450px;
     height: 60px;
     background-color: #dcdcdc;
-    border: 1px solid #dcdcdc;
+    // border: 1px solid #dcdcdc;
     border-radius: 15px;
     margin-top: 15px;
     margin-left: 100px;
@@ -360,6 +360,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50px;
+    margin-top: -3px;
 }
 
 .ten-1 {

@@ -22,6 +22,7 @@ import {
   updateDoc,
   arrayUnion,
 } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 import { ActivatedRoute } from '@angular/router';
 
@@ -37,7 +38,8 @@ export class MessageComponent implements OnInit {
     public fireStore: Firestore,
     private MessageService: MessageService,
     private RoomService: RoomService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private Router: Router
   ) { }
   public myId!: string;
   public room: any;
@@ -48,35 +50,35 @@ export class MessageComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log(params['roomId'])
+      // console.log(params['roomId'])
       if (!params['roomId']) return
       this.getRoomId(params['roomId'])
       this.roomId = params['roomId']
     })
     this.UserService.user$.subscribe((user) => {
-      console.log(user);
+      // console.log(user);
       if (!user) return;
       this.user = user
       this.myId = user.id;
       this.UserService.notifyCount(this.myId).subscribe((user: any) => {
         if (!user) return;
-        console.log(user.requests.length);
+        // console.log(user.requests.length);
       });
       this.UserService.getListOfRoomId(user.id).subscribe((value) => {
-        console.log(value)
+        // console.log(value)
         value.map(async (roomId: any, i: number) => {
           const listOfRoomId: any = await this.RoomService.getRoomByIdPromise(roomId);
           value[i] = listOfRoomId;
-          console.log(listOfRoomId)
+          // console.log(listOfRoomId)
           if (listOfRoomId.name !== "") {
             return
           }
           else {
             for (let j = 0; j < listOfRoomId.users.length; j++) {
               if (listOfRoomId.users[j] !== this.myId) {
-                console.log(listOfRoomId.users[j]) //ban minh
+                // console.log(listOfRoomId.users[j]) //ban minh
                 let user: any = (await this.UserService.getUserByID(listOfRoomId.users[j])).data()
-                console.log(user)
+                // console.log(user)
                 listOfRoomId.name = user.displayName;
                 listOfRoomId.image = user.photoURL
                 return
@@ -85,7 +87,7 @@ export class MessageComponent implements OnInit {
           }
         })
         this.rooms = value
-        console.log(this.rooms)
+        // console.log(this.rooms)
       })
     });
   }
@@ -93,7 +95,6 @@ export class MessageComponent implements OnInit {
   getRoomId(id: string) {
     this.RoomService.getRoomById(id).subscribe((room: any) => {
       // console.log(room.messages)
-      console.log(room);
       if (!room) {
         console.log(`Room tim ko dc`)
         return;
@@ -191,5 +192,9 @@ export class MessageComponent implements OnInit {
       this.content = '';
       this.image = '';
     }
+  }
+
+  changeMessage(idMessage: string) {
+    this.Router.navigate([`/m/${idMessage}`]);
   }
 }

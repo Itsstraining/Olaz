@@ -36,7 +36,7 @@ import { MessageService } from './message/message.service';
 })
 export class UserService {
   loggedIn = false;
-  user!: User;
+  user!: any;
   userTodo: any;
 
   callRef: any;
@@ -62,17 +62,18 @@ export class UserService {
       if (user) {
         this.userTodo = collection(this.fs, 'todo');
         this.loggedIn = true;
-        this.user = {
-          id: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          requests: [],
-          friends: [],
-          incall: false,
+        this.user = await (await this.getUserByID(user.uid)).data();
+        // this.user = {
+        //   id: user.uid,
+        //   email: user.email,
+        //   displayName: user.displayName,
+        //   photoURL: user.photoURL,
+        //   requests: [],
+        //   friends: [],
+        //   incall: false,
 
-          rooms: [],
-        };
+        //   rooms: [],
+        // };
         this.user$.next(this.user);
 
         collectionChanges(this.callRef).subscribe((data) => {
@@ -211,7 +212,7 @@ export class UserService {
     return this.http.get('http://localhost:3333/api/user/suggest-user');
   }
 
-   getListOfRoomId(userId: string) {
+  getListOfRoomId(userId: string) {
     const rooms = docData(doc(this.fs, 'users', userId)).pipe(
       map((user: any) => {
         return user.rooms;

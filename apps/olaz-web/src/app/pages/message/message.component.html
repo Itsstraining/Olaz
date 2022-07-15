@@ -3,7 +3,7 @@
     <div id="Layout-left">
 
         <div class="left-top">
-            <div style="display: flex;">
+            <div *ngIf="user" style="display: flex;">
 
                 <img class="image-user" [src]="user.photoURL">
 
@@ -17,9 +17,7 @@
             </div>
 
 
-            <div style="margin-top: 20px;" id="Input-search">
-                <input type="search" name="search" placeholder="Tìm Kiếm" id="Input-search1">
-            </div>
+            <input type="search" name="search" placeholder="Tìm Kiếm" id="Input-search1">
 
             <div class="canle">
                 <div class="tatca">
@@ -31,9 +29,7 @@
                 </div>
             </div>
 
-            <hr>
-
-            <div *ngFor="let room of rooms " class="cha-1">
+            <div *ngFor="let room of rooms " (click)="changeMessage(room.id)" class="cha-1">
                 <div class="ava">
                     <img class="avachat" [src]="room.image" alt="">
                 </div>
@@ -42,7 +38,6 @@
                     <p class="ten-1">{{room.name}}</p>
                     <p class="ten-1-1">Ferrari: Hello Ferrari</p>
                 </div>
-
             </div>
 
         </div>
