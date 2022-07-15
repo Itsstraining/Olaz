@@ -1,24 +1,32 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogFowardComponent } from './pages/message/components/dialog-foward/dialog-foward.component';
 import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'olaz-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'olaz-web';
   panelOpenState = false;
+  userInfo = undefined
   
   // @Input() screenWidthContent = 0;
   // @Input() collapsed = false;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public userService: UserService) { }
+  ngOnInit(): void {
+    this.userService.user$.subscribe(user => {
+      if (!user) return;
+      this.userInfo = user;
+    })
+  }
 
   // isSideNavCollapsed =  false;
   screenWidth = 0;
@@ -32,12 +40,26 @@ export class AppComponent {
 
   getBodyClass():string{
     let styleClass ='';
-    if(this.collapsed == true){
-      styleClass = 'body-trimmed';
-    }else if(this.collapsed ==false){
-      styleClass = 'body-md-screen'
+    if(this.userInfo != undefined){
+      if(this.collapsed == true){
+        styleClass = 'body-trimmed';
+      }else if(this.collapsed ==false){
+        styleClass = 'body-md-screen'
+      }
+    }else{
+      styleClass = 'body-without-login'
     }
     return styleClass;
+  }
+
+  getMatDrawerClass():string{
+    let styleWithoutLoginClass = '';
+    if(this.userInfo != undefined){
+      styleWithoutLoginClass = 'mat-drawer-with-login';
+    }else{
+      styleWithoutLoginClass = 'mat-drawer-without-login';
+    }
+    return styleWithoutLoginClass;
   }
   // openDialog(): void {
   //   this.dialog.open(DialogComponent, {

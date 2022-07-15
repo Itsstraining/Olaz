@@ -3,20 +3,24 @@
   height: 100vh;
 }
 
-.mat-drawer{
+.mat-drawer-with-login{
   width: 16rem;
+}
+
+.mat-drawer-without-login{
+  width: 0 !important;
 }
 
 mat-drawer:not(.mat-drawer-opened) {
   transform: none !important;
   visibility: visible !important;
-  width: 5rem !important;
+  width: 5rem;
   overflow: hidden;
   display: block;
 } 
 
 .mat-drawer-content{
-  margin-left: 5rem;
+  // margin-left: 5rem;
 }
 
 .mat-drawer-transition .mat-drawer-content{
@@ -44,4 +48,8 @@ mat-drawer:not(.mat-drawer-opened) {
 .body-md-screen{
   width: calc(100% - 5rem);
   margin-left: 5rem;
+}
+.body-without-login{
+  width: 100vw !important;
+  margin-left: 0 !important;
 }

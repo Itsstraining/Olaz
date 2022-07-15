@@ -1,4 +1,4 @@
-<nav class="khung">
+<nav class="khung" *ngIf="userInfo !== undefined">
   <div class="nav-icons">
     <div type="button" class="icon-button">
       <span
@@ -31,22 +31,22 @@
   </div>
   <button class="pic" mat-button [matMenuTriggerFor]="menu">
     <img
-      src="https://vcdn-giaitri.vnecdn.net/2022/04/28/Avatar-2-James-Cameron-5081-1651112580.jpg"
+      [src]="userInfo['photoURL']"
     />
   </button>
-  <mat-menu #menu="matMenu">
+  <mat-menu #menu="matMenu" style="width: 500px;">
     <div class="user-info" mat-menu-item>
       <img
         class="small-ava"
-        src="https://vcdn-giaitri.vnecdn.net/2022/04/28/Avatar-2-James-Cameron-5081-1651112580.jpg"
+        [src]="userInfo['photoURL']"
       />
       <div class="name-email">
-        <h3>Trong Pham</h3>
-        <h4>Trong.pdt@gmail.com</h4>
+        <h3>{{userInfo['displayName']}}</h3>
+        <h4>{{userInfo['email']}}</h4>
       </div>
     </div>
     <hr />
-    <button class="icon" mat-menu-item>
+    <button class="icon" mat-menu-item (click)="this.UserService.logout()">
       <i class="uil uil-signout"></i>
       <p class="logout">Logout</p>
     </button>
