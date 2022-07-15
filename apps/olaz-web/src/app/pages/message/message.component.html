@@ -39,19 +39,19 @@
 
             <div class="ngang"></div>
 
-            <div class="cha-1">
+            <div *ngFor="let room of rooms " class="cha-1">
                 <div class="ava">
-                    <img class="avachat" src="../../../assets/assets/benzema-real-1-3834.jpg" alt="">
+                    <img class="avachat" [src]="imageRoom" alt="">
                 </div>
 
                 <div>
-                    <p class="ten-1">Ferrari</p>
+                    <p class="ten-1">{{nameRoom}}</p>
                     <p class="ten-1-1">Ferrari: Hello Ferrari</p>
                 </div>
 
             </div>
 
-            <div class="cha-1">
+            <!-- <div class="cha-1">
                 <div class="ava">
                     <img class="avachat" src="../../../assets/assets/Benzema.jpg" alt="">
                 </div>
@@ -94,7 +94,7 @@
                     <p class="ten-1">Trang Phạm</p>
                     <p class="ten-1-1">Trang Phạm: Yeeu Annh Raat Nheeu</p>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 

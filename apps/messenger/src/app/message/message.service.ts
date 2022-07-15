@@ -11,7 +11,7 @@ export class MessageService {
     image: string,
     type: string,
     myID: string,
-    roomID: string,
+    roomId: string,
     createdTime: string
   ) {
     const fs = firebase.firestore();
@@ -36,7 +36,7 @@ export class MessageService {
 
       const updateRoom = fs
         .collection('rooms')
-        .doc(roomID)
+        .doc(roomId)
         .update({
           messages: firebase.firestore.FieldValue.arrayUnion(messID),
         });
