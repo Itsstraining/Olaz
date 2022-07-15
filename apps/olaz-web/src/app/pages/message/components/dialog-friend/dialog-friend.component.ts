@@ -19,14 +19,27 @@ export class DialogFriendComponent implements OnInit {
     this.userService.user$.subscribe(user=>{
       this._user = user;
     })
-  
+    // this.userService.suggestUsers().subscribe(user =>{
+    //   console.log(user)
+    //   this.listOfFriend.push(user)
+    // })
   }
 
   public _user: any;
-  
+  listOfFriend: any = [];
   email!: string;
   listOfEmail: any = []; 
 
+  findSuggestUser(){
+    this.userService.getUsers().subscribe(user=>{
+      console.log(user)
+      this.listOfFriend =user;
+    },
+    err=> {
+      console.log(err.error.text);
+    }
+    )
+  }
   findUser() {
     //  this.userService.getUsers().subscribe(
     //   res => {
