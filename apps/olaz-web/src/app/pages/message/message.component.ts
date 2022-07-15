@@ -45,6 +45,7 @@ export class MessageComponent implements OnInit {
 public rooms = []
 public nameRoom: string = ''
 public imageRoom: string = ''
+  user!: any
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
     this.route.params.subscribe(params =>{
@@ -56,6 +57,7 @@ public imageRoom: string = ''
     this.UserService.user$.subscribe((user) => {
       console.log(user);
       if (!user) return;
+      this.user=user
       this.myId = user.id;
       this.UserService.notifyCount(this.myId).subscribe((user: any) => {
         if (!user) return;

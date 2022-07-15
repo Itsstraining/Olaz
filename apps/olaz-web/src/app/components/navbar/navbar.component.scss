@@ -58,6 +58,10 @@
     margin: 0;
     font-size: 14px;
     line-height: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden
   }
   
   .small-ava {
@@ -67,6 +71,7 @@
   
   .name-email {
     margin-left: 5px;
+    overflow: hidden;
   }
   hr {
     margin: 0 15px;

@@ -22,9 +22,10 @@ export class RejectAddComponent implements OnInit {
     })
     this.UserService.suggestUsers().subscribe(user=>{
       console.log(user)
+      this.listOfFriend = user
     })
    }
-
+  listOfFriend: any = [];
   public myID: any
   toggleRequest(check: boolean, frID: string){
     // console.log("check:::::" + check)

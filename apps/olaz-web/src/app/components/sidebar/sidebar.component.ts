@@ -2,13 +2,14 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { UserService } from '../../services/user.service';
 interface SideNavToggle{
   screenWidth: number;
   collapsed: boolean;
 }
 export const navbarData = [
   {
-    routeLink: 'm',
+    routeLink: 'm/:id',
     icon: 'uil uil-comments' ,
     Label: 'Message',
   },
@@ -35,12 +36,17 @@ export const navbarData = [
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor() {}
+  constructor( public userService: UserService) {}
   @Output() isOpened: EventEmitter<SideNavToggle> = new EventEmitter();
   // @Output() isOpened: EventEmitter<boolean> = new EventEmitter();
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.user$.subscribe(data => {
+      if (!data) return; 
+      this.appear = data;
+    })
+  }
   collapsed = false;
   screenWidth = 0;
   navData = navbarData;
@@ -55,4 +61,5 @@ export class SidebarComponent implements OnInit {
 
     this.isOpened.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
   }
+  appear = undefined;
 }
