@@ -76,14 +76,12 @@ export class UserService {
         this.user$.next(this.user);
 
         collectionChanges(this.callRef).subscribe((data) => {
-          data.forEach((doc) => {
-            if (
-              doc.type === 'added' &&
-              doc.doc.data()['opponentID'] === this.user.id
-            ) {
-              let text = 'Incoming Call...';
+          data.forEach(async (doc) => {
+            if (doc.type === 'added' && doc.doc.data()['opponentID'] === this.user.id) {
+              let text = "Incoming Call...";
               if (confirm(text) == true) {
-                this.answerCall(doc.doc.id);
+
+                await this.answerCall(doc.doc.id);
               } else {
                 text = 'Denied!';
               }
