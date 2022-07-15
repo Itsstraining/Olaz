@@ -1,4 +1,4 @@
-<div class="side" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
+<div class="side" [ngClass]="collapsed ? 'sidenav-collapsed' : ''" *ngIf="appear !== undefined ">
     <div class="logo-container">
       <button class="logo" (click)="toggleCollapse()" [ngStyle]="{display: collapsed ? 'none':'block' }">
         <i class="uil uil-angle-double-right" matTooltip="Open sidebar" matTooltipPosition="after"></i>

@@ -36,7 +36,5 @@ export class CallComponent implements OnInit {
     await addDoc(this.callRequestRef, { ownerID: this.UsrSv.user.id, opponentID: this.userID }).then((data) => {
       this.router.navigate([`call/call/${data.id}`])
     })
-
-
   }
 }

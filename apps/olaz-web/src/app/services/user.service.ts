@@ -76,14 +76,12 @@ export class UserService {
         this.user$.next(this.user);
 
         collectionChanges(this.callRef).subscribe((data) => {
-          data.forEach((doc) => {
-            if (
-              doc.type === 'added' &&
-              doc.doc.data()['opponentID'] === this.user.id
-            ) {
-              let text = 'Incoming Call...';
+          data.forEach(async (doc) => {
+            if (doc.type === 'added' && doc.doc.data()['opponentID'] === this.user.id) {
+              let text = "Incoming Call...";
               if (confirm(text) == true) {
-                this.answerCall(doc.doc.id);
+
+                await this.answerCall(doc.doc.id);
               } else {
                 text = 'Denied!';
               }
@@ -181,6 +179,7 @@ export class UserService {
     let provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(this.auth, provider);
+      this.route.navigate(['/todo'])
       alert('Loggin Success');
     } catch (e) {
       alert('Loggin Failed !');
@@ -190,6 +189,7 @@ export class UserService {
   async logout() {
     try {
       await signOut(this.auth);
+      this.route.navigate(['login'])
       alert('Logout Success');
     } catch (e) {
       alert('Logout Failed !');

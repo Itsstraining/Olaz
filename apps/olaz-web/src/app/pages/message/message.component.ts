@@ -42,28 +42,51 @@ export class MessageComponent implements OnInit {
   public myId!: string;
   public room: any;
   public roomId: string = ''
+public rooms = []
+public nameRoom: string = ''
+public imageRoom: string = ''
+  user!: any
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
     this.route.params.subscribe(params =>{
       console.log(params['roomId'])
       if(!params['roomId'])  return
       this.getRoomId(params['roomId'])
+      this.roomId = params['roomId']
     })
     this.UserService.user$.subscribe((user) => {
       console.log(user);
       if (!user) return;
+      this.user=user
       this.myId = user.id;
       this.UserService.notifyCount(this.myId).subscribe((user: any) => {
         if (!user) return;
         console.log(user.requests.length);
       });
       this.UserService.getListOfRoomId(user.id).subscribe((value)=>{
-        console.log( value)
-        value.map((roomId:any)=> console.log(roomId))
+        console.log(value)
+        value.map(async (roomId:any, i: number)=>{
+          const listOfRoomId: any = await this.RoomService.getRoomByIdPromise(roomId);
+          value[i] = listOfRoomId;
+          console.log(listOfRoomId)
+          if (listOfRoomId.name !== ""){
+            return this.nameRoom = listOfRoomId.name, this.imageRoom = listOfRoomId.image
+          }
+          else{
+            for(let j = 0; j < listOfRoomId.users.length; j++){
+              if(listOfRoomId.users[j] !== this.myId){
+               console.log(listOfRoomId.users[j]) //ban minh
+               let user:any = (await this.UserService.getUserByID(listOfRoomId.users[j])).data()
+               console.log(user)
+               return this.nameRoom = user.displayName, this.imageRoom = user.photoURL
+              }  
+            }
+          }
+        })
+        this.rooms = value
+        console.log(this.rooms)
       })
     });
-
-
   }
 
   getRoomId(id: string){

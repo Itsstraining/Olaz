@@ -13,17 +13,19 @@ import { RejectAddComponent } from '../../pages/message/components/reject-add/re
 export class NavbarComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
-    private UserService:UserService
+    public UserService:UserService
   ) {}
 
   count = 0;
-  messageCount = 0
+  messageCount = 0;
+  userInfo = undefined;
   ngOnInit(): void {
     this.UserService.user$.subscribe(user=>{
       if(!user) return
       this.UserService.notifyCount(user.id).subscribe((count:any)=>{
         this.count = count.requests.length;
       })
+      this.userInfo = user;
     })
   }
   openDialogAddFr() {

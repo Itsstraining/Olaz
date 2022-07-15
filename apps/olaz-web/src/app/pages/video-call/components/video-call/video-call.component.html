@@ -1,6 +1,8 @@
 <div>
   <div>
-    <video id="user1video" autoplay></video>
+    <div id="uservideocontainer1">
+      <video id="user1video" autoplay></video>
+    </div>
     <div *ngIf="!checkScreen" id="back_ground">
       <img
         id="img"
@@ -8,7 +10,9 @@
       />
     </div>
   </div>
-  <video style="width: 100%; height: 100%" autoplay id="user2video"></video>
+  <div id="uservideocontainer2">
+    <video autoplay id="user2video"></video>
+  </div>
   <button id="btn-call-end" mat-fab>
     <i class="uil uil-phone-slash" style="font-size: 150%"></i>
   </button>
