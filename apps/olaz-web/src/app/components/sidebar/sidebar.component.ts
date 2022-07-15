@@ -46,10 +46,28 @@ export class SidebarComponent implements OnInit {
       if (!data) return; 
       this.appear = data;
     })
+    
   }
   collapsed = false;
   screenWidth = 0;
   navData = navbarData;
+  userInfo = undefined;
+  incall = false;
+  // inCall(){
+  //   let styleClass ='';
+  //   if(this.userInfo == undefined) return;
+  //   if(this.userInfo['incall'] == false ){
+  //     if(this.collapsed == true){
+  //       styleClass = 'body-trimmed';
+  //     }else if(this.collapsed ==false){
+  //       styleClass = 'body-md-screen'
+  //     }
+  //   }else{
+  //     styleClass = 'body-without-login'
+  //   }
+  //   return styleClass;
+  // }
+
   closeSidenav(): void {
     this.collapsed = false;
     this.isOpened.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});

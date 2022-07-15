@@ -41,6 +41,9 @@ export class AppComponent implements OnInit{
   getBodyClass():string{
     let styleClass ='';
     if(this.userInfo != undefined){
+      if(this.userInfo['incall'] == true ){
+        styleClass ='body-without-login'
+      }
       if(this.collapsed == true){
         styleClass = 'body-trimmed';
       }else if(this.collapsed ==false){
@@ -51,7 +54,7 @@ export class AppComponent implements OnInit{
     }
     return styleClass;
   }
-
+  
   getMatDrawerClass():string{
     let styleWithoutLoginClass = '';
     if(this.userInfo != undefined){
@@ -61,6 +64,23 @@ export class AppComponent implements OnInit{
     }
     return styleWithoutLoginClass;
   }
+
+  // inCall(){
+  //   let styleClass ='';
+  //   if(this.userInfo == undefined) return;
+  //   if(this.userInfo['incall'] == false ){
+  //     if(this.collapsed == true){
+  //       styleClass = 'body-trimmed';
+  //     }else if(this.collapsed ==false){
+  //       styleClass = 'body-md-screen'
+  //     }
+  //   }else{
+  //     styleClass = 'body-without-login'
+  //   }
+  //   return styleClass;
+  // }
+
+
   // openDialog(): void {
   //   this.dialog.open(DialogComponent, {
   //     width: '250px',

@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit {
   count = 0;
   messageCount = 0;
   userInfo = undefined;
+  
   ngOnInit(): void {
     this.UserService.user$.subscribe(user=>{
       if(!user) return
@@ -28,6 +29,7 @@ export class NavbarComponent implements OnInit {
       this.userInfo = user;
     })
   }
+  
   openDialogAddFr() {
     const dialogRef = this.dialog.open(DialogFriendComponent, {
       width: '50%'
