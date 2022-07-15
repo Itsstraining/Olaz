@@ -1,19 +1,12 @@
 #Layout-parent {
-    width: 100%;
-    height: 740px;
     display: flex;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    // border-bottom: 1px solid black;
 }
 
-/* --------------------------------------------------------------------------- */
 
 #Layout-left {
-    width: 360px;
-    height: 740px;
-    background-color: white;
+    width: 30%;
     display: flex;
+    background-color: gray;
 }
 
 .Font-user {
@@ -25,18 +18,9 @@
     margin-left: 10px;
 }
 
-.Circle-left-one {
-    // width: 75px;
-    // height: 70px;
-    // background: grey;
-    // border-radius: 50%;
-    // margin-left: 15px;
-    // margin-top: 15px;
-    
-}
-.image-user{
-    width: 70px;
-    height: 70px;
+.image-user {
+    width: 55px;
+    height: 55px;
     border-radius: 50px;
     margin-left: 10px;
     margin-top: 10px;
@@ -46,7 +30,6 @@
     width: 8px;
     height: 8px;
     background: green;
-    border: 1px solid green;
     border-radius: 50%;
     display: flex;
     margin-top: 6px;
@@ -67,16 +50,14 @@
 
 .left-top {
     width: 100%;
-    height: auto;
 }
 
 /*------------------------------------------------------------------- */
 
 #Layout-right {
     width: 100%;
-    height: auto;
+    height: 100%;
     // background-color: gray;
-    border-left: 1px solid black;
 }
 
 .Icon-user {
@@ -89,7 +70,7 @@
 
 .right-top {
     width: 100%;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .right-top-one {
@@ -120,11 +101,8 @@
 }
 
 .image-message {
-    width: 60px;
-    height: 60px;
-    display: block;
-    margin-left: 10px;
-    margin-top: 4px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
 }
 
@@ -142,7 +120,7 @@
 /*----------------------------------------------------------------------*/
 
 #right-center {
-    // background-color: rgb(201, 31, 31);
+    background-color: rgb(201, 31, 31);
 }
 
 .messager-user-one {
@@ -203,79 +181,11 @@
     margin-left: 400px;
 }
 
-
-/* trong */
-/* .avt{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 30px;
-    margin-top: 15px;
-}
-
-.my-msg{
-    padding: 15px;
-}
-.my-message-content{
-    border-radius: 12px;
-}
-
-.message{
-    margin-right: 20px;
-}
-
-.options{
-    margin-top: 30px;
-    width: 20px;
-    height: auto;
-    margin-right: 20px;
-} */
-
-
-/* trong-v2 */
-/* .cha{
-    display: flex;
-    float: right;   
-}
-
-.hinhanhdaidien{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-.hinhanh{
-    margin-top: 15px;
-    margin-right: 20px;
-}
-
-.noidungtinnhan{
-    background-color: gray;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-.tinnhan{
-    margin-right: 20px;
-}
-
-.img-ba-cham{
-    width: 20px;
-}
-
-.bacham{
-    margin-top: 30px;
-    margin-right: 20px;
-} */
-
 .cha {
     display: flex;
-    // float: right;
+    width: 100%;
 }
 
-.hinhanh {
-    margin-right: 40px;
-    margin-top: 40px;
-}
 
 .hinhanhdaidien {
     width: 50px;
@@ -283,21 +193,31 @@
     border-radius: 50px;
 }
 
-.tinnhan {
-    width: fit-content;
-    height: fit-content;
+.noidungtinnhan {
+    color: white;
     background-color: #5A3E9E;
-    // border: 1px solid #dcdcdc;
-    border-radius: 15px;
-    margin-right: 10px;
-    margin-top: 39px;
+    padding: 12px;
+    border-radius: 20px;
+    float: right;
+    line-height: 1.5rem;
 }
 
-.noidungtinnhan {
-    font-size: 14pt;
-    margin-left: 20px;
-    margin-top: 10px;
+.noidungtinnhan-fr {
     color: white;
+    background-color: gray;
+    padding: 12px;
+    border-radius: 20px;
+    line-height: 1.5rem;
+}
+
+.my-message {
+    width: 100%;
+    margin: 5px 20px 5px 50%;
+}
+
+.fr-message {
+    margin: 5px 50% 5px 20px;
+
 }
 
 .thoigiantinnhan {
@@ -315,6 +235,7 @@
 .cha-1 {
     display: flex;
     width: 100%;
+    overflow: auto;
     // padding: 30px;
 }
 
@@ -361,22 +282,16 @@
 }
 
 .hinhanhdaidien-2 {
-    margin-top: 10px;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+
 }
 
-// .tinnhan-2 {
-//     background-color: #dcdcdc;
-//     // border: 1px solid #dcdcdc;
-//     border-radius: 15px;
-// }
 .noidungtinnhan-2 {
-    padding: 20px;
-    border-radius: 15px;
+    padding: 12px;
+    border-radius: 20px;
     background-color: #dcdcdc;
-
 }
 
 
@@ -400,11 +315,8 @@
 }
 
 .right-bottom {
-    position: fixed;
-    bottom: 0;
     width: 100%;
-    // background-color: red;
-    height: 50px;
+    display: flex;
 }
 
 .icon {
@@ -420,6 +332,7 @@
 
 .canle {
     display: flex;
+    margin-top: 20px;
 }
 
 .tatca {
@@ -436,9 +349,6 @@
 
 .ngang {
     width: 340px;
-    border: 0.1px solid black;
-    margin-left: 10px;
-    margin-top: 10px;
 }
 
 .ava {
@@ -449,7 +359,6 @@
 .avachat {
     width: 50px;
     height: 50px;
-    border: 1px solid black;
     border-radius: 50px;
 }
 
@@ -464,23 +373,33 @@
     margin-left: 10px;
 }
 
-.icon-bottom {
-    margin-right: 20px;
-    margin-top: 15px;
-}
+
 
 .icon-logo-bottom {
     height: 20px;
-    margin-left: 30px;
-    float: right;
-    display: flex;
+    display: block;
+    margin: 0 auto;
+}
+
+.hub-icon {
+    display: block;
+    width: 25%;
 }
 
 .input-kichthuoc {
-    width: 100%;
-    display: block;
-    margin: 0 auto;
-    height: 50px;
+    width: 90%;
     border: none;
     outline: none;
+    padding: 12px 20px;
+    display: block;
+    margin: 0 auto;
+}
+
+.input-message {
+    width: 75%;
+}
+
+.icon-bottom {
+    width: 25%;
+    display: flex;
 }
