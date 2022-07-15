@@ -22,6 +22,7 @@ import {
   updateDoc,
   arrayUnion,
 } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 import { ActivatedRoute } from '@angular/router';
 
@@ -37,40 +38,64 @@ export class MessageComponent implements OnInit {
     public fireStore: Firestore,
     private MessageService: MessageService,
     private RoomService: RoomService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private Router: Router
+  ) { }
   public myId!: string;
   public room: any;
   public roomId: string = ''
+  public rooms: any = []
+
+  user!: any
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
-    this.route.params.subscribe(params =>{
-      console.log(params['roomId'])
-      if(!params['roomId'])  return
+    this.route.params.subscribe(params => {
+      // console.log(params['roomId'])
+      if (!params['roomId']) return
       this.getRoomId(params['roomId'])
+      this.roomId = params['roomId']
     })
     this.UserService.user$.subscribe((user) => {
-      console.log(user);
+      // console.log(user);
       if (!user) return;
+      this.user = user
       this.myId = user.id;
       this.UserService.notifyCount(this.myId).subscribe((user: any) => {
         if (!user) return;
-        console.log(user.requests.length);
+        // console.log(user.requests.length);
       });
-      this.UserService.getListOfRoomId(user.id).subscribe((value)=>{
-        console.log( value)
-        value.map((roomId:any)=> console.log(roomId))
+      this.UserService.getListOfRoomId(user.id).subscribe((value) => {
+        // console.log(value)
+        value.map(async (roomId: any, i: number) => {
+          const listOfRoomId: any = await this.RoomService.getRoomByIdPromise(roomId);
+          value[i] = listOfRoomId;
+          // console.log(listOfRoomId)
+          if (listOfRoomId.name !== "") {
+            return
+          }
+          else {
+            for (let j = 0; j < listOfRoomId.users.length; j++) {
+              if (listOfRoomId.users[j] !== this.myId) {
+                // console.log(listOfRoomId.users[j]) //ban minh
+                let user: any = (await this.UserService.getUserByID(listOfRoomId.users[j])).data()
+                // console.log(user)
+                listOfRoomId.name = user.displayName;
+                listOfRoomId.image = user.photoURL
+                return
+              }
+            }
+          }
+        })
+        this.rooms = value
+        // console.log(this.rooms)
       })
     });
-
-
   }
 
-  getRoomId(id: string){
+  getRoomId(id: string) {
     this.RoomService.getRoomById(id).subscribe((room: any) => {
       // console.log(room.messages)
-      console.log(room);
-      if(!room) {
+      if (!room) {
         console.log(`Room tim ko dc`)
         return;
       }
@@ -91,7 +116,21 @@ export class MessageComponent implements OnInit {
         // console.log(user)
         room.messages[i].userId = user;
       });
+
+      if (room.name == "" && room.image == "") {
+        room.users.map(async (user: any) => {
+          if (user != this.myId) {
+            let _friend: any = await (await this.UserService.getUserByID(user)).data();
+            room.name = _friend.displayName;
+            room.image = _friend.photoURL;
+            return;
+          }
+        })
+      }
+
       this.room = room;
+
+      console.log(room)
     });
   }
 
@@ -153,5 +192,9 @@ export class MessageComponent implements OnInit {
       this.content = '';
       this.image = '';
     }
+  }
+
+  changeMessage(idMessage: string) {
+    this.Router.navigate([`/m/${idMessage}`]);
   }
 }

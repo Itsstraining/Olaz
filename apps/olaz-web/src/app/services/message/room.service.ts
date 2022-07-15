@@ -18,5 +18,7 @@ export class RoomService {
     return docData(doc(this.fs, 'rooms', roomId));
   }
 
-  
+ async getRoomByIdPromise(roomId: string){
+    return await (await getDoc(doc(this.fs, 'rooms', roomId))).data()
+  }
 }

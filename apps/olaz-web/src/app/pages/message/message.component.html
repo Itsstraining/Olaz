@@ -3,11 +3,12 @@
     <div id="Layout-left">
 
         <div class="left-top">
-            <div style="display: flex;">
-                <div class="Circle-left-one"></div>
+            <div *ngIf="user" style="display: flex;">
 
-                <div style="padding: 15px;" class="Letter-left">
-                    <P class="Font-user">Chí Khang</P>
+                <img class="image-user" [src]="user.photoURL">
+
+                <div style="padding: 15px;">
+                    <P class="Font-user">{{user.displayName}}</P>
                     <div style="display: flex;">
                         <div class="Circle-green"></div>
                         <div class="Online-left">online</div>
@@ -16,15 +17,7 @@
             </div>
 
 
-            <div id="Input-search">
-
-                <img src="../../../assets/assets/user-add (3).png" alt="" class="Icon-user">
-
-                <div>
-                    <input type="search" name="search" placeholder="Tìm Kiếm" id="Input-search1">
-                </div>
-
-            </div>
+            <input type="search" name="search" placeholder="Tìm Kiếm" id="Input-search1">
 
             <div class="canle">
                 <div class="tatca">
@@ -36,62 +29,14 @@
                 </div>
             </div>
 
-            <div class="ngang"></div>
-
-            <div class="cha-1">
+            <div *ngFor="let room of rooms " (click)="changeMessage(room.id)" class="cha-1">
                 <div class="ava">
-                    <img class="avachat" src="../../../assets/assets/benzema-real-1-3834.jpg" alt="">
+                    <img class="avachat" [src]="room.image" alt="">
                 </div>
 
                 <div>
-                    <p class="ten-1">Ferrari</p>
+                    <p class="ten-1">{{room.name}}</p>
                     <p class="ten-1-1">Ferrari: Hello Ferrari</p>
-                </div>
-
-            </div>
-
-            <div class="cha-1">
-                <div class="ava">
-                    <img class="avachat" src="../../../assets/assets/Benzema.jpg" alt="">
-                </div>
-
-                <div>
-                    <p class="ten-1">Lamborghini</p>
-                    <p class="ten-1-1">Me: Nice to meet you</p>
-                </div>
-            </div>
-
-            <div class="cha-1">
-                <div class="ava">
-                    <img class="avachat" src="../../../assets/assets/real-madrid-benzema-1-15.jpg" alt="">
-                </div>
-
-                <div>
-                    <p class="ten-1">Mercedes</p>
-                    <p class="ten-1-1">Mercedes is typing...</p>
-                </div>
-            </div>
-
-            <div class="cha-1">
-                <div class="ava">
-                    <img class="avachat"
-                        src="../../../assets/assets/real-madrids-karim-benzema-jubelt-1539004837-18132-3958.jpg" alt="">
-                </div>
-
-                <div>
-                    <p class="ten-1">Porsche</p>
-                    <p class="ten-1-1">Porsche: Yep Thanks</p>
-                </div>
-            </div>
-
-            <div class="cha-1">
-                <div class="ava">
-                    <img class="avachat" src="../../../assets/assets/Emyeuuu.jpg" alt="">
-                </div>
-
-                <div>
-                    <p class="ten-1">Trang Phạm</p>
-                    <p class="ten-1-1">Trang Phạm: Yeeu Annh Raat Nheeu</p>
                 </div>
             </div>
 
@@ -99,16 +44,15 @@
 
     </div>
 
-
     <div id="Layout-right">
 
-        <div class="right-top" style="display:flex;">
+        <div *ngIf="room" class="right-top" style="display:flex;">
 
             <div class="Circle-top-one">
                 <span style="display: flex;">
-                    <img class="image-message" src="../../../assets/assets/Emyeuuu.jpg" alt="">
+                    <img class="image-message" [src]="room.image" alt="">
                     <span>
-                        <p class="font-user-one">Trang Phạm</p>
+                        <p class="font-user-one">{{room.name}}</p>
 
                         <div style="display: flex; padding: 0px 5px 5px 5px">
 
@@ -133,57 +77,51 @@
 
         </div>
 
-        <div id="right-center">
-            <div class="cha-1">
-                <div class="hinhanh-2">
-                    <img class="hinhanhdaidien-2" src="../../../assets/assets/Emyeuuu.jpg">
-                </div>
+        <div id="right-center" *ngIf="!room">
+            <p>Loading...</p>
+        </div>
 
-                <div class="tinnhan-2">
-                    <p class="noidungtinnhan-2">Hello, Chí Khag</p>
-                </div>
+        <div *ngIf="room" id="right-center">
 
-                <div class="bacham-2">
-                    <img src="../../../assets/assets/menu-dots (2).png" alt="">
-                </div>
-            </div>
-
-            <div *ngIf="room">
-                <div *ngFor="let message of room.messages" class="cha">
-                    <div class="bacham">
-                        <img src="../../../assets/assets/menu-dots (2).png" alt="">
-                    </div>
-
-                    <div class="tinnhan">
+            <span *ngFor="let message of room.messages">
+                <div *ngIf="message.userId?.id === myId" class="cha">
+                    <div class="my-message">
+                        <span style="flex: 1 1 auto;"></span>
                         <p class="noidungtinnhan">{{message.content}}</p>
                     </div>
-                    <div class="hinhanh">
-                        <img class="hinhanhdaidien" [src]="message.userId?.photoURL" alt="">
+                </div>
+                <div *ngIf="message.userId?.id !== myId" class="cha">
+                    <div class="fr-message">
+                        <p class="noidungtinnhan-fr">{{message.content}}</p>
                     </div>
+                </div>
+            </span>
+
+        </div>
+
+        <div *ngIf="room" class="right-bottom">
+            <div class="input-message">
+                <input *ngIf="room" class="input-kichthuoc" (keydown)="onKeydown($event)" type="text"
+                    [(ngModel)]="content" placeholder="Enter your messages....">
+            </div>
+            <div class="icon-bottom">
+                <div class="hub-icon">
+                    <img class="icon-logo-bottom" src="../../../assets/assets/link-free-icon-font.png" alt="">
+                </div>
+
+                <div class="hub-icon">
+                    <img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt="">
+                </div>
+
+                <div class="hub-icon">
+                    <img class="icon-logo-bottom" src="../../../assets/assets/clock-five-free-icon-font.png" alt="">
+                </div>
+
+                <div class="hub-icon">
+                    <img class="icon-logo-bottom" src="../../../assets/assets/smile-free-icon-font.png" alt="">
                 </div>
             </div>
         </div>
-
-        <div class="icon-bottom">
-            <div>
-                <img class="icon-logo-bottom" src="../../../assets/assets/link-free-icon-font.png" alt="">
-            </div>
-
-            <div>
-                <img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt="">
-            </div>
-
-            <div>
-                <img class="icon-logo-bottom" src="../../../assets/assets/clock-five-free-icon-font.png" alt="">
-            </div>
-
-            <div>
-                <img class="icon-logo-bottom" src="../../../assets/assets/smile-free-icon-font.png" alt="">
-            </div>
-        </div>
-
-        <input class="input-kichthuoc" (keydown)="onKeydown($event)" type="text" [(ngModel)]="content"
-            placeholder="Enter your messages....">
 
     </div>
 

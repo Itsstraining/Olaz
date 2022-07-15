@@ -20,6 +20,7 @@ export class VideoCallComponent implements OnInit {
     });
 
 
+
   }
 
   myFunction() {
@@ -82,15 +83,29 @@ export class VideoCallComponent implements OnInit {
         this.remoteStream.addTrack(track);
       })
     })
+    this.pc.iceConnectionState
+    this.pc.addEventListener('onconnectionstatechange ',event=>{
+      if(this.pc.connectionState=='disconnected'){
+        console.log('alo')
+      }
+    })
+    this.pc.onconnectionstatechange = () => {
+      const connectionStatus = this.pc.connectionState;
+      if (["disconnected", "failed", "closed"].includes(connectionStatus)) {
+          console.log("disconnected");
+      }
+  };
+
 
     localvideo.srcObject = this.localStream;
-    remoteVideo.srcObject = this.remoteStream;
+    remoteVideo.srcObject =  this.localStream;
   }
+
   async startCall() {
     this.callRef = collection(this.fs, 'calls');
     let userCallDoc = doc(this.fs, `calls/${this.docId}`)
     let ownerID = (await getDoc(userCallDoc)).data()!['ownerID']
-    
+
     if (this.userSrv.user.id === ownerID) {
       this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
       const ansdocRef = collection(userCallDoc, 'answerCandidates');
@@ -119,8 +134,7 @@ export class VideoCallComponent implements OnInit {
           }
         })
       })
-    } else 
-    {
+    } else {
       this.answerCall()
     }
   }
@@ -132,7 +146,7 @@ export class VideoCallComponent implements OnInit {
     const callRef = collection(this.fs, 'calls');
     const callDoc = doc(callRef, this.docId);
 
-   
+
     this.pc.onicecandidate = ((event) => {
       event.candidate && addDoc(this.ansDocRef, event.candidate.toJSON());
     });
@@ -161,8 +175,5 @@ export class VideoCallComponent implements OnInit {
       })
     })
   }
-
-
-
 }
 

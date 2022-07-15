@@ -157,6 +157,7 @@ export class UserService {
             messages: [],
             users: [frID, myID],
             name: '',
+            image: '',
           });
 
         await Promise.all([myUpdate, frUpdate, createRoom]);
