@@ -133,35 +133,34 @@
 
         </div>
 
-        <div id="right-center">
+        <div *ngIf="room" id="right-center">
+
             <div class="cha-1">
-                <div class="hinhanh-2">
-                    <img class="hinhanhdaidien-2" src="../../../assets/assets/Emyeuuu.jpg">
-                </div>
+                <img class="hinhanhdaidien-2" src="../../../assets/assets/Emyeuuu.jpg">
 
-                <div class="tinnhan-2">
-                    <p class="noidungtinnhan-2">Hello, Chí Khag</p>
-                </div>
+                <p class="noidungtinnhan-2">Hello, Chí Khag</p>
 
-                <div class="bacham-2">
+                <div style="padding: 20px; margin-top: 8px;">
                     <img src="../../../assets/assets/menu-dots (2).png" alt="">
                 </div>
             </div>
 
-            <div *ngIf="room">
-                <div *ngFor="let message of room.messages" class="cha">
-                    <div class="bacham">
-                        <img src="../../../assets/assets/menu-dots (2).png" alt="">
-                    </div>
+            <div *ngFor="let message of room.messages" class="cha">
+                <div class="bacham">
+                    <img src="../../../assets/assets/menu-dots (2).png" alt="">
+                </div>
 
-                    <div class="tinnhan">
-                        <p class="noidungtinnhan">{{message.content}}</p>
-                    </div>
-                    <div class="hinhanh">
-                        <img class="hinhanhdaidien" [src]="message.userId?.photoURL" alt="">
-                    </div>
+                <div class="tinnhan">
+                    <p class="noidungtinnhan">{{message.content}}</p>
+                </div>
+                <div class="hinhanh">
+                    <img class="hinhanhdaidien" [src]="message.userId?.photoURL" alt="">
                 </div>
             </div>
+        </div>
+
+        <div id="right-center" *ngIf="!room">
+            <p>Loading...</p>
         </div>
 
         <div class="icon-bottom">

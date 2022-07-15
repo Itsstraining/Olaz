@@ -281,8 +281,8 @@
 }
 
 .tinnhan {
-    width: 200px;
-    height: 60px;
+    width: fit-content;
+    height: fit-content;
     background-color: #5A3E9E;
     // border: 1px solid #dcdcdc;
     border-radius: 15px;
@@ -311,6 +311,8 @@
 
 .cha-1 {
     display: flex;
+    width: 100%;
+    // padding: 30px;
 }
 
 .tinnhan-1 {
@@ -328,6 +330,10 @@
     margin-left: 20px;
     margin-top: 20px;
     color: white;
+    background-color: black;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
 }
 
 .thoigiantinnhan-1 {
@@ -348,24 +354,28 @@
 
 .hinhanh-2 {
     margin-left: 40px;
-    margin-top: 40px;
+    margin-top: 45px;
 }
 
 .hinhanhdaidien-2 {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
+    margin-top: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
 }
 
-.tinnhan-2 {
-    width: 250px;
-    height: 60px;
-    background-color: #dcdcdc;
-    // border: 1px solid #dcdcdc;
+// .tinnhan-2 {
+//     background-color: #dcdcdc;
+//     // border: 1px solid #dcdcdc;
+//     border-radius: 15px;
+// }
+.noidungtinnhan-2 {
+    padding: 20px;
     border-radius: 15px;
-    margin-left: 10px;
-    margin-top: 39px;
+    background-color: #dcdcdc;
+
 }
+
 
 .noidungtinnhan-2 {
     margin-left: 20px;
