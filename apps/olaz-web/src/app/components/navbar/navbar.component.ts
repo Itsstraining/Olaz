@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
         this.count = count.requests.length;
       })
       this.userInfo = user;
+      console.log(user)
     })
   }
   openDialogAddFr() {

@@ -10,8 +10,8 @@
   }
   
   .login-page {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: #9756E2;
     position: relative;
   }
@@ -54,15 +54,15 @@
     cursor: pointer;
     transition: .2s;
     width: 70%;
-    height: 5%;
-    margin-top: 5%;
-    font-family: Encode sans;
+    // height: 5%;
+    margin-top: 15px;
     font-style: normal;
     font-size: 1.5vw;
     text-align: center;
     color: #FFFFFF;
     border: none;
-  
+    letter-spacing: 1px;
+    padding: 5px;
   }
   
   .btn-login-google {
@@ -72,9 +72,11 @@
     cursor: pointer;
     transition: .2s;
     width: 70%;
-    height: 5%;
-    margin-top: 4%;
-    font-family: Encode sans;
+    // height: 5%;
+    margin-top: 15px;
+    letter-spacing: 1px;
+    padding: 5px;
+    // font-family: Encode sans;
     font-style: normal;
   
     font-size: 1.5vw;
@@ -90,16 +92,16 @@
   
   .email {
     width: 80%;
-    margin-top: 5%;
+    margin-top: 10px;
   }
   
   .password {
-    margin-top: 5%;
+    margin-top: 10px;
     width: 80%;
   }
   
   #forgot-password {
-    font-family: Encode sans;
+    // font-family: Encode sans;
     font-style: normal;
     font-size: 100%;
     text-decoration-line: underline;
@@ -110,8 +112,8 @@
   #register {
     color: rgba(0, 0, 0, 0.8);
     text-align: center;
-    margin-top: 1%;
-    font-family: Encode sans;
+    margin-top: 20px;
+    // font-family: Encode sans;
     font-style: normal;
   }
   
@@ -121,13 +123,13 @@
 
   
   .mat-input-element {
-    font-family: Encode sans;
+    // font-family: Encode sans;
     font-style: normal;
-    font-size: 180%;
+    font-size: 1.25rem;
+    padding-bottom: 5px;
     border-width: 0;
     width: 80%;
     color: rgba(0, 0, 0, 0.8);
-  
   }
   
   .uil-envelope-alt::before {

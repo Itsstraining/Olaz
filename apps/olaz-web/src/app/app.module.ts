@@ -17,8 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+
 import { FormsModule } from '@angular/forms';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -34,14 +33,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/video-call/components/login/login.component';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
-    NavbarComponent,
-    SidebarComponent,
     LoginComponent,
     
   ],
@@ -55,6 +53,7 @@ import { LoginComponent } from './pages/video-call/components/login/login.compon
     MatDialogModule,
     MatInputModule,
     MatListModule,
+    MatTooltipModule,
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot(
@@ -81,6 +80,7 @@ import { LoginComponent } from './pages/video-call/components/login/login.compon
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
+    provideStorage(()=> getStorage()),
     MatGridListModule,
     MatCardModule,
     MatMenuModule,

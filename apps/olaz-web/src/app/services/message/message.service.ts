@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Firestore, getDoc, doc } from '@angular/fire/firestore';
+import {  Storage,uploadBytesResumable,ref, percentage, getDownloadURL } from '@angular/fire/storage'
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +10,8 @@ export class MessageService {
 
   constructor(
     private HttpClient:HttpClient,
-    private fs: Firestore
+    private fs: Firestore,
+    private fStorage: Storage
     ) { }
 
   public sendMessage(
@@ -33,5 +35,27 @@ export class MessageService {
 
   async getMessageById(messId: string){
     return await (await getDoc(doc(this.fs, 'messages', messId))).data()
+  }
+
+  async uploadImage(file: File): Promise<string>{
+    return new Promise((resolve, reject) => {
+      const _ext = file.name.split('.').pop();
+      const _id = Date.now().toString();
+      const path = `images/${_id}.${_ext}`;
+      if(file){
+        try {
+          const storageRef =  ref(this.fStorage, path);
+          const task = uploadBytesResumable(storageRef, file);
+          percentage(task).subscribe(async (value: any) => {
+            if(value.snapshot.metadata != null){
+              const _url = await getDownloadURL(storageRef);
+              resolve(_url)
+            }
+          });
+        } catch (err) {
+          reject(err);
+        }
+      }
+    });
   }
 }
