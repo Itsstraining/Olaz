@@ -33,7 +33,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/video-call/components/login/login.component';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { LoginComponent } from './pages/video-call/components/login/login.compon
     MatDialogModule,
     MatInputModule,
     MatListModule,
+    MatTooltipModule,
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot(
@@ -78,6 +80,7 @@ import { LoginComponent } from './pages/video-call/components/login/login.compon
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
+    provideStorage(()=> getStorage()),
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
