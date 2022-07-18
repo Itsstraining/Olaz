@@ -13,12 +13,14 @@ import { MaterialModule } from '@olaz/material';
 import { MessageComponent } from './message.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
+import { CreateRoomComponent } from './components/dialog-create-room/create-room.component';
 @NgModule({
   declarations: [
     MessageComponent,
     DialogFowardComponent,
     DialogFriendComponent,
     RejectAddComponent,
+    CreateRoomComponent
   ],
   imports: [
     CommonModule,
