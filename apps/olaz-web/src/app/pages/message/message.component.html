@@ -29,17 +29,19 @@
                 </div>
             </div>
 
-            <div *ngFor="let room of rooms " (click)="changeMessage(room.id)" class="cha-1">
-                <div class="ava">
-                    <img class="avachat" [src]="room.image" alt="">
+            <span *ngIf="rooms" >
+                <div *ngFor="let room of rooms " (click)="changeMessage(room.id)" class="cha-1">
+                    <div class="ava">
+                        <img class="avachat" [src]="room.image" alt="">
+                    </div>
+    
+                    <div>
+                        <p class="ten-1">{{room.name}}</p>
+                        <p class="ten-1-1">Ferrari: Hello Ferrari</p>
+                    </div>
                 </div>
-
-                <div>
-                    <p class="ten-1">{{room.name}}</p>
-                    <p class="ten-1-1">Ferrari: Hello Ferrari</p>
-                </div>
-            </div>
-
+            </span>
+      
         </div>
 
     </div>
@@ -84,7 +86,7 @@
         <div *ngIf="room" id="right-center">
 
             <span *ngFor="let message of room.messages">
-                <div *ngIf="message.userId?.id === myId" class="cha">
+                <div *ngIf="message.userId?.id === myId && !message.image" class="cha">
                     <div class="my-message">
                         <span style="flex: 1 1 auto;"></span>
                         <p mat-raised-button #tooltip="matTooltip"
@@ -93,7 +95,7 @@
                         class="noidungtinnhan">{{message.content}}</p>
                     </div>
                 </div>
-                <div *ngIf="message.userId?.id !== myId" class="cha">
+                <div *ngIf="message.userId?.id !== myId && !message.image" class="cha">
                     <div class="fr-message">
                         <p mat-raised-button #tooltip="matTooltip"
                         matTooltip="{{message.createdTime | date: 'short'}}"                       
@@ -128,7 +130,10 @@
                 </div>
 
                 <div class="hub-icon">
-                        <button class ="button-function" type="file" (click)="onFileSelectedEvent($event)"><img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt=""></button>
+                    <form action="/action_page.php">
+                        <!-- <input type="file" (change)="onFileSelectedEvent($event)" > -->
+                        <button class ="button-function" type="file" (change)="onFileSelectedEvent($event)"><img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt=""></button>
+                      </form>
                     
                 </div>
 

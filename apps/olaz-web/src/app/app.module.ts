@@ -17,8 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+
 import { FormsModule } from '@angular/forms';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -41,8 +40,6 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
   declarations: [
     AppComponent,
     NxWelcomeComponent,
-    NavbarComponent,
-    SidebarComponent,
     LoginComponent,
     
   ],

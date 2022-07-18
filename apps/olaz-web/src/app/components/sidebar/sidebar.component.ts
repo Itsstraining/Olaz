@@ -50,6 +50,8 @@ export class SidebarComponent implements OnInit {
         navbarData[0].routeLink = `m/123456789`;
       }
       this.appear = data;
+      console.log(data)
+
     })
   }
   collapsed = false;
