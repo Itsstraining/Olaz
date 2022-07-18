@@ -32,8 +32,8 @@
               <div matLine class="user-email">
                 <span> {{user.email}} </span>
               </div>
-              <button (click)="toggleRequest(true, user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
-              <button (click)="toggleRequest(false , user.id )" class="btn"><i class="uil uil-user-times"></i></button>
+              <button (click)="addFriend(user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
+              <button (click)="addFriend(user.id)" class="btn"><i class="uil uil-user-times"></i></button>
             </mat-list-item>
 
             <mat-list-item  *ngFor="let user of listOfFriend">
@@ -44,7 +44,7 @@
               <div matLine class="user-email">
                 <span> {{user.email}} </span>
               </div>
-              <button (click)="toggleRequest(true, user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
+              <button (click)="addFriend(user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
             </mat-list-item>
           
             <!-- <mat-list-item>

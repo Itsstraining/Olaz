@@ -37,7 +37,7 @@ export class RejectAddComponent implements OnInit {
   }
 
   public request: any = [];
-
+  public _user: any;
   async getAllRequests(myID:string){
     const user = await (await this.UserService.getUserByID(myID)).data();
     console.log(user)
@@ -47,5 +47,14 @@ export class RejectAddComponent implements OnInit {
       user['requests'][index] = await (await this.UserService.getUserByID(requestId)).data();
     })
     this.request = user['requests']
+  }
+  addFriend(frID:string){
+    if(this._user){
+      this.UserService.sendRequest(this._user.id, frID).subscribe((response)=>{
+        console.log(response);
+      })
+    }else{
+      console.log("user:null")
+    }
   }
 }

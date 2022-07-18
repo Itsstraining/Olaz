@@ -44,6 +44,7 @@ export class UserService {
   ansDocRef: any;
   opponentId!: any;
   ownerId!: any;
+  statemanager= false;
 
   constructor(
     private route: Router,
@@ -71,7 +72,7 @@ export class UserService {
           requests: [],
           friends: [],
           incall: false,
-
+          statemanager: true,
           rooms: [],
         };
         this.user$.next(this.user);
@@ -220,4 +221,5 @@ export class UserService {
     );
     return rooms;
   }
+  
 }
