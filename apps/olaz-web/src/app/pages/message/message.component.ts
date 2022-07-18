@@ -56,8 +56,9 @@ export class MessageComponent implements OnInit {
       this.roomId = params['roomId']
     })
     this.UserService.user$.subscribe((user) => {
-      // console.log(user);
-      if (!user) return;
+      if (!user) return
+      console.log(user)
+  
       this.user = user
       this.myId = user.id;
       this.UserService.notifyCount(this.myId).subscribe((user: any) => {

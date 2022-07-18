@@ -51,7 +51,7 @@ export class UserService {
     private auth: Auth,
     private http: HttpClient
   ) {
-    authState(this.auth).subscribe(async (user) => {
+    authState(this.auth).subscribe(async (user:any) => {
       if (!user) return;
       let userDoc = doc(collection(this.fs, 'users'), user!.uid);
       let todoCollection = collection(userDoc, 'Todo');
@@ -74,7 +74,11 @@ export class UserService {
 
         //   rooms: [],
         // };
-        this.user$.next(this.user);
+        let _user = {
+          ...this.user,
+          token: user.accessToken
+        }
+        this.user$.next(_user);
 
         collectionChanges(this.callRef).subscribe((data) => {
           data.forEach(async (doc) => {
