@@ -15,16 +15,16 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
     <style>
       html {
         -webkit-text-size-adjust: 100%;
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        /* font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
           'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-          'Noto Color Emoji';
+          'Noto Color Emoji'; */
         line-height: 1.5;
         tab-size: 4;
         scroll-behavior: smooth;
       }
       body {
-        font-family: inherit;
+        /* font-family: inherit; */
         line-height: inherit;
         margin: 0;
       }
@@ -52,8 +52,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
         text-decoration: inherit;
       }
       pre {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-          'Liberation Mono', 'Courier New', monospace;
+        /* font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          'Liberation Mono', 'Courier New', monospace; */
       }
       svg {
         display: block;
@@ -68,8 +68,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
         background-color: rgba(55, 65, 81, 1);
         border-radius: 0.25rem;
         color: rgba(229, 231, 235, 1);
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-          'Liberation Mono', 'Courier New', monospace;
+        /* font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          'Liberation Mono', 'Courier New', monospace; */
         overflow: scroll;
         padding: 0.5rem 0.75rem;
       }
