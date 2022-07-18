@@ -63,17 +63,17 @@ export class UserService {
         this.userTodo = collection(this.fs, 'todo');
         this.loggedIn = true;
         this.user = await (await this.getUserByID(user.uid)).data();
-        // this.user = {
-        //   id: user.uid,
-        //   email: user.email,
-        //   displayName: user.displayName,
-        //   photoURL: user.photoURL,
-        //   requests: [],
-        //   friends: [],
-        //   incall: false,
+        this.user = {
+          id: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          requests: [],
+          friends: [],
+          incall: false,
 
-        //   rooms: [],
-        // };
+          rooms: [],
+        };
         this.user$.next(this.user);
 
         collectionChanges(this.callRef).subscribe((data) => {
@@ -180,7 +180,7 @@ export class UserService {
     let provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(this.auth, provider);
-      this.route.navigate(['/todo'])
+      this.route.navigate(['/ownspace/todo'])
       alert('Loggin Success');
     } catch (e) {
       alert('Loggin Failed !');
@@ -190,7 +190,7 @@ export class UserService {
   async logout() {
     try {
       await signOut(this.auth);
-      this.route.navigate(['login'])
+      this.route.navigate(['/'])
       alert('Logout Success');
     } catch (e) {
       alert('Logout Failed !');

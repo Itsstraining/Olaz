@@ -175,7 +175,7 @@ export class MessageComponent implements OnInit {
     //       setDoc,
     //       updateDoc
     //     ])
-    if (!this.myId) return;
+    if (!this.myId || content=='') return;
     this.MessageService.sendMessage(
       content,
       image,
@@ -207,5 +207,23 @@ export class MessageComponent implements OnInit {
 
   changeMessage(idMessage: string) {
     this.Router.navigate([`/m/${idMessage}`]);
+  }
+
+  selectedFile!: File;
+  async onFileSelectedEvent(event: any){
+    this.selectedFile = event.target.files[0]
+    console.log(this.selectedFile)
+    const url: string = await this.MessageService.uploadImage(this.selectedFile);
+    console.log(url)
+
+    this.MessageService.sendMessage(
+      "",
+      url,
+      "image",
+      this.myId,
+      this.roomId
+    ).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

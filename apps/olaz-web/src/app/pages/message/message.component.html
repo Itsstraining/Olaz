@@ -93,13 +93,30 @@
                 <div *ngIf="message.userId?.id === myId" class="cha">
                     <div class="my-message">
                         <span style="flex: 1 1 auto;"></span>
-                        <p class="noidungtinnhan">{{message.content}}</p>
+                        <p mat-raised-button #tooltip="matTooltip"
+                        matTooltip="{{message.createdTime | date: 'short'}}"                       
+                        aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+                        class="noidungtinnhan">{{message.content}}</p>
                     </div>
                 </div>
                 <div *ngIf="message.userId?.id !== myId" class="cha">
                     <div class="fr-message">
-                        <p class="noidungtinnhan-fr">{{message.content}}</p>
+                        <p mat-raised-button #tooltip="matTooltip"
+                        matTooltip="{{message.createdTime | date: 'short'}}"                       
+                        aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+                        class="noidungtinnhan-fr">{{message.content}}</p>
                     </div>
+                </div>
+                <div *ngIf="message.userId?.id === myId">
+                    <div class="my-image"> 
+                        <span style="flex: 1 1 auto;"></span>                       
+                        <img  style="float: right;width:30%" [src]="message.image" alt="">
+                    </div>                   
+                </div>
+                <div *ngIf="message.userId?.id !== myId">
+                    <div class="fr-image">                        
+                        <img style="width:30%" [src]="message.image" alt="">
+                    </div>                   
                 </div>
             </span>
 
@@ -112,19 +129,26 @@
             </div>
             <div class="icon-bottom">
                 <div class="hub-icon">
-                    <img class="icon-logo-bottom" src="../../../assets/assets/link-free-icon-font.png" alt="">
+                    <button class ="button-function"><img class="icon-logo-bottom" src="../../../assets/assets/link-free-icon-font.png" alt=""></button>
+                    
                 </div>
 
                 <div class="hub-icon">
-                    <img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt="">
+                    <form action="/action_page.php">
+                        <button class ="button-function" type="file" (change)="onFileSelectedEvent($event)"><img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt=""></button>
+                        <!-- <input type="submit"> -->
+                      </form>
+                    
                 </div>
 
                 <div class="hub-icon">
-                    <img class="icon-logo-bottom" src="../../../assets/assets/clock-five-free-icon-font.png" alt="">
+                    <button class ="button-function"><img class="icon-logo-bottom" src="../../../assets/assets/clock-five-free-icon-font.png" alt=""></button>
+                    <!-- <img class="icon-logo-bottom" src="../../../assets/assets/clock-five-free-icon-font.png" alt=""> -->
                 </div>
 
                 <div class="hub-icon">
-                    <img class="icon-logo-bottom" src="../../../assets/assets/smile-free-icon-font.png" alt="">
+                    <button class ="button-function"><img class="icon-logo-bottom" src="../../../assets/assets/smile-free-icon-font.png" alt=""></button>
+                    
                 </div>
             </div>
         </div>
