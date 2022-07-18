@@ -36,7 +36,9 @@ export const navbarData = [
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService, ) {
+   
+   }
   @Output() isOpened: EventEmitter<SideNavToggle> = new EventEmitter();
   // @Output() isOpened: EventEmitter<boolean> = new EventEmitter();
 

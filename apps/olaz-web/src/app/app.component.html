@@ -1,5 +1,5 @@
 <mat-drawer-container class="container">
-  <mat-drawer [ngClass]="getMatDrawerClass()"><olaz-sidebar (isOpened)="isOpened($event)"></olaz-sidebar></mat-drawer>
+  <mat-drawer [ngClass]="getMatDrawerClass()" *ngIf="path === false"><olaz-sidebar (isOpened)="isOpened($event)"></olaz-sidebar></mat-drawer>
   <!-- <olaz-body [collapsed]="isSideNavCollapsed" -->
             <!-- [screenWidth]="screenWidth"></olaz-body> -->
   <mat-drawer-content class="body-content" [ngClass]="getBodyClass()">

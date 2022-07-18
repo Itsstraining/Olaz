@@ -6,6 +6,8 @@ import { DialogComponent } from './dialog/dialog.component';
 import { DialogFowardComponent } from './pages/message/components/dialog-foward/dialog-foward.component';
 import { DialogFriendComponent } from './pages/message/components/dialog-friend/dialog-friend.component';
 import { UserService } from './services/user.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'olaz-root',
@@ -19,11 +21,28 @@ export class AppComponent implements OnInit{
   
   // @Input() screenWidthContent = 0;
   // @Input() collapsed = false;
+  path=false;
 
-  constructor(public dialog: MatDialog, public userService: UserService) { }
+  constructor(public dialog: MatDialog, public userService: UserService, private router: Router, private location: Location) {
+    // this.router.events.subscribe((val)=>{
+      // this.path = this.location.path()
+      // console.log(val)
+    // })
+    // if(this.location.path() == `/call/call/YZHEycnganXwXfXNI5ah`){
+    //   this.path = true;
+    //   console.log(this.path)
+    //   if (!this.userInfo) return;
+    //   console.log(this.userInfo['incall']);
+    // }
+   }
   ngOnInit(): void {
     this.userService.user$.subscribe(user => {
       if (!user) return;
+      if(this.location.prepareExternalUrl()== `/call/call/`){
+        this.path = true;
+        console.log(this.path)
+        console.log(user.incall)
+      }
       this.userInfo = user;
     })
   }
