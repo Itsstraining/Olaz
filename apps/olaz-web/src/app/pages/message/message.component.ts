@@ -147,7 +147,7 @@ export class MessageComponent implements OnInit {
 
   openDialogCreatRoom() {
     const dialogRef = this.dialog.open(CreateRoomComponent, {
-      width: '250px',
+      width: '50%',
     });
 
     dialogRef.afterClosed().subscribe(result => {
