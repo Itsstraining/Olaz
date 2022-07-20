@@ -26,13 +26,15 @@
             <mat-list-item  *ngFor="let user of request">
               <img
                 matListAvatar
-                src="{{user.photoURL}}"
+                [src]="user.photoURL"
               />
              
               <div matLine class="user-email">
                 <span> {{user.email}} </span>
               </div>
-              <button (click)="toggleRequest(true, user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
+              <button  *ngIf="requestStatus === 'Chưa kết bạn'" (click)="toggleRequest(true, user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
+              <button disabled *ngIf="requestStatus === 'Đang kết bạn'" class="btn" ><i class="uil uil-user-plus"></i></button>
+              <button *ngIf="requestStatus === 'Kết bạn thành công'" class="btn" ><i class="uil-check"></i></button>
               <button (click)="toggleRequest(false , user.id )" class="btn"><i class="uil uil-user-times"></i></button>
             </mat-list-item>
 

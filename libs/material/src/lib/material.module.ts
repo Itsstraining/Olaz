@@ -13,6 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 @NgModule({
   imports: [
     MatInputModule,
@@ -29,6 +31,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatSelectModule,
     MatExpansionModule,
     MatTooltipModule,
+    DragDropModule
   ],
   exports: [
     MatInputModule,
@@ -45,6 +48,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatSelectModule,
     MatExpansionModule,
     MatTooltipModule,
+    DragDropModule
   ]
 })
 export class MaterialModule { }
