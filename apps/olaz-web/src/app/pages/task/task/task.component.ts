@@ -51,6 +51,8 @@ export class TaskComponent implements OnInit {
   }];
   done =[];
 
+  isShowDetail = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -73,8 +75,24 @@ export class TaskComponent implements OnInit {
     
   }
 
-  showDetails(task: any){
-    console.log(task.title)
+  getShowDetailsClass():string{
+    let styleClass ='';
+    if(this.isShowDetail == true){
+      styleClass = 'task-details';
+    }else if(this.isShowDetail ==false){
+      styleClass = 'not-show-task-details'
+    }
+    console.log(styleClass)
+
+    return styleClass;
+  }
+
+  showDetails(){
+    this.isShowDetail = true
+  }
+
+  closeShowDetails(){
+    this.isShowDetail = false
   }
 
 }

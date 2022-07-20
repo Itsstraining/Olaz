@@ -21,7 +21,7 @@
                       <h2>To do</h2>
                     </div>
                     <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of todo" cdkDrag (click)="showDetails(task)">
+                        <div class="task-container"  *ngFor="let task of todo" cdkDrag (click)="showDetails()">
                             <olaz-single-task [task]="task"></olaz-single-task>
                         </div>                  
                     </div>
@@ -32,7 +32,7 @@
                       <h2>Doing</h2>
                     </div>
                     <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="doing" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of doing" cdkDrag>
+                        <div class="task-container"  *ngFor="let task of doing" cdkDrag (click)="showDetails()">
                             <olaz-single-task [task]="task"></olaz-single-task>
                         </div>                  
                     </div>
@@ -43,12 +43,29 @@
                       <h2>Done</h2>
                     </div>
                     <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of done" cdkDrag>
+                        <div class="task-container"  *ngFor="let task of done" cdkDrag (click)="showDetails()">
                             <olaz-single-task [task]="task"></olaz-single-task>
                         </div>                  
                     </div>
                 </div>
             </div>
         </div>
+
+    </div>
+
+    <!-- SHOW DETAILS IN THE RIGHT SIDE -->
+    <div [ngClass]="getShowDetailsClass()">
+       <div>
+            <div>
+
+            </div>
+            <hr/>
+            <div>
+
+            </div>
+            <div>
+
+            </div>
+       </div>
     </div>
 </div>
