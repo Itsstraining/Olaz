@@ -1,7 +1,6 @@
-<div style="height: fit-content">
+<div >
   <div>
- 
-    <div *ngIf="!checkScreen" id="back_ground">
+    <div *ngIf="!checkScreen" >
       <img
         id="img"
         src="../../../../../assets/119148422_182366610069243_8985745084837655824_n.jpg"
@@ -9,10 +8,12 @@
     </div>
   </div>
   <div id="uservideocontainer2">
-
+    <div class="video1">
       <video id="user1video" autoplay></video>
-
-    <video autoplay id="user2video" height="100%" width="100%"></video>
+    </div>
+    <div class="video2">
+      <video autoplay id="user2video" height="100%" width="100%"></video>
+    </div>
     <div class="btn-container">
       <button id="btn-call-end" mat-fab (click)="turnWebCam()">
         <i class="uil uil-phone-slash" style="font-size: 150%"></i>
