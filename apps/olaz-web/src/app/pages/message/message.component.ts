@@ -56,8 +56,9 @@ export class MessageComponent implements OnInit {
       this.roomId = params['roomId']
     })
     this.UserService.user$.subscribe((user) => {
-      // console.log(user);
-      if (!user) return;
+      if (!user) return
+      console.log(user)
+  
       this.user = user
       this.myId = user.id;
       this.UserService.notifyCount(this.myId).subscribe((user: any) => {
@@ -92,13 +93,22 @@ export class MessageComponent implements OnInit {
     });
   }
 
-  getRoomId(id: string) {
+  async getRoomId(id: string) {
+
+    const isCheck = await this.RoomService.checkRoom(id)?.toPromise();
+    console.log(`check::::::::::::::::::${isCheck}`)
+    if(!isCheck) {
+      console.log("Bạn không có quyền truy cập vào phòng này!")
+      return;
+    }
+
     this.RoomService.getRoomById(id).subscribe((room: any) => {
       // console.log(room.messages)
       if (!room) {
         console.log(`Room tim ko dc`)
         return;
       }
+
       room.messages.map(async (message: string, i: number) => {
         // room['messages'].map(async (value: any, j: number)=>{
         //   room.message[i].messages[j] = await this.MessageService.getMessageById(room.message[i].messages[j])
@@ -195,7 +205,7 @@ export class MessageComponent implements OnInit {
   }
 
   changeMessage(idMessage: string) {
-    this.Router.navigate([`/m/${idMessage}`]);
+    this.Router.navigate([`ownspace/m/${idMessage}`]);
   }
 
   selectedFile!: File;
