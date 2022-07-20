@@ -7,12 +7,22 @@ import {
   getDoc,
   docData,
 } from '@angular/fire/firestore';
+import { UserService } from '../user.service';
+import { HttpClient,HttpHeaders  } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoomService {
-  constructor(private fs: Firestore) {}
+
+  private _token!: string;
+  constructor(private fs: Firestore, private UserService:UserService, private HttpClient:HttpClient) {
+    this.UserService.user$.subscribe(user=>{
+      console.log(user)
+      if(!user) return;
+      this._token = user.token;
+    })
+  }
 
   getRoomById(roomId: string) {
     return docData(doc(this.fs, 'rooms', roomId));
@@ -20,5 +30,14 @@ export class RoomService {
 
  async getRoomByIdPromise(roomId: string){
     return await (await getDoc(doc(this.fs, 'rooms', roomId))).data()
+  }
+
+  checkRoom(roomId:string){
+    if(!this._token) return;
+    const header  = {
+      headers: new HttpHeaders()
+        .set('Authorization', `Bearer ${this._token}`)
+    }
+    return this.HttpClient.get(`http://localhost:3333/api/room/check-room/${roomId}`, header)
   }
 }

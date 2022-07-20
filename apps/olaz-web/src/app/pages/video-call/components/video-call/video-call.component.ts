@@ -175,5 +175,16 @@ export class VideoCallComponent implements OnInit {
       })
     })
   }
+  turnWebCam() {
+    this.checkScreen = !this.checkScreen;
+    this.localStream.getVideoTracks().forEach((track) => {
+      track.enabled = !track.enabled;
+    })
+  }
+  turnMic() {
+    this.localStream.getAudioTracks().forEach((track) => {
+      track.enabled = !track.enabled;
+    })
+  }
 }
 
