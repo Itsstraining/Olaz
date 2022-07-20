@@ -1,0 +1,46 @@
+.task-title{
+    width: 100%;
+    margin-bottom: 10px; 
+    
+    h2{
+        font-size: 18px; 
+        font-weight: bold;    
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 5px;
+    }
+    p{ 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.task-footer{
+    display: flex;
+    justify-content: space-between;
+
+    .deadline{ 
+        display: flex;
+        justify-content: space-between;
+
+        i{
+            margin-right: 5px;
+        }
+
+        p{
+            font-size: 12px;
+            font-weight: bold;
+            padding-top: 3px;
+        }
+    }
+}
+
+.user-Img {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #555;
+    background-attachment: fixed;
+}
