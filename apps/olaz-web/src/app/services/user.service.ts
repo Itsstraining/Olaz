@@ -75,6 +75,7 @@ export class UserService {
           statemanager: true,
           rooms: [],
         };
+
         this.user$.next(this.user);
 
         collectionChanges(this.callRef).subscribe((data) => {
