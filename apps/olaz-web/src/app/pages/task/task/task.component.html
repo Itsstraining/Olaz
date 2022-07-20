@@ -1,71 +1,136 @@
 <div class="wrapper-container">
-    <div class="content-wrapper">
-        <div class="content-title" >
-            <button class="backBtn" matTooltip="Back to conversation" matTooltipPosition="below">
-                <i class="uil uil-angle-left-b"></i>
-            </button>
-            <h1>Group's task list</h1>
-        </div>
-        <div class="add-area">
-            <input placeholder="Add new task...">
-            <button class="addBtn" matTooltip="Add new Task" matTooltipPosition="above">
-                <i class="uil uil-plus" style="font-size:150%;"></i>
-            </button>
-        </div>
-        <div class="dashboard">
-            <div class="dashboard-columns" cdkDropListGroup>
+  <div class="content-wrapper">
+    <div class="content-title">
+      <button class="backBtn" matTooltip="Back to conversation" matTooltipPosition="below">
+        <i class="uil uil-angle-left-b"></i>
+      </button>
+      <h1>Group's task list</h1>
+    </div>
+    <div class="add-area">
+      <input placeholder="Add new task...">
+      <button class="addBtn" matTooltip="Add new Task" matTooltipPosition="above" (click)="addNew()">
+        <i class="uil uil-plus" style="font-size:150%;"></i>
+      </button>
+    </div>
+    <div class="dashboard">
+      <div class="dashboard-columns" cdkDropListGroup>
 
-                <!-- To do column -->
-                <div class="task-column">
-                    <div class="title">
-                      <h2>To do</h2>
-                    </div>
-                    <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of todo" cdkDrag (click)="showDetails()">
-                            <olaz-single-task [task]="task"></olaz-single-task>
-                        </div>                  
-                    </div>
-                </div>
-                <!-- Doing column -->
-                <div class="task-column">
-                    <div class="title">
-                      <h2>Doing</h2>
-                    </div>
-                    <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="doing" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of doing" cdkDrag (click)="showDetails()">
-                            <olaz-single-task [task]="task"></olaz-single-task>
-                        </div>                  
-                    </div>
-                </div>
-                <!-- Done column -->
-                <div class="task-column">
-                    <div class="title">
-                      <h2>Done</h2>
-                    </div>
-                    <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of done" cdkDrag (click)="showDetails()">
-                            <olaz-single-task [task]="task"></olaz-single-task>
-                        </div>                  
-                    </div>
-                </div>
+        <!-- To do column -->
+        <div class="task-column">
+          <div class="title">
+            <h2>To do</h2>
+          </div>
+          <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="todo"
+            (cdkDropListDropped)="drop($event)">
+            <div class="task-container" *ngFor="let task of todo" cdkDrag (click)="showDetails()">
+              <olaz-single-task [task]="task"></olaz-single-task>
             </div>
+          </div>
         </div>
-
+        <!-- Doing column -->
+        <div class="task-column">
+          <div class="title">
+            <h2>Doing</h2>
+          </div>
+          <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="doing"
+            (cdkDropListDropped)="drop($event)">
+            <div class="task-container" *ngFor="let task of doing" cdkDrag (click)="showDetails()">
+              <olaz-single-task [task]="task"></olaz-single-task>
+            </div>
+          </div>
+        </div>
+        <!-- Done column -->
+        <div class="task-column">
+          <div class="title">
+            <h2>Done</h2>
+          </div>
+          <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="done"
+            (cdkDropListDropped)="drop($event)">
+            <div class="task-container" *ngFor="let task of done" cdkDrag (click)="showDetails()">
+              <olaz-single-task [task]="task"></olaz-single-task>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- SHOW DETAILS IN THE RIGHT SIDE -->
-    <div [ngClass]="getShowDetailsClass()">
-       <div>
-            <div>
+  </div>
 
-            </div>
-            <hr/>
-            <div>
-
-            </div>
-            <div>
-
-            </div>
-       </div>
+  <!-- SHOW DETAILS IN THE RIGHT SIDE -->
+  <div [ngClass]="getShowDetailsClass()">
+    <div class="delete-n-closeDetail-board-container">
+      <div class="delete-n-closeDetail-board">
+        <button style="border: none; background-color:transparent;">
+          <i class="uil uil-trash-alt"></i>
+        </button>
+        <button style="border: none; background-color:transparent;" (click)="closeShowDetails()">
+          <i class="uil uil-multiply"></i>
+        </button>
+      </div>
     </div>
-</div>
+    <hr style="width:80%; margin-left: 20px;">
+    <div class="title-Detail">
+      <h3 style="font-weight: bold">Title</h3>
+      <div class="wrap-title-Description">
+        <textarea></textarea>
+      </div>
+      <button class="dropdownBtn" mat-button [matMenuTriggerFor]="menu" style="width: 45%;height: 40px;">In
+        Progress</button>
+      <i class="uil uil-angle-down"></i>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>To Do</button>
+        <button mat-menu-item>Done</button>
+      </mat-menu>
+      <!-- <div class="Description">
+            <h3 style="font-weight: bold">Description</h3>
+            <div class="wrap-Description">
+              <textarea rows="100"></textarea>
+            </div>
+          </div> -->
+      <div class="details-Description">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight:bold;">
+              Details
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <hr>
+          <div class="detail-Expand">
+            <!-- <div class="assignee-Detail">
+                  <p style="font-weight: bold;">Assignee</p>
+                  <img class="assignee-Img"
+                    src="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/284781432_2881526582155047_7043290483571551769_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HhFZrAQ4OuMAX-9lm-X&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVJbKm_pJmGES4wahfXm2M-wDgQntVDa5xxpPTAW4HAyhQ&oe=62E9DFE3">
+                  <p>Trong</p>
+                </div>
+                <div class="reporter-Detail">
+                  <p style="font-weight: bold;">Reporter</p>
+                  <img class="reporter-Img"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWbxT6GMI5BJJd9ixuP2ijrKzKxaQREiDl1g&usqp=CAU">
+                  <p>Trung</p>
+                </div>
+                <div class="deadline-Detail">
+                  <p style="font-weight: bold;">Deadline</p>
+                  <mat-datepicker #picker>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  </mat-datepicker>
+                  <input matInput [matDatepicker]="picker">
+
+
+                </div>
+
+                <div class="priority-Detail">
+                  <p style="font-weight: bold;">Priority</p>
+                  <button class="priorityBtn" mat-button [matMenuTriggerFor]="menu">Medium
+                    <i class="uil uil-bookmark-full"></i>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Low</button>
+                    <button mat-menu-item>High</button>
+                  </mat-menu>
+                </div> -->
+          </div>
+        </mat-expansion-panel>
+
+      </div>
+    </div>
+  </div>

@@ -14,6 +14,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -31,7 +32,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatSelectModule,
     MatExpansionModule,
     MatTooltipModule,
-    DragDropModule
+    DragDropModule,
+    MatDatepickerModule,
+    
   ],
   exports: [
     MatInputModule,
@@ -48,7 +51,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatSelectModule,
     MatExpansionModule,
     MatTooltipModule,
-    DragDropModule
+    DragDropModule,
+    MatDatepickerModule,
   ]
 })
 export class MaterialModule { }

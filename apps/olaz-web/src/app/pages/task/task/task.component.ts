@@ -44,13 +44,13 @@ export class TaskComponent implements OnInit {
   },
 ];
   doing =[{
-    title: 'my daily life  my daily life hihimy daily life hihi my daily life hihi', 
+    title: 'my daily life  my daily life hihimy daily life hihi my daily life hihi my daily life  my daily life hihimy daily life hihi my daily life hihi', 
     content:'remember to do home work',
     deadline: '22/07/2022',
     assignee: ''
   }];
   done =[];
-
+  panelOpenState = false;
   isShowDetail = false;
 
   constructor() { }

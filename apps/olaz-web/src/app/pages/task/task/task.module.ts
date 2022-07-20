@@ -15,7 +15,7 @@ import { SingleTaskComponent } from '../components/single-task/single-task.compo
   imports: [
     CommonModule,
     TaskRoutingModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports:[
     SingleTaskComponent,
