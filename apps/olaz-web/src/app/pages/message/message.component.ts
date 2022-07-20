@@ -7,6 +7,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogFowardComponent } from '../message/components/dialog-foward/dialog-foward.component';
+import { CreateRoomComponent } from '../message/components/dialog-create-room/create-room.component';
 import { UserService } from '../../services/user.service';
 import { MessageService } from '../../services/message/message.service';
 import { RoomService } from '../../services/message/room.service';
@@ -151,6 +152,16 @@ export class MessageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openDialogCreatRoom() {
+    const dialogRef = this.dialog.open(CreateRoomComponent, {
+      width: '50%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
 
