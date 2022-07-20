@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, OnInit } from '@angular/core';
@@ -11,32 +12,32 @@ import {  transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 export class TaskComponent implements OnInit {
 
   todo =[{
-    title: 'my daily life  my dai', 
+    title: 'My daily life', 
     content:'remember to do home work',
     deadline: '22/07/2022',
     assignee: ''
   },
   {
-    title: 'my daily life  my dai', 
+    title: 'Make new daily routine', 
     content:'remember to do home work',
     deadline: '22/07/2022',
     assignee: ''
   },
   {
-    title: 'my daily life  my dai', 
+    title: 'Design prototype', 
     content:'remember to do home work',
     deadline: '22/07/2022',
     assignee: ''
   },
   {
-    title: 'my daily life  my dai', 
+    title: 'my daily life  my da', 
     content:'remember to do home work',
     deadline: '22/07/2022',
     assignee: ''
   },
   
   {
-    title: 'my daily life  my dai', 
+    title: 'New project', 
     content:'remember to do home work',
     deadline: '22/07/2022',
     assignee: ''
@@ -70,6 +71,10 @@ export class TaskComponent implements OnInit {
 
   addNew(){
     
+  }
+
+  showDetails(task: any){
+    console.log(task.title)
   }
 
 }
