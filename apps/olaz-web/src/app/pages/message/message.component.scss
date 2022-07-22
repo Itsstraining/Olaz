@@ -1,11 +1,15 @@
 #Layout-parent {
     display: flex;
+    width: 100%;
+    height: 93%;
+    overflow: hidden;
 }
 
 
 #Layout-left {
     width: 30%;
     display: flex;
+    flex-direction: column;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -39,7 +43,7 @@
 
 #Input-search1 {
     margin-top: 25px;
-    width: 300px;
+    width: 90%;
     height: 35px;
     color: #9F99B7;
     border-radius: 50px;
@@ -58,13 +62,15 @@
 }
 .add-room-ava{
     width: 20px;
+    margin-right: 20px;
 }
 
 /*------------------------------------------------------------------- */
 
 #Layout-right {
     width: 100%;
-    height: 100%;
+    height: 100%;display: flex;
+    flex-direction: column;
     // background-color: gray;
 }
 
@@ -78,6 +84,7 @@
 
 .right-top {
     width: 100%;
+    flex: 1;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -129,7 +136,11 @@
 
 /*----------------------------------------------------------------------*/
 
-#right-center {}
+#right-center {
+    overflow-y: scroll;
+    flex: 10;
+
+}
 
 .messager-user-one {
     width: 450px;
@@ -339,6 +350,13 @@
 .right-bottom {
     width: 100%;
     display: flex;
+    flex: 1;
+
+    overflow: auto;
+    .icon-bottom {
+        width: 25%;
+        display: flex;
+    }
 }
 
 .icon {
@@ -355,18 +373,21 @@
 .canle {
     display: flex;
     margin-top: 20px;
+    width: 100%
 }
 
 .tatca {
     margin-top: 5px;
-    margin-left: 100px;
+    padding-left: 22%;
     font-size: 14pt;
+    width:50%
 }
 
 .dadoc {
     margin-top: 5px;
-    margin-left: 50px;
+    padding-left: 18%;
     font-size: 14pt;
+    width:50%
 }
 
 .ngang {
@@ -407,6 +428,8 @@
 .hub-icon {
     display: block;
     width: 25%;
+    margin: auto;
+    padding-left: 13px;
 }
 
 .input-kichthuoc {
@@ -422,11 +445,9 @@
     width: 75%;
 }
 
-.icon-bottom {
-    width: 25%;
-    display: flex;
-}
+
 
 .button-function {
-    border: none
+    border: none;
+    background-color: white;
 }
