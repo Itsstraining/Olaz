@@ -1,4 +1,4 @@
-<nav class="khung" *ngIf="userInfo !== undefined">
+<nav class="khung" *ngIf="userInfo !== undefined " >
   <div class="nav-icons">
     <div type="button" class="icon-button">
       <span
@@ -45,6 +45,11 @@
         <h4>{{userInfo['email']}}</h4>
       </div>
     </div>
+    <hr />
+    <button class="icon" mat-menu-item (click)="this.openDialogProfile()">
+    <i class ="uil uil-user-circle"></i>
+    <p class="logout">Profile</p>
+    </button>
     <hr />
     <button class="icon" mat-menu-item (click)="this.UserService.logout()">
       <i class="uil uil-signout"></i>
