@@ -16,7 +16,7 @@
         matTooltip="Anouncement"
         matTooltipPosition="below"
       ></span>
-      <span class="icon-button__badge">{{ messageCount }}</span>
+      <span class="icon-button__badge" [ngStyle]="{'display': messageCount === 0? 'none' : 'block'}">{{ messageCount }}</span>
     </div>
     <div type="button" class="icon-button">
       <span
@@ -26,7 +26,7 @@
         matTooltipPosition="below"
         (click)="openDialogAddRj()"
       ></span>
-      <span class="icon-button__badge">{{ count }}</span>
+      <span class="icon-button__badge" [ngStyle]="{'display': count === 0? 'none' : 'block'}">{{ count }}</span>
     </div>
   </div>
   <button class="pic" mat-button [matMenuTriggerFor]="menu">

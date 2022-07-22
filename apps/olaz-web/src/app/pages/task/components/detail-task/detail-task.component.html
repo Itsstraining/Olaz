@@ -1,0 +1,81 @@
+<!-- <div class="delete-n-closeDetail-board-container">
+  <div class="delete-n-closeDetail-board">
+    <button matTooltip="Delete task" matTooltipPosition="below">
+      <i class="uil uil-trash-alt"></i>
+    </button>
+    <button (click)="closeShowDetails()" matTooltip="Close" matTooltipPosition="below">
+      <i class="uil uil-multiply"></i>
+    </button>
+  </div>
+</div> -->
+<!-- <hr style="width:80%; margin-left: 20px;"> -->
+<div class="title-detail">
+  <h3 class="label">Title</h3>
+  <div class="wrap-title-Description">
+    <input type="text" [value]="taskData['title']">
+  </div>
+</div>
+<div class="status-detail">
+  <h3 class="label">Status</h3>
+  <div class="dropdownBtn" [ngClass]="getDropdownClass()" (click)="toggleDropdown()">
+    <input type="text" class="textBox" placeholder="Choose option" readonly [value]="taskData['status']"
+      [ngStyle]="{'color': taskData['status'] === 'Done' ? '#FF1818' : taskData['status'] === 'Doing' ? '#37a812' : 'black'}">
+    <div class="option">
+      <div (click)="show('To do')">To do</div>
+      <div (click)="show('Doing')">Doing</div>
+      <div (click)="show('Done')">Done</div>
+    </div>
+  </div>
+</div>
+<div class="description-detail">
+  <h3 class="label">Description</h3>
+  <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']"></textarea>
+</div>
+<div class="other-detail">
+  <mat-expansion-panel [expanded]="true"  (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title style="font-weight:bold;">
+        Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <hr>
+    <div class="detail-Expand">
+      <div class="detail-row">
+        <p>Assignee</p>
+        <div class="detail-row-data">
+          <img class="user-img"
+            src="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/284781432_2881526582155047_7043290483571551769_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HhFZrAQ4OuMAX-9lm-X&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVJbKm_pJmGES4wahfXm2M-wDgQntVDa5xxpPTAW4HAyhQ&oe=62E9DFE3">
+          <p>Trong</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <p>Reporter</p>
+        <div class="detail-row-data">
+          <img class="user-img"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWbxT6GMI5BJJd9ixuP2ijrKzKxaQREiDl1g&usqp=CAU">
+          <p>Trung</p>
+        </div>
+      </div>
+      <div class="detail-row" style="margin: 0;">
+        <p>Deadline</p>
+        <div class="datePicker-ipt">
+          <input [matDatepicker]="picker" readonly />
+          <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+        </div>
+      </div>
+      <mat-datepicker #picker></mat-datepicker>
+
+      <div class="detail-row">
+        <p>Priority</p>
+        <button class="priorityBtn" mat-button [matMenuTriggerFor]="menu">Medium
+          <i class="uil uil-bookmark-full"></i>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Low</button>
+          <button mat-menu-item>High</button>
+        </mat-menu>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+</div>

@@ -60,6 +60,7 @@ export class SidebarComponent implements OnInit {
   collapsed = false;
   screenWidth = 0;
   navData = navbarData;
+<<<<<<< HEAD
   userInfo = undefined;
   incall = false;
   // inCall(){
@@ -85,8 +86,18 @@ export class SidebarComponent implements OnInit {
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
     // this.isOpened.emit(this.collapsed);
+=======
+  // closeSidenav(): void {
+  //   this.collapsed = false;
+  //   this.isOpened.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
+  //   // this.isOpened.emit(this.collapsed);
+  // }
+  // toggleCollapse(): void {
+  //   this.collapsed = !this.collapsed;
+  //   // this.isOpened.emit(this.collapsed);
+>>>>>>> eec8e86dbab1f5a486d19499bf6e4022f34cf5d9
 
-    this.isOpened.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
-  }
+  //   this.isOpened.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
+  // }
   appear = undefined;
 }

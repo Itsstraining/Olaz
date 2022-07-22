@@ -11,7 +11,9 @@
     .logo-container {
       display: flex;
       align-items: center;
-      padding: 0.938rem 0.938rem 0 0.938rem;
+      justify-content: center;
+      // padding: 0.938rem 0.938rem 0 0.938rem;
+      padding: 8px 0;
       width: 100%;
       .logo {
         background: #5a3e9e;
@@ -25,6 +27,7 @@
         font-weight: 900;
         cursor: pointer;
         border: none;
+        margin-bottom: 1rem;
       }
   
       .logo-text {
@@ -130,7 +133,7 @@
     right: 0.3rem;
     width: 18px;
     height: 18px;
-    background: red;
+    background: #FF1818;
     color: #ffffff;
     display: flex;
     justify-content: center;
