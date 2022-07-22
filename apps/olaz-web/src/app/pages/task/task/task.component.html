@@ -7,7 +7,7 @@
       <h1>Group's task list</h1>
     </div>
     <div class="add-area">
-      <input placeholder="Add new task...">
+      <input placeholder="New task title..." [(ngModel)]="newTaskTitle">
       <button class="addBtn" matTooltip="Add new Task" matTooltipPosition="above" (click)="addNew()">
         <i class="uil uil-plus" style="font-size:150%;"></i>
       </button>
@@ -61,7 +61,7 @@
     <div class="delete-n-closeDetail-board-container">
       <div class="delete-n-closeDetail-board">
         <button matTooltip="Save change" matTooltipPosition="below">
-          <i class="uil uil-pen"></i>
+          <i class="uil uil-pen" (click)="updateTaskBtn()"></i>
         </button>
         <button matTooltip="Delete task" matTooltipPosition="below">
           <i class="uil uil-trash-alt"></i>
@@ -72,6 +72,6 @@
       </div>
     </div>
     <hr style="width:85%; margin-left: 20px; border-width: 1px;">
-    <olaz-detail-task [taskData]="taskData" *ngIf="taskData !== undefined"></olaz-detail-task>
+    <olaz-detail-task (updateTaskEmit)="updateTaskEmit($event)" [taskData]="taskData" *ngIf="taskData !== undefined"></olaz-detail-task>
   </div>
 </div>

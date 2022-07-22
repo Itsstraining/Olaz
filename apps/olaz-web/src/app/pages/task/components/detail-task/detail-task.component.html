@@ -1,38 +1,29 @@
-<!-- <div class="delete-n-closeDetail-board-container">
-  <div class="delete-n-closeDetail-board">
-    <button matTooltip="Delete task" matTooltipPosition="below">
-      <i class="uil uil-trash-alt"></i>
-    </button>
-    <button (click)="closeShowDetails()" matTooltip="Close" matTooltipPosition="below">
-      <i class="uil uil-multiply"></i>
-    </button>
-  </div>
-</div> -->
-<!-- <hr style="width:80%; margin-left: 20px;"> -->
 <div class="title-detail">
   <h3 class="label">Title</h3>
   <div class="wrap-title-Description">
-    <input type="text" [value]="taskData['title']">
+    <input type="text" [value]="taskData['title']" [(ngModel)]="newTitle" (ngModelChange)="updateTitle(newTitle)">
   </div>
 </div>
+
 <div class="status-detail">
   <h3 class="label">Status</h3>
   <div class="dropdownBtn" [ngClass]="getDropdownClass()" (click)="toggleDropdown()">
     <input type="text" class="textBox" placeholder="Choose option" readonly [value]="taskData['status']"
-      [ngStyle]="{'color': taskData['status'] === 'Done' ? '#FF1818' : taskData['status'] === 'Doing' ? '#37a812' : 'black'}">
+      [ngClass]="getDropdownColorClass()">
     <div class="option">
-      <div (click)="show('To do')">To do</div>
-      <div (click)="show('Doing')">Doing</div>
-      <div (click)="show('Done')">Done</div>
+      <div [class.chose]="option.value === taskData['status']" *ngFor="let option of arr" (click)="show(option.value)">{{option.value}}</div>
     </div>
   </div>
 </div>
+
 <div class="description-detail">
   <h3 class="label">Description</h3>
-  <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']"></textarea>
+  <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']"
+    [(ngModel)]="newDes" (ngModelChange)="updateDes(newDes)"></textarea>
 </div>
+
 <div class="other-detail">
-  <mat-expansion-panel [expanded]="true"  (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-title style="font-weight:bold;">
         Details
@@ -67,13 +58,14 @@
 
       <div class="detail-row">
         <p>Priority</p>
-        <button class="priorityBtn" mat-button [matMenuTriggerFor]="menu">Medium
-          <i class="uil uil-bookmark-full"></i>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>Low</button>
-          <button mat-menu-item>High</button>
-        </mat-menu>
+        <div class="dropdownBtn-Prio" [ngClass]="getDropdownPrioClass()" (click)="toggleDropdownPrio()">
+          <div class="optionPrio">
+            <div [class.chose]="option.value === taskData['priority']" *ngFor="let option of arrPrio; index as i" (click)="showPrio(option.value)">{{option.value}}</div>
+          </div>
+          <mat-icon>bookmark</mat-icon>
+          <input type="text" class="textBox" placeholder="Choose option" readonly [value]="taskData['priority']">
+          
+        </div>
       </div>
     </div>
   </mat-expansion-panel>
