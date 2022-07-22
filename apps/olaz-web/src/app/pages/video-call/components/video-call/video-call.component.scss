@@ -37,7 +37,7 @@
   z-index: 1;
   margin : 0 auto;
   width: 100%;
-  height: 100%;
+  height: 91.5%;
 }
 #uservideocontainer2 {
   display: flex;
@@ -45,7 +45,7 @@
   margin: 0;
   background-color: black;
   width: 100%;
-  height: 93.33vh;
+  height: 91.5vh;
   z-index: -100;
 }
 
@@ -136,11 +136,23 @@
     flex-direction:column ;
     height: 50%;
     justify-content: center;
+    padding:0;
   }
   #user2video{
     position: unset;
+    height: 100%;
+    width: 100%;
+    
   }
 }
+// @media only screen and (max-height: 653px){
+//   #uservideocontainer2{
+//     height: 92vh;
+//   }
+//   #user2video{
+//     height:92%;
+//   }
+// }
 // #uservideocontainer2 {
 //   position: relative;
 // }
