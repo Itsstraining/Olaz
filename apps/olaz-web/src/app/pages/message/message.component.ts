@@ -47,6 +47,18 @@ export class MessageComponent implements OnInit {
   public roomId: string = ''
   public rooms: any = []
 
+  callRequestRef: any;
+
+  servers = {
+    iceServers: [
+      {
+        urls: ['stun:stun.l.google.com:19302', 'stun:stun2.l.google.com:19302']
+      },
+    ],
+    iceCandidatePoolSize: 10,
+  }
+  pc = new RTCPeerConnection(this.servers);
+
   user!: any
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
@@ -235,5 +247,19 @@ export class MessageComponent implements OnInit {
     ).subscribe((res) => {
       console.log(res);
     });
+  }
+  async clickCall() {
+    console.log(this.myId)
+    console.log(this.room);
+    let userID;
+    this.room.users.forEach((user:any)=>{
+      if(user!=this.myId){
+        userID=user
+      }
+    })
+    this.callRequestRef = collection(this.fireStore, 'calls');
+    await addDoc(this.callRequestRef, { ownerID: this.UserService.user.id, opponentID: userID }).then((data) => {
+      this.Router.navigate([`ownspace/call/call/${data.id}`])
+    })
   }
 }
