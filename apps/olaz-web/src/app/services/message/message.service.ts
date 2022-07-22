@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Firestore, getDoc, doc } from '@angular/fire/firestore';
 import {  Storage,uploadBytesResumable,ref, percentage, getDownloadURL } from '@angular/fire/storage'
+import { idToken } from '@angular/fire/auth';
+import { _FEATURE_REDUCERS_TOKEN } from '@ngrx/store/src/tokens';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +24,7 @@ export class MessageService {
     roomID: string
   ) {
     const messageID = Date.now().toString();
-    return this.HttpClient.post('http://localhost:3333/api/message/send-message', {
+    console.log({
       userId: myID,
       id: messageID,
       content: content,
@@ -30,6 +32,15 @@ export class MessageService {
       type: type,
       createdTime: messageID,
       roomID:roomID
+    })
+    return this.HttpClient.post('http://localhost:3333/api/message/send-message', {
+      userId: myID,
+      id: messageID,
+      content: content,
+      image: image,
+      type: type,
+      createdTime: messageID,
+      roomID:roomID,
     });
   }
 
