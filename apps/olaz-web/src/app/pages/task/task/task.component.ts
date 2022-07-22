@@ -13,44 +13,55 @@ export class TaskComponent implements OnInit {
 
   todo =[{
     title: 'My daily life', 
-    content:'remember to do home work',
+    description:'remember to do home work',
+    status: 'To do',
     deadline: '22/07/2022',
-    assignee: ''
+    assignee: '',
+    reporter: '',
+    priority: ''
   },
   {
     title: 'Make new daily routine', 
-    content:'remember to do home work',
+    description:'remember to do home work',
+    status: 'To do',
     deadline: '22/07/2022',
     assignee: ''
   },
   {
     title: 'Design prototype', 
-    content:'remember to do home work',
+    description:'remember to do home work',
+    status: 'Doing',
     deadline: '22/07/2022',
     assignee: ''
   },
   {
     title: 'my daily life  my da', 
-    content:'remember to do home work',
+    description:'remember to do home work',
+    status: 'To do',
     deadline: '22/07/2022',
     assignee: ''
   },
   
   {
     title: 'New project', 
-    content:'remember to do home work',
+    description:'remember to do home work',
+    status: 'Done',
     deadline: '22/07/2022',
     assignee: ''
   },
 ];
   doing =[{
-    title: 'my daily life  my daily life hihimy daily life hihi my daily life hihi', 
-    content:'remember to do home work',
+    title: 'my daily life  my daily life hihimy daily life hihi my daily life hihi my daily life  my daily life hihimy daily life hihi my daily life hihi', 
+    description:'remember to do home work',
     deadline: '22/07/2022',
     assignee: ''
   }];
   done =[];
-
+  panelOpenState = true;
+  isShowDetail = false;
+  isActiveDropdown = false;
+  onSelected = 'Choose option'
+  taskData: any;
   constructor() { }
 
   ngOnInit(): void {
@@ -73,8 +84,41 @@ export class TaskComponent implements OnInit {
     
   }
 
-  showDetails(task: any){
-    console.log(task.title)
+  getShowDetailsClass():string{
+    let styleClass ='';
+    if(this.isShowDetail == true){
+      styleClass = 'task-details';
+    }else if(this.isShowDetail ==false){
+      styleClass = 'not-show-task-details'
+    }
+    return styleClass;
   }
+
+  showDetails(taskData: any){
+    this.isShowDetail = true;
+    this.taskData = taskData
+  }
+
+  closeShowDetails(){
+    this.isShowDetail = false
+  }
+
+  // show(status: any){
+  //   this.onSelected = status
+  // }
+
+  // getDropdownClass():string{
+  //   let styleClass ='';
+  //   if(this.isActiveDropdown == true){
+  //     styleClass = 'active';
+  //   }else {
+  //     styleClass = ''
+  //   }
+  //   return styleClass;
+  // }
+
+  // toggleDropdown(){
+  //   this.isActiveDropdown = !this.isActiveDropdown;
+  // }
 
 }

@@ -1,54 +1,77 @@
 <div class="wrapper-container">
-    <div class="content-wrapper">
-        <div class="content-title" >
-            <button class="backBtn" matTooltip="Back to conversation" matTooltipPosition="below">
-                <i class="uil uil-angle-left-b"></i>
-            </button>
-            <h1>Group's task list</h1>
-        </div>
-        <div class="add-area">
-            <input placeholder="Add new task...">
-            <button class="addBtn" matTooltip="Add new Task" matTooltipPosition="above">
-                <i class="uil uil-plus" style="font-size:150%;"></i>
-            </button>
-        </div>
-        <div class="dashboard">
-            <div class="dashboard-columns" cdkDropListGroup>
-
-                <!-- To do column -->
-                <div class="task-column">
-                    <div class="title">
-                      <h2>To do</h2>
-                    </div>
-                    <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of todo" cdkDrag (click)="showDetails(task)">
-                            <olaz-single-task [task]="task"></olaz-single-task>
-                        </div>                  
-                    </div>
-                </div>
-                <!-- Doing column -->
-                <div class="task-column">
-                    <div class="title">
-                      <h2>Doing</h2>
-                    </div>
-                    <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="doing" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of doing" cdkDrag>
-                            <olaz-single-task [task]="task"></olaz-single-task>
-                        </div>                  
-                    </div>
-                </div>
-                <!-- Done column -->
-                <div class="task-column">
-                    <div class="title">
-                      <h2>Done</h2>
-                    </div>
-                    <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
-                        <div class="task-container"  *ngFor="let task of done" cdkDrag>
-                            <olaz-single-task [task]="task"></olaz-single-task>
-                        </div>                  
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="content-wrapper">
+    <div class="content-title">
+      <button class="backBtn" matTooltip="Back to conversation" matTooltipPosition="below">
+        <i class="uil uil-angle-left-b"></i>
+      </button>
+      <h1>Group's task list</h1>
     </div>
+    <div class="add-area">
+      <input placeholder="Add new task...">
+      <button class="addBtn" matTooltip="Add new Task" matTooltipPosition="above" (click)="addNew()">
+        <i class="uil uil-plus" style="font-size:150%;"></i>
+      </button>
+    </div>
+    <div class="dashboard">
+      <div class="dashboard-columns" cdkDropListGroup>
+
+        <!-- To do column -->
+        <div class="task-column">
+          <div class="title">
+            <h2>To do</h2>
+          </div>
+          <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="todo"
+            (cdkDropListDropped)="drop($event)">
+            <div class="task-container" *ngFor="let task of todo" cdkDrag (click)="showDetails(task)">
+              <olaz-single-task [task]="task"></olaz-single-task>
+            </div>
+          </div>
+        </div>
+        <!-- Doing column -->
+        <div class="task-column">
+          <div class="title">
+            <h2>Doing</h2>
+          </div>
+          <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="doing"
+            (cdkDropListDropped)="drop($event)">
+            <div class="task-container" *ngFor="let task of doing" cdkDrag (click)="showDetails(task)">
+              <olaz-single-task [task]="task"></olaz-single-task>
+            </div>
+          </div>
+        </div>
+        <!-- Done column -->
+        <div class="task-column">
+          <div class="title">
+            <h2>Done</h2>
+          </div>
+          <div class="task-column-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="done"
+            (cdkDropListDropped)="drop($event)">
+            <div class="task-container" *ngFor="let task of done" cdkDrag (click)="showDetails(task)">
+              <olaz-single-task [task]="task"></olaz-single-task>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SHOW DETAILS IN THE RIGHT SIDE -->
+  <div [ngClass]="getShowDetailsClass()">
+    <div class="delete-n-closeDetail-board-container">
+      <div class="delete-n-closeDetail-board">
+        <button matTooltip="Save change" matTooltipPosition="below">
+          <i class="uil uil-pen"></i>
+        </button>
+        <button matTooltip="Delete task" matTooltipPosition="below">
+          <i class="uil uil-trash-alt"></i>
+        </button>
+        <button (click)="closeShowDetails()" matTooltip="Close" matTooltipPosition="below">
+          <i class="uil uil-multiply"></i>
+        </button>
+      </div>
+    </div>
+    <hr style="width:85%; margin-left: 20px; border-width: 1px;">
+    <olaz-detail-task [taskData]="taskData" *ngIf="taskData !== undefined"></olaz-detail-task>
+  </div>
 </div>
