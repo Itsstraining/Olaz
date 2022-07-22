@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { DialogFriendComponent } from '../../pages/message/components/dialog-friend/dialog-friend.component';
 import { RejectAddComponent } from '../../pages/message/components/reject-add/reject-add.component';
+import { ProfileComponent } from '../../pages/task/components/profile/profile.component';
 @Component({
   selector: 'olaz-navbar',
   templateUrl: './navbar.component.html',
@@ -49,4 +50,14 @@ export class NavbarComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+  openDialogProfile(){
+    const dialogRef = this.dialog.open(ProfileComponent,{
+      width: '30%', height:'450px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  
 }

@@ -46,6 +46,11 @@
       </div>
     </div>
     <hr />
+    <button class="icon" mat-menu-item (click)="this.openDialogProfile()">
+    <i class ="uil uil-user-circle"></i>
+    <p class="logout">Profile</p>
+    </button>
+    <hr />
     <button class="icon" mat-menu-item (click)="this.UserService.logout()">
       <i class="uil uil-signout"></i>
       <p class="logout">Logout</p>
