@@ -6,6 +6,7 @@ import { TaskComponent } from './task.component';
 import { MaterialModule } from '@olaz/material';
 import { SingleTaskComponent } from '../components/single-task/single-task.component';
 import { DetailTaskComponent } from '../components/detail-task/detail-task.component';
+import { ShareModule } from '../../../modules/share.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { DetailTaskComponent } from '../components/detail-task/detail-task.compo
     CommonModule,
     TaskRoutingModule,
     MaterialModule,
+    ShareModule
   ],
   exports:[
     SingleTaskComponent,
