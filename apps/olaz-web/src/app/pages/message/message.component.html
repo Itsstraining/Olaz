@@ -109,15 +109,18 @@
                         class="noidungtinnhan-fr">{{message.content}}</p>
                     </div>
                 </div>
-                <div *ngIf="message.userId?.id === myId">
-                    <div class="my-image"> 
-                        <span style="flex: 1 1 auto;"></span>                       
-                        <img  style="float: right;width:30%" [src]="message.image" alt="">
+                <div *ngIf="message.userId?.id === myId && !message.content && message.image !== ''">
+                    <div mat-raised-button #tooltip="matTooltip" matTooltip="{{message.createdTime | date: 'short'}}"
+                    aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+                     class="my-image"> 
+                        <!-- <span style="flex: 1 1 auto;"></span>                        -->
+                       <img class="noidunghinhanh" style="float: right;width:30%;" [src]="message.image" alt="">
                     </div>                   
                 </div>
-                <div *ngIf="message.userId?.id !== myId">
-                    <div class="fr-image">                        
-                        <img style="width:30%" [src]="message.image" alt="">
+                <div *ngIf="message.userId?.id !== myId && !message.content">
+                    <div mat-raised-button #tooltip="matTooltip" matTooltip="{{message.createdTime | date: 'short'}}" 
+                    aria-label="Button that displays a tooltip that hides when scrolled out of the container" class="fr-image">                        
+                        <img class="noidunghinhanh-fr" style="width:30%" [src]="message.image" alt="">
                     </div>                   
                 </div>
             </span>
