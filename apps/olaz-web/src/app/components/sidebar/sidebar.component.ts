@@ -57,16 +57,16 @@ export class SidebarComponent implements OnInit {
   collapsed = false;
   screenWidth = 0;
   navData = navbarData;
-  closeSidenav(): void {
-    this.collapsed = false;
-    this.isOpened.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
-    // this.isOpened.emit(this.collapsed);
-  }
-  toggleCollapse(): void {
-    this.collapsed = !this.collapsed;
-    // this.isOpened.emit(this.collapsed);
+  // closeSidenav(): void {
+  //   this.collapsed = false;
+  //   this.isOpened.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
+  //   // this.isOpened.emit(this.collapsed);
+  // }
+  // toggleCollapse(): void {
+  //   this.collapsed = !this.collapsed;
+  //   // this.isOpened.emit(this.collapsed);
 
-    this.isOpened.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
-  }
+  //   this.isOpened.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
+  // }
   appear = undefined;
 }

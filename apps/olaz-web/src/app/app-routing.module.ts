@@ -7,7 +7,8 @@ const routes: Routes = [
     // { path: '', component: AppComponent },
     
     { path: '', component: LoginComponent},
-    { path: 'ownspace', loadChildren: () => import('./pages/layout/layout.module').then(m => m.LayoutModule) },    
+    { path: 'ownspace', loadChildren: () => import('./pages/layout/layout.module').then(m => m.LayoutModule) }, 
+    
     // {
     //     path:'',
     //     redirectTo: 'm/:roomId', pathMatch: 'full'

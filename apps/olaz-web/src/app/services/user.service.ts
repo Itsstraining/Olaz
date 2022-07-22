@@ -52,7 +52,7 @@ export class UserService {
     private auth: Auth,
     private http: HttpClient
   ) {
-    authState(this.auth).subscribe(async (user) => {
+    authState(this.auth).subscribe(async (user:any) => {
       if (!user) return;
       let userDoc = doc(collection(this.fs, 'users'), user!.uid);
       let todoCollection = collection(userDoc, 'Todo');
@@ -64,19 +64,16 @@ export class UserService {
         this.userTodo = collection(this.fs, 'todo');
         this.loggedIn = true;
         this.user = await (await this.getUserByID(user.uid)).data();
-        this.user = {
-          id: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          requests: [],
-          friends: [],
-          incall: false,
-          statemanager: true,
-          rooms: [],
-        };
+ 
+        let _user = {
+          ...this.user,
+          token: user.accessToken
+        }
 
-        this.user$.next(this.user);
+        console.log(_user)
+        
+        this.user$.next(_user);
+      
 
         collectionChanges(this.callRef).subscribe((data) => {
           data.forEach(async (doc) => {
@@ -222,5 +219,9 @@ export class UserService {
     );
     return rooms;
   }
-  
+  private stateManager(myID:string ){
+    authState(this.auth).subscribe(async (user)=>{
+      
+    })
+  }
 }

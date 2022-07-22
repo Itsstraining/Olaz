@@ -27,12 +27,19 @@ export class RejectAddComponent implements OnInit {
    }
   listOfFriend: any = [];
   public myID: any
+  
+   public requestStatus = "Chưa kết bạn";
+
   toggleRequest(check: boolean, frID: string){
     // console.log("check:::::" + check)
     // console.log(`myID:::::${myID}`)
     // console.log(`frID::::::${frID}`)
+    this.requestStatus = "Đang kết bạn";
     this.UserService.toggleRequest(check, frID, this.myID).subscribe(res=>{
+      if(!res) return
       console.log(res)
+      this.requestStatus = "Kết bạn thành công"   
+      window.location.reload()   
     })
   }
 

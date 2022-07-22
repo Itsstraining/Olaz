@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 
 import { AppService } from './app.service';
 
@@ -15,14 +15,25 @@ export class AppController {
 
     return this.appService.addItem(item);
   }
-  
+
   @Delete('delete-Item')
-  async delDoc(@Query() query: any) {  
-    if(await this.appService.delDoc(query.id)){
+  async delDoc(@Query() query: any) {
+    if (await this.appService.delDoc(query.id)) {
       return 'You had deleted this item';
-    }else{
+    } else {
       return 'This item hasn`t been deleted'
     }
 
+  }
+
+  @Put('update-call-status')
+  async updateDoc(@Body() data: any) {
+
+    if (await this.appService.updateDoc(data.id, data.userId, data.status)) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
