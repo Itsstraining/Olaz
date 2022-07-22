@@ -1,12 +1,12 @@
 <!-- <div class="task-container" cdkDropList #todolist="cdkDropList" [cdkDropListData]="taskList" (cdkDropListDropped)="drop($event)"> -->
     <div class="task-title">
       <h2 >{{task.title}}</h2>
-      <p style="margin-left: 0px;">{{task.content}}</p>
+      <p style="margin-left: 0px;">{{task.description}}</p>
     </div>
     <div class="task-footer">
         <div class="deadline">
             <i class="uil uil-calender"></i>
-            <p>Deadline: {{task.deadline}}</p>
+            <p>Deadline: {{task.deadline | date:'dd/MM/yyy'}}</p>
         </div>
         <img class="user-Img"
             src="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/284781432_2881526582155047_7043290483571551769_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HhFZrAQ4OuMAX-9lm-X&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVJbKm_pJmGES4wahfXm2M-wDgQntVDa5xxpPTAW4HAyhQ&oe=62E9DFE3">
