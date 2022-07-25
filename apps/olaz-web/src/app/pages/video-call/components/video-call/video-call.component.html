@@ -15,14 +15,14 @@
       <video autoplay id="user2video" height="100%" width="100%"></video>
     </div>
     <div class="btn-container">
-      <button id="btn-call-end" mat-fab (click)="turnWebCam()">
+      <button id="btn-call-end" mat-fab (click)="endCall()">
         <i class="uil uil-phone-slash" style="font-size: 150%"></i>
       </button>
     </div>
   </div>
 </div>
 
-<!-- <div>
+<div>
   <div class="menuItems">
     <button
       mat-icon-button
@@ -36,7 +36,7 @@
       <button class="btn-call" mat-icon-button>
         <i class="uil uil-signout" style="font-size: 150%"></i>
       </button>
-      <button class="btn-call" mat-icon-button (click)="screenOff()">
+      <button class="btn-call" [disabled]="this.camInProgress" mat-icon-button  (click)="turnWebCam()">
         <i
           *ngIf="checkScreen"
           class="uil uil-video-slash"
@@ -56,7 +56,7 @@
           style="font-size: 150%"
         ></i>
       </button>
-      <button class="btn-call" mat-icon-button (click)="micOff()">
+      <button class="btn-call" [disabled]="this.micInProgress" mat-icon-button (click)="turnMic()">
         <i
           *ngIf="checkMic"
           class="uil uil-microphone-slash"
@@ -78,4 +78,4 @@
         <i class="uil uil-setting" style="font-size: 150%"></i>
       </button>
     </div>
-</div> -->
+</div>

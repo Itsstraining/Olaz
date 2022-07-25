@@ -12,7 +12,6 @@ export class AppController {
   }
   @Post('add-Item')
   addItem(@Body() item: any) {
-
     return this.appService.addItem(item);
   }
 
@@ -23,13 +22,12 @@ export class AppController {
     } else {
       return 'This item hasn`t been deleted'
     }
-
   }
 
   @Put('update-call-status')
   async updateDoc(@Body() data: any) {
-
-    if (await this.appService.updateDoc(data.id, data.userId, data.status)) {
+ 
+    if (await this.appService.updateDoc(data.data.id, data.data.userId, data.data.status)) {
       return true;
     }
     else {

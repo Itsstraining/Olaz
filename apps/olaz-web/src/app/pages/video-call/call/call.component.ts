@@ -33,8 +33,15 @@ export class CallComponent implements OnInit {
   //button call
   async clickCall() {
     this.callRequestRef = collection(this.db, 'calls');
-    await addDoc(this.callRequestRef, { ownerID: this.UsrSv.user.id, opponentID: this.userID }).then((data) => {
-      this.router.navigate([`ownspace/call/${data.id}`])
+    await addDoc(this.callRequestRef,
+      {
+        owner: { id: this.UsrSv.user.id, camOn: true, micOn: true },
+        opponent: { id: this.userID, camOn: true, micOn: true }
+      }
+    ).then((data) => {
+      this.router.navigate([`ownspace/call/call/${data.id}`])
     })
+
+
   }
 }
