@@ -26,15 +26,16 @@
 
             <div class="canle">
                 <div class="tatca">
-                    <p>Tất cả</p>
+                    <button style="border:none; background-color: white;">Tất cả</button>
                 </div>
 
                 <div class="dadoc">
-                    <p>Đã đọc</p>
+                    <button style="border:none; background-color: white;">Đã đọc</button>
                 </div>
             </div>
-
-            <span *ngIf="rooms" >
+        </div>
+        <div  style="overflow-y: scroll;">
+            <div *ngIf="rooms">
                 <div *ngFor="let room of rooms " (click)="changeMessage(room.id)" class="cha-1">
                     <div class="ava">
                         <img class="avachat" [src]="room.image" alt="">
@@ -45,8 +46,7 @@
                         <p class="ten-1-1">Ferrari: Hello Ferrari</p>
                     </div>
                 </div>
-            </span>
-      
+            </div>
         </div>
 
     </div>
@@ -109,15 +109,18 @@
                         class="noidungtinnhan-fr">{{message.content}}</p>
                     </div>
                 </div>
-                <div *ngIf="message.userId?.id === myId">
-                    <div class="my-image"> 
-                        <span style="flex: 1 1 auto;"></span>                       
-                        <img  style="float: right;width:30%" [src]="message.image" alt="">
+                <div *ngIf="message.userId?.id === myId && !message.content && message.image !== ''">
+                    <div mat-raised-button #tooltip="matTooltip" matTooltip="{{message.createdTime | date: 'short'}}"
+                    aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+                     class="my-image"> 
+                        <!-- <span style="flex: 1 1 auto;"></span>                        -->
+                       <img class="noidunghinhanh" style="float: right;width:30%;" [src]="message.image" alt="">
                     </div>                   
                 </div>
-                <div *ngIf="message.userId?.id !== myId">
-                    <div class="fr-image">                        
-                        <img style="width:30%" [src]="message.image" alt="">
+                <div *ngIf="message.userId?.id !== myId && !message.content">
+                    <div mat-raised-button #tooltip="matTooltip" matTooltip="{{message.createdTime | date: 'short'}}" 
+                    aria-label="Button that displays a tooltip that hides when scrolled out of the container" class="fr-image">                        
+                        <img class="noidunghinhanh-fr" style="width:30%" [src]="message.image" alt="">
                     </div>                   
                 </div>
             </span>
