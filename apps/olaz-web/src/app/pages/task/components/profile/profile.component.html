@@ -1,0 +1,20 @@
+<div *ngIf="this.UserService.user !== undefined">
+    <button class="uil uil-multiply" (click)="onNoClick()"></button>
+    <div class="profile-img" >
+        <img src={{this.UserService.user.photoURL}}/>
+    </div>
+    <hr >  
+    <div style="margin-top: 20px;">
+        <div class="dialog-row">
+            <i class="uil uil-user"></i>
+            <input type="text" class="input" [value]="this.UserService.user.displayName">
+        </div>
+        <div class="dialog-row">
+            <i class="uil uil-envelope"></i>
+            <input class="input" readonly disabled [value]="this.UserService.user.email">
+        </div>
+    </div>
+    <mat-dialog-actions align="end">
+        <button class="save" mat-button>Save</button>
+    </mat-dialog-actions>
+</div>

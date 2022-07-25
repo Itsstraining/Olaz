@@ -26,6 +26,7 @@ import {
 import { Router } from '@angular/router';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 import { ActivatedRoute } from '@angular/router';
+import { idToken } from '@angular/fire/auth';
 
 @Component({
   selector: 'olaz-message',
@@ -203,7 +204,7 @@ export class MessageComponent implements OnInit {
       image,
       type,
       this.myId,
-      this.roomId
+      this.roomId,
     ).subscribe((res) => {
       console.log(res);
     });
@@ -243,7 +244,7 @@ export class MessageComponent implements OnInit {
       url,
       "image",
       this.myId,
-      this.roomId
+      this.roomId,
     ).subscribe((res) => {
       console.log(res);
     });
@@ -263,3 +264,7 @@ export class MessageComponent implements OnInit {
     })
   }
 }
+function token(content: string, image: string, type: string, myId: string, roomId: string, token: any) {
+  throw new Error('Function not implemented.');
+}
+

@@ -9,7 +9,6 @@ const routes: Routes = [{ path: '', component: LayoutComponent,
 
     { path: 'm/:roomId', loadChildren: () => import('../message/message.module').then(m => m.MessageModule) },
     { path: 'call', loadChildren: () => import('../video-call/call/call.module').then(m => m.CallModule) },
-    { path: 'profile', loadChildren: () => import('../profile/profile/profile.module').then(m => m.ProfileModule) },
   ]
 }];
 

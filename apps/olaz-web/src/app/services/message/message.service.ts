@@ -1,28 +1,44 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Firestore, getDoc, doc } from '@angular/fire/firestore';
-import {  Storage,uploadBytesResumable,ref, percentage, getDownloadURL } from '@angular/fire/storage'
-import { idToken } from '@angular/fire/auth';
-import { _FEATURE_REDUCERS_TOKEN } from '@ngrx/store/src/tokens';
+import { UserService } from '../user.service';
+import {  Storage,uploadBytesResumable,ref, percentage, getDownloadURL } from '@angular/fire/storage';
+
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
 
+  private _token!: string;
+
   constructor(
     private HttpClient:HttpClient,
     private fs: Firestore,
-    private fStorage: Storage
-    ) { }
+    private fStorage: Storage,
+    private UserService:UserService
+    ) { 
+      this.UserService.user$.subscribe(user=>{
+      console.log(user)
+      if(!user) return;
+      this._token = user.token;
+    })
+    }
 
   public sendMessage(
     content: string,
     image: string,
     type: string,
     myID: string,
-    roomID: string
+    roomID: string,
   ) {
+    if(!this._token) {
+      return from(<any>{})
+    };
+    const header  = {
+      headers: new HttpHeaders()
+        .set('Authorization', `Bearer ${this._token}`)
+    }
     const messageID = Date.now().toString();
     console.log({
       userId: myID,
@@ -41,7 +57,8 @@ export class MessageService {
       type: type,
       createdTime: messageID,
       roomID:roomID,
-    });
+      roomID:roomID,
+    }, header);
   }
 
   async getMessageById(messId: string){
