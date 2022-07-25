@@ -1,19 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {  transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'olaz-single-task',
   templateUrl: './single-task.component.html',
   styleUrls: ['./single-task.component.scss']
 })
-export class SingleTaskComponent implements OnInit {
+export class SingleTaskComponent implements OnInit, OnChanges {
+  deadline: any;
   @Input() task: any;
-  constructor() { }
+  
+  constructor(public datePipe: DatePipe) { 
+  }
+  ngOnChanges(): void {
+    this.deadline = this.datePipe.transform(new Date(this.task.deadline*1000), 'dd/MM/yyyy');
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.deadline =this.datePipe.transform(new Date(this.task.deadline*1000), 'dd/MM/yyyy');
+  }
 
   drop(event: any) {
     if (event.previousContainer === event.container) {
