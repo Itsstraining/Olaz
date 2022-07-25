@@ -35,12 +35,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/video-call/components/login/login.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { DialogCallComponent } from './pages/video-call/components/dialog-call/dialog-call.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
     LoginComponent,
+    DialogCallComponent,
     
   ],
   imports: [
