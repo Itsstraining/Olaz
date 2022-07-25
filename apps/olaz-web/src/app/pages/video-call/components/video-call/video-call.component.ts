@@ -1,7 +1,8 @@
 import { Component, OnInit, } from '@angular/core';
-import { doc, Firestore, collection, addDoc, setDoc, docData, getDoc, collectionChanges, updateDoc } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { doc, Firestore, collection, addDoc, setDoc, docData, getDoc, collectionChanges, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'apps/olaz-web/src/app/services/user.service';
+import { VideoService } from 'apps/olaz-web/src/app/services/video-call/video.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { UserService } from 'apps/olaz-web/src/app/services/user.service';
   styleUrls: ['./video-call.component.scss'],
 })
 export class VideoCallComponent implements OnInit {
-  constructor(public fs: Firestore, private route: ActivatedRoute, public userSrv: UserService) { }
+  constructor(public fs: Firestore, private route: ActivatedRoute,public userSrv:UserService, public videoSrv:VideoService, public router: Router) { }
 
   ngOnInit(): void {
     this.init();
@@ -18,9 +19,6 @@ export class VideoCallComponent implements OnInit {
       this.docId = params['id'];
       this.startCall();
     });
-
-
-
   }
 
   myFunction() {
@@ -28,8 +26,16 @@ export class VideoCallComponent implements OnInit {
   }
 
   onOffScreen = true;
+  opponentStatus = {
+    micOn: true,
+    camOn: true,
+  }
+  ownerStatus = {
+    micOn: true,
+    camOn: true,
+  }
   checkScreen = true;
-  checkMic = false;
+  checkMic = true;
   localStream!: MediaStream;
   remoteStream!: MediaStream;
   servers = {
@@ -46,7 +52,10 @@ export class VideoCallComponent implements OnInit {
   ansDocRef: any;
   inputCall!: string;
   inputAnswer!: string;
-  docId: any
+  docId: any;
+  callInf: any;
+  camInProgress = false;
+  micInProgress = false;
   pc = new RTCPeerConnection(this.servers);
 
   screenOff() {
@@ -78,33 +87,52 @@ export class VideoCallComponent implements OnInit {
     this.localStream.getTracks().forEach((track) => {
       this.pc.addTrack(track, this.localStream);
     })
+
     this.pc.ontrack = ((event) => {
       event.streams[0].getTracks().forEach((track) => {
         this.remoteStream.addTrack(track);
       })
     })
-    this.pc.iceConnectionState
-    this.pc.addEventListener('onconnectionstatechange ',event=>{
-      if(this.pc.connectionState=='disconnected'){
-        console.log('alo')
-      }
-    })
-    this.pc.onconnectionstatechange = () => {
-      const connectionStatus = this.pc.connectionState;
-      if (["disconnected", "failed", "closed"].includes(connectionStatus)) {
-          console.log("disconnected");
-      }
-  };
-
 
     localvideo.srcObject = this.localStream;
-    remoteVideo.srcObject =  this.localStream;
+    remoteVideo.srcObject = this.remoteStream;
+
+    this.pc.oniceconnectionstatechange = () => {
+      if (this.pc.iceConnectionState == 'disconnected') {
+        this.deleteRoom();
+      }
+    }
+
+    docData(doc(this.fs, `calls/${this.docId}`)).subscribe((data: any) => {
+      this.callInf = data;
+      this.opponentStatus.camOn = data.opponent.camOn;
+      this.opponentStatus.micOn = data.opponent.micOn;
+      this.ownerStatus.camOn = data.owner.camOn;
+      this.ownerStatus.micOn = data.owner.micOn;
+      console.log(this.ownerStatus);
+    });
+
+    collectionChanges(collection(this.fs, 'calls')).subscribe((data) => {
+      data.forEach((doc) => {
+        if (doc.type === 'removed' && doc.doc.id === this.docId) {
+          alert("Cuộc gọi đã kết thúc");
+          this.router.navigate(["/call"]);
+        }
+      })
+    })
+  }
+
+  deleteRoom() {
+    this.videoSrv.delData(this.docId).subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
   async startCall() {
     this.callRef = collection(this.fs, 'calls');
-    let userCallDoc = doc(this.fs, `calls/${this.docId}`)
-    let ownerID = (await getDoc(userCallDoc)).data()!['ownerID']
+    let userCallDoc = doc(this.fs, `calls/${this.docId}`);
+    let ownerID = (await getDoc(userCallDoc)).data()!['owner']['id'];
+    console.log(ownerID);
 
     if (this.userSrv.user.id === ownerID) {
       this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
@@ -118,11 +146,11 @@ export class VideoCallComponent implements OnInit {
         sdp: offerDescription.sdp,
         type: offerDescription.type,
       }
-      await setDoc(userCallDoc, { offer });
+      await updateDoc(userCallDoc, { offer });
       docData(userCallDoc).subscribe((data: any) => {
         if (!this.pc.currentRemoteDescription && data?.answer) {
           const answerDescription = new RTCSessionDescription(data.answer);
-          this.pc.setRemoteDescription(answerDescription)
+          this.pc.setRemoteDescription(answerDescription);
         }
       });
 
@@ -130,12 +158,12 @@ export class VideoCallComponent implements OnInit {
         data.forEach((doc) => {
           if (doc.type === 'added') {
             const candidate = new RTCIceCandidate(doc.doc.data());
-            this.pc.addIceCandidate(candidate)
+            this.pc.addIceCandidate(candidate);
           }
         })
       })
     } else {
-      this.answerCall()
+      this.answerCall();
     }
   }
 
@@ -175,16 +203,34 @@ export class VideoCallComponent implements OnInit {
       })
     })
   }
+
   turnWebCam() {
+    this.camInProgress = true;
     this.checkScreen = !this.checkScreen;
+    let status = { micOn: this.checkMic, camOn: this.checkScreen }
+    this.videoSrv.updateData(this.docId, this.userSrv.user.id, status).subscribe(() => {
+      this.camInProgress = false;
+    })
     this.localStream.getVideoTracks().forEach((track) => {
       track.enabled = !track.enabled;
     })
   }
+
   turnMic() {
+    this.checkMic = !this.checkMic;
+    this.micInProgress = true;
+    let status = { micOn: this.checkMic, camOn: this.checkScreen }
+    this.videoSrv.updateData(this.docId, this.userSrv.user.id, status).subscribe(() => {
+      this.micInProgress = false;
+    })
     this.localStream.getAudioTracks().forEach((track) => {
       track.enabled = !track.enabled;
     })
+  }
+
+  endCall() {
+    this.videoSrv.delData(this.docId).subscribe(() => {
+    });
   }
 }
 

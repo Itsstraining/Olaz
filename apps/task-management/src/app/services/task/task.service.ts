@@ -33,24 +33,14 @@ export class TaskService {
         return result;
     }
     async create(newTask: any, roomsId){
-        const taskId = Date.now().toString();
-        const result = await this.firestore.collection('tasks').doc(taskId).create({
-            id: taskId,
-            title: newTask.title, 
-            description: newTask.description,
-            status: 0,
-            deadline: Date.now(),
-            assignee: [],
-            reporter: [],
-            updatedDate: Date.now(),
-            priority: 0
-        });
+        const result = await this.firestore.collection('tasks').doc(newTask.id).create(newTask);
         await this.firestore.collection('taskList').doc('TL'+roomsId).update({
-            taskList: admin.firestore.FieldValue.arrayUnion(taskId)
+            taskList: admin.firestore.FieldValue.arrayUnion(newTask.id)
         })
         return result;
     }
     async update(updateTask, taskId){
+        console.log(updateTask)
         const result = await this.firestore.collection('tasks').doc(taskId).update({
             title: updateTask.title, 
             description: updateTask.description,
@@ -61,12 +51,13 @@ export class TaskService {
             updatedDate: Date.now(),
             priority: updateTask.priority
         });
-        console.log(result)
-
         return result;
     }
     async delete(roomsId, taskId){
-        const result = await this.firestore.collection('rooms').doc(roomsId).collection('task').doc(taskId).delete() ;
+        const tempTaskList = await this.firestore.collection('taskList').doc('TL'+roomsId).update({
+            taskList: admin.firestore.FieldValue.arrayRemove(taskId)
+        }); 
+        const result = await this.firestore.collection('tasks').doc(taskId).delete();
         return result ;
     }
 }

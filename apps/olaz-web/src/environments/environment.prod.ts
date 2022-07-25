@@ -10,4 +10,5 @@ export const environment = {
     messagingSenderId: '859382530359',
   },
   production: true,
+  endpoint: "http://localhost:3333/api/",
 };
