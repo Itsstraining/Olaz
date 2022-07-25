@@ -1,4 +1,4 @@
-FROM node:16.16-alpine3.16 as builder
+FROM node:18-alpine3.15 as builder
 
 
 ENV NODE_ENV build
@@ -12,7 +12,7 @@ RUN chmod 777 -R /home/node/
 RUN npm i
 RUN yarn nx build messenger --configuration=production
 
-FROM node:16.16-alpine3.16
+FROM node:18-alpine3.15
 
 ENV NODE_ENV production
 
