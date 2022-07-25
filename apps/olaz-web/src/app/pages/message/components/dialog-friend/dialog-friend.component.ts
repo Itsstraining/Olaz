@@ -40,7 +40,7 @@ export class DialogFriendComponent implements OnInit {
     }
     )
   }
-  findUser() {
+ async findUser() {
     //  this.userService.getUsers().subscribe(
     //   res => {
     //     // console.log(res)
@@ -53,15 +53,17 @@ export class DialogFriendComponent implements OnInit {
     //     })
     //   }
     // );
-    this.userService.getUserByEmail(this.email).subscribe(
-      users=>{
-        console.log(users);
-        this.listOfEmail = users;
-      },
-      err => {
-        console.log(err.error.text)
+    this.listOfEmail = await this.userService.getUserByEmail(this.email).toPromise()
+    console.log(this.listOfEmail)
+    const myListFriend:any= await (await this.userService.getUserByID(this._user.id)).data()
+    console.log(myListFriend)
+    for(let i = 0; i<myListFriend.friends.length; i++){
+      for(let j = 0; j<this.listOfEmail.length; j++){
+        if(myListFriend.friends[i] == this.listOfEmail[j].id){
+          console.log(true)
       }
-    )
+    }
+    }
   }
 
   // getMyListFriend(){

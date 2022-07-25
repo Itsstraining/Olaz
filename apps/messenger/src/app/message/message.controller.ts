@@ -13,6 +13,10 @@ export class MessageController {
         try{
             console.log(body);
             const _token = headers.authorization;
+            if(_token){
+            console.log(_token);
+                
+            }
             return this.MessageService.sendMessage(body.content, body.image, body.type, body.userId, body.roomID, body.createdTime,_token)
         }
         catch (error) {
