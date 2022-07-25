@@ -60,7 +60,6 @@ export class AppService {
               micOn: status.micOn,
               id: callData.opponent.id,
               camOn: status.camOn,
-              incall: status.incall,
             }
           });
         }
@@ -70,7 +69,6 @@ export class AppService {
               micOn: status.micOn,
               id: callData.owner.id,
               camOn: status.camOn,
-              incall: status.incall,
             }
           }
           );
