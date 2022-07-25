@@ -1,29 +1,34 @@
 #Layout-parent {
     display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 
 
 #Layout-left {
     width: 30%;
     display: flex;
+    flex-direction: column;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .Font-user {
     // font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .Online-left {
     margin-left: 10px;
+    font-size: 14px;
 }
 
 .image-user {
     width: 55px;
     height: 55px;
     border-radius: 50px;
-    margin-left: 25px;
-    margin-top: 10px;
+    // margin-left: 25px;
+    // margin-top: 10px;
 }
 
 .Circle-green {
@@ -39,33 +44,38 @@
 
 #Input-search1 {
     margin-top: 25px;
-    width: 300px;
+    width: 90%;
     height: 35px;
     color: #9F99B7;
-    border-radius: 50px;
+    border-radius: 5px;
     text-align: center;
     display: block;
     margin: 0 auto;
+    letter-spacing: 1px;
+    border: 1px solid #9F99B7;
 }
 
 .left-top {
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .add-room{
-    margin-top: 20px;
-    margin-left: 100px;
+    background-color: transparent;
+    border: none;
+    // margin-top: 20px;
+    // margin-left: 100px;
 }
-.add-room-ava{
-    width: 20px;
-}
+// .add-room-ava{
+//     width: 20px;
+//     margin-right: 20px;
+// }
 
 /*------------------------------------------------------------------- */
 
 #Layout-right {
     width: 100%;
     height: 100%;
-    // background-color: gray;
 }
 
 .Icon-user {
@@ -78,27 +88,40 @@
 
 .right-top {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .right-top-one {
-    // margin-right: 500px;
-    // margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .uil{
+        font-size: 25px;
+        margin-left: 10px;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
 }
 
 .font-user-one {
     // font-family: time 'Times New Roman', Times, serif;
     font-size: 16pt;
-    padding: 5px 10px 10px 10px;
 }
 
 .online-right {
     margin-left: 5px;
 }
 
-.icon-nav {
-    padding: 20px;
-}
+// .icon-nav {
+//     margin-left: 10px;
+// }
 
 .icon-nav:hover {
     cursor: pointer;
@@ -112,8 +135,6 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-top: 10px;
-    margin-left: 25px;
 }
 
 .circle-green-top-one {
@@ -129,7 +150,10 @@
 
 /*----------------------------------------------------------------------*/
 
-#right-center {}
+// #right-center {
+//     overflow-y: auto;
+//     height: 50%;
+// }
 
 .messager-user-one {
     width: 450px;
@@ -210,10 +234,24 @@
     line-height: 1.5rem;
 }
 
+.noidunghinhanh {
+    background-color: #5A3E9E;
+    padding: 20px;
+    border-radius: 20px;
+    line-height: 1.5rem;
+}
+
 .noidungtinnhan-fr {
     color: white;
     background-color: gray;
     padding: 12px;
+    border-radius: 20px;
+    line-height: 1.5rem;
+}
+
+.noidunghinhanh-fr {
+    background-color: #5A3E9E;
+    padding: 20px;
     border-radius: 20px;
     line-height: 1.5rem;
 }
@@ -325,6 +363,13 @@
 .right-bottom {
     width: 100%;
     display: flex;
+    flex: 1;
+
+    overflow: auto;
+    .icon-bottom {
+        width: 25%;
+        display: flex;
+    }
 }
 
 .icon {
@@ -341,19 +386,42 @@
 .canle {
     display: flex;
     margin-top: 20px;
+    width: 100%
 }
 
-.tatca {
-    margin-top: 5px;
-    margin-left: 100px;
+.optionBtn{
     font-size: 14pt;
+    width:50%;
+    button{
+        letter-spacing: 1px;
+        font-size:  14px;
+        padding: 5px;
+        border:none; 
+        background-color: transparent; 
+        width: 100%;
+        font-weight: bold;
+        border-radius: 5px;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
 }
 
-.dadoc {
-    margin-top: 5px;
-    margin-left: 50px;
-    font-size: 14pt;
+.optionBtn button.active{
+    background-color: #5A3E9E;
+    color: white;
 }
+
+// .tatca {
+//     font-size: 14pt;
+//     width:50%
+// }
+
+// .dadoc {
+//     font-size: 14pt;
+//     width:50%
+// }
 
 .ngang {
     width: 340px;
@@ -393,6 +461,8 @@
 .hub-icon {
     display: block;
     width: 25%;
+    margin: auto;
+    padding-left: 13px;
 }
 
 .input-kichthuoc {
@@ -408,11 +478,9 @@
     width: 75%;
 }
 
-.icon-bottom {
-    width: 25%;
-    display: flex;
-}
+
 
 .button-function {
-    border: none
+    border: none;
+    background-color: white;
 }
