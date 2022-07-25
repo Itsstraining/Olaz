@@ -1,4 +1,4 @@
-FROM node:16.8-alpine3.11 as builder
+FROM node:16.16-alpine3.16 as builder
 
 
 ENV NODE_ENV build
@@ -8,18 +8,11 @@ WORKDIR /home/node
 
 
 COPY . /home/node
+RUN chmod 777 -R /home/node/
+RUN npm i
+RUN yarn nx build messenger --configuration=production
 
-
-RUN npm i \
-    && npm run build \
-    && npm prune --production
-
-
-# ---
-
-
-FROM node:16.8-alpine3.11
-
+FROM node:16.16-alpine3.16
 
 ENV NODE_ENV production
 
@@ -30,7 +23,7 @@ WORKDIR /home/node
 
 COPY --from=builder /home/node/package*.json /home/node/
 COPY --from=builder /home/node/node_modules/ /home/node/node_modules/
-COPY --from=builder /home/node/dist/ /home/node/dist/
+COPY --from=builder /home/node/dist/apps/messenger/ /home/node/dist/
 
 
 CMD ["node", "dist/main.js"]
