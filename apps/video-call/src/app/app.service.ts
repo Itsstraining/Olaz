@@ -36,6 +36,7 @@ export class AppService {
   }
 
   async updateDoc(id: string, userId: string, status: any) {
+    console.log(status)
     try {
       await admin.firestore().collection('calls').doc(id).get().then(async (data) => {
         let callData = data.data();
