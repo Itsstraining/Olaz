@@ -44,6 +44,7 @@ export class UserService {
   ansDocRef: any;
   opponentId!: any;
   ownerId!: any;
+  statemanager= false;
 
   constructor(
     private route: Router,
@@ -217,5 +218,10 @@ export class UserService {
       })
     );
     return rooms;
+  }
+  private stateManager(myID:string ){
+    authState(this.auth).subscribe(async (user)=>{
+      
+    })
   }
 }

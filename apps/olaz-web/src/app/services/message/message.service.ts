@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Firestore, getDoc, doc } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
-import {  Storage,uploadBytesResumable,ref, percentage, getDownloadURL } from '@angular/fire/storage'
-import { from } from 'rxjs';
+import {  Storage,uploadBytesResumable,ref, percentage, getDownloadURL } from '@angular/fire/storage';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,6 +40,15 @@ export class MessageService {
         .set('Authorization', `Bearer ${this._token}`)
     }
     const messageID = Date.now().toString();
+    console.log({
+      userId: myID,
+      id: messageID,
+      content: content,
+      image: image,
+      type: type,
+      createdTime: messageID,
+      roomID:roomID
+    })
     return this.HttpClient.post('http://localhost:3333/api/message/send-message', {
       userId: myID,
       id: messageID,
@@ -47,6 +56,7 @@ export class MessageService {
       image: image,
       type: type,
       createdTime: messageID,
+      roomID:roomID,
       roomID:roomID,
     }, header);
   }

@@ -8,4 +8,5 @@ export interface User {
     friends: Array<any>;
     incall: boolean;
     rooms: Array<any>;
+    statemanager: boolean;
 }
