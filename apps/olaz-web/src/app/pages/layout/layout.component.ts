@@ -15,14 +15,12 @@ export class LayoutComponent implements OnInit {
   constructor(public userService: UserService) { }
 
   ngOnInit(): void {
-    console.log(this.userService.user)
   }
 
 
   isOpened(data: any):void{
     this.screenWidth=data.screenWidth;
     this.collapsed = data.collapsed;
-    console.log(data.screenWidth)
   }
 
   getBodyClass():string{

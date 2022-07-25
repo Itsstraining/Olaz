@@ -7,6 +7,7 @@ import { MaterialModule } from '@olaz/material';
 import { SingleTaskComponent } from '../components/single-task/single-task.component';
 import { DetailTaskComponent } from '../components/detail-task/detail-task.component';
 import { ShareModule } from '../../../modules/share.module';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ShareModule } from '../../../modules/share.module';
   exports:[
     SingleTaskComponent,
     DetailTaskComponent
-  ]
+  ],
+  providers:[DatePipe]
 })
 export class TaskModule { }

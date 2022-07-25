@@ -4,8 +4,8 @@ import { TaskService } from '../../services/task/task.service';
 export class TaskController {
     constructor(private TaskService : TaskService){}
     // CRUD FOR TASK LIST=========
-    @Get()
-    async getTaskList(@Body() data: any):Promise <any>{
+    @Get('/:roomsId')
+    async getTaskList(@Param() data: {roomsId: any}):Promise <any>{
         try {
             return await this.TaskService.getTaskList(data.roomsId);
         } catch (error) {
@@ -35,8 +35,8 @@ export class TaskController {
     }
 
     // CRUD FOR TASK=========
-    @Get('task')
-    async getTaskDetail(@Body() data:any):Promise <any>{
+    @Get('task/:taskId')
+    async getTaskDetail(@Param() data):Promise <any>{
         return this.TaskService.getTaskDetail(data.taskId);
     }
     @Post('task')
@@ -65,6 +65,16 @@ export class TaskController {
     }
     @Delete('task')
     async delete(@Body() data: any){
-        return await this.TaskService.delete(data.roomsId, data.taskId);
+    console.log(data)
+
+        try{
+            await this.TaskService.delete(data.roomsId, data.taskId);
+            return {message: "Delete Success"}
+        }catch(err){
+            return {
+                message: "Delete Failed",
+                error: err
+            }
+        }
     }
 }
