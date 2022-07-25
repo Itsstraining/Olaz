@@ -1,3 +1,46 @@
+.not-show-task-details{
+  display: none;
+}
+
+.task-details{
+  width: 350px;
+  height: 100%;
+  padding: 20px 20px;
+  // position: fixed;
+  background-color: #D9D9D9;
+}
+
+.delete-n-closeDetail-board-container{
+  display: flex;
+  justify-content: end;
+}
+
+.delete-n-closeDetail-board{
+  width: fit-content;
+  margin-bottom: 10px;
+  
+    button{
+      margin-left: 10px;
+      border: none; 
+      background-color:transparent;
+      i{
+        font-size: 25px;
+      }
+    
+      &:hover{
+        cursor: pointer;
+
+        .uil-trash-alt{
+          color: #E74848;
+        }
+
+        .uil-multiply{
+          color: #5a3e9e;
+        }
+      }
+    }
+}
+
 .label {
   letter-spacing: 1px;
   font-weight: bold;
