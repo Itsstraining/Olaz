@@ -16,6 +16,7 @@ import { User } from './user';
 
 import {
   doc,
+  docSnapshots,
   collection,
   collectionData,
   addDoc,
@@ -38,7 +39,7 @@ export class UserService {
   loggedIn = false;
   user!: any;
   userTodo: any;
-
+  
   callRef: any;
   offerDocRef: any;
   ansDocRef: any;
@@ -76,12 +77,15 @@ export class UserService {
       
 
         collectionChanges(this.callRef).subscribe((data) => {
-          data.forEach(async (doc) => {
-            if (doc.type === 'added' && doc.doc.data()['opponentID'] === this.user.id) {
+          data.forEach(async (docVal) => {
+            if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === this.user.id) {
+              let ownerID=docVal.doc.data()['owner']['id'];
+              let callerData = (await getDoc(doc(this.fs,`users/${ownerID}`))).data()
+              console.log(callerData)
               let text = "Incoming Call...";
               if (confirm(text) == true) {
 
-                await this.answerCall(doc.doc.id);
+                await this.answerCall(docVal.doc.id);
               } else {
                 text = 'Denied!';
               }
