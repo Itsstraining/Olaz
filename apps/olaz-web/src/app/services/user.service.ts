@@ -79,14 +79,22 @@ export class UserService {
         collectionChanges(this.callRef).subscribe((data) => {
           data.forEach(async (docVal) => {
             if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === this.user.id) {
+              // const audio = new Audio('../../assets/audios/incoming-call.wav');
+              // audio.play().then(()=>{
+              // });
+              // let user=(await getDoc(doc(this.fs,`users/${this.user.id}`))).data()?['incall']
               let ownerID=docVal.doc.data()['owner']['id'];
               let callerData = (await getDoc(doc(this.fs,`users/${ownerID}`))).data()
-              console.log(callerData)
+              console.log(callerData);
+   
               let text = "Incoming Call...";
               if (confirm(text) == true) {
-
+                // audio.pause();
+                // audio.currentTime=0;
                 await this.answerCall(docVal.doc.id);
               } else {
+                // audio.pause();
+                // audio.currentTime=0;
                 text = 'Denied!';
               }
             }
@@ -104,7 +112,7 @@ export class UserService {
     });
   }
   async answerCall(idDoc: any) {
-    this.route.navigate([`call/call/${idDoc}`]);
+    this.route.navigate([`ownspace/call/call/${idDoc}`]);
   }
 
   public user$ = new BehaviorSubject<any>(null);

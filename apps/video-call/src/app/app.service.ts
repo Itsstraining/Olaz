@@ -35,6 +35,20 @@ export class AppService {
     }
   }
 
+  async updateUserStatus(id: any) {
+    console.log(id);
+    let status= await admin.firestore().collection('users').doc(id).get().then((data) => {
+      {
+        return data.data().incall
+      }
+   
+    });
+    admin.firestore().collection('users').doc(id).update({
+      incall: !status
+    })
+    return true;
+  }
+
   async updateDoc(id: string, userId: string, status: any) {
     console.log(status)
     try {
@@ -44,22 +58,24 @@ export class AppService {
           await admin.firestore().collection('calls').doc(id).update({
             opponent: {
               micOn: status.micOn,
-              id:callData.opponent.id,
+              id: callData.opponent.id,
               camOn: status.camOn,
+              incall: status.incall,
             }
-          })
+          });
         }
         else {
           await admin.firestore().collection('calls').doc(id).update({
             owner: {
               micOn: status.micOn,
-              id:callData.owner.id,
+              id: callData.owner.id,
               camOn: status.camOn,
+              incall: status.incall,
             }
           }
-          )
+          );
         }
-      })
+      });
       return true;
     }
     catch (error) {
