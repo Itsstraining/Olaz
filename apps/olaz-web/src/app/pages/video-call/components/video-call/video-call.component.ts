@@ -26,13 +26,17 @@ export class VideoCallComponent implements OnInit {
   }
 
   onOffScreen = true;
+
   opponentStatus = {
     micOn: true,
     camOn: true,
+    incall: true,
   }
+
   ownerStatus = {
     micOn: true,
     camOn: true,
+    incall: true,
   }
   checkScreen = true;
   checkMic = true;
@@ -74,10 +78,6 @@ export class VideoCallComponent implements OnInit {
     this.checkMic = !this.checkMic;
   }
 
-  onOff() {
-    this.onOffScreen = !this.onOffScreen;
-  }
-
   async init() {
     let localvideo = <HTMLVideoElement>document.getElementById('user1video');
     let remoteVideo = <HTMLVideoElement>document.getElementById('user2video');
@@ -107,8 +107,10 @@ export class VideoCallComponent implements OnInit {
       this.callInf = data;
       this.opponentStatus.camOn = data.opponent.camOn;
       this.opponentStatus.micOn = data.opponent.micOn;
+      this.opponentStatus.incall = data.owner.incall;
       this.ownerStatus.camOn = data.owner.camOn;
       this.ownerStatus.micOn = data.owner.micOn;
+      this.ownerStatus.incall = data.owner.incall;
       console.log(this.ownerStatus);
     });
 
