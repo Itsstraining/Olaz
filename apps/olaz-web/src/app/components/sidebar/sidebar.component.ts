@@ -45,9 +45,9 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.user$.subscribe(data => {
-      console.log(data)
+
       if (!data) return;
-      if (data.rooms.length !== 0) {
+      if (data.rooms.length != []) {
         navbarData[0].routeLink = `m/${data.rooms[0]}`;
       } else {
         navbarData[0].routeLink = `m/123456789`;

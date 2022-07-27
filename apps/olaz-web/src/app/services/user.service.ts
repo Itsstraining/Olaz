@@ -87,6 +87,8 @@ export class UserService {
         }
       }
 
+      this.user = await (await this.getUserByID(user.uid)).data();
+
       let _user = {
         ...this.user,
         token: user.accessToken
