@@ -1,0 +1,60 @@
+input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    border: 1px solid #4d4d4d;
+  }
+
+.groupBtn{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    div{
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        .button{
+            padding: 8px;
+            letter-spacing: 1px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 5px;
+            width: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover{
+                cursor: pointer;
+            }
+        }
+
+        .is-light{
+            background-color: #efefef;
+            border: 1px solid #efefef;
+            color: #4d4d4d;
+            font-weight: bold;
+            margin-right: 10px;
+
+            &:hover{
+                background-color: #cbcbcb;
+            }
+        }
+
+        .alt-gradient-button{
+            background-color: #9756e2;
+            border: 1px solid #efefef;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+
+            &:hover{
+                background-color: #5a3e9e;
+            }
+        }
+    }
+    
+}

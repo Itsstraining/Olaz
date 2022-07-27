@@ -14,23 +14,24 @@ import { ProfileComponent } from '../../pages/task/components/profile/profile.co
 export class NavbarComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
-    public UserService:UserService
-  ) {}
+    public UserService: UserService
+  ) { }
 
   count = 0;
   messageCount = 0;
   userInfo = undefined;
-  
+
   ngOnInit(): void {
-    this.UserService.user$.subscribe(user=>{
-      if(!user) return
-      this.UserService.notifyCount(user.id).subscribe((count:any)=>{
+    this.UserService.user$.subscribe(user => {
+      if (!user) return
+      this.UserService.notifyCount(user.id).subscribe((count: any) => {
+        if (!count) return
         this.count = count.requests.length;
       })
       this.userInfo = user;
     })
   }
-  
+
   openDialogAddFr() {
     const dialogRef = this.dialog.open(DialogFriendComponent, {
       width: '50%'
@@ -40,23 +41,23 @@ export class NavbarComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-  openDialogAddRj(){
-    const dialogRef = this.dialog.open(RejectAddComponent,{
-      width: '50%', height:'350px',
+  openDialogAddRj() {
+    const dialogRef = this.dialog.open(RejectAddComponent, {
+      width: '50%', height: '350px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  openDialogProfile(){
-    const dialogRef = this.dialog.open(ProfileComponent,{
-      width: '30%', height:'450px',
+  openDialogProfile() {
+    const dialogRef = this.dialog.open(ProfileComponent, {
+      width: '30%', height: '450px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  
+
 }

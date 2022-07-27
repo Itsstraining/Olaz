@@ -39,7 +39,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    // top: 0;
+    overflow: hidden;
     transition: all .5s ease;
     background: #ffffff;
     // padding: 3rem;
