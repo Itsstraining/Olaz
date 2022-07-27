@@ -26,11 +26,22 @@ export class AppController {
 
   @Put('update-call-status')
   async updateDoc(@Body() data: any) {
- 
     if (await this.appService.updateDoc(data.data.id, data.data.userId, data.data.status)) {
       return true;
     }
-    else {
+    else 
+    {
+      return false;
+    }
+  }
+
+  @Put('update-user-call-status')
+  async updateUserStatus(@Body() data: any){
+    if (await this.appService.updateUserStatus(data.id)){
+      return true;
+    }
+    else 
+    {
       return false;
     }
   }
