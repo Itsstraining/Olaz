@@ -54,6 +54,7 @@ export class TaskService {
         return result;
     }
     async delete(roomsId, taskId){
+        console.log(taskId)
         const tempTaskList = await this.firestore.collection('taskList').doc('TL'+roomsId).update({
             taskList: admin.firestore.FieldValue.arrayRemove(taskId)
         }); 

@@ -7,6 +7,7 @@ import { TodoItemComponent } from '../pages/task/todo/components/todo-item/todo-
 import { DeleteDialogComponent } from '../components/navbar/delete-dialog/delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
+
 @NgModule({
   declarations: [
     DeleteDialogComponent,

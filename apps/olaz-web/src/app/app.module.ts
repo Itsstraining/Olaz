@@ -39,7 +39,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { DialogCallComponent } from './pages/video-call/components/dialog-call/dialog-call.component';
 // =======
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
-// >>>>>>> f76133577a1e13e0e54c5bec7f76be7bb1c8178d
+import { PickUserDialogComponent } from './pages/task/components/pick-user-dialog/pick-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,7 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
     DialogCallComponent,
 // =======
     SnackBarComponent,
-// >>>>>>> f76133577a1e13e0e54c5bec7f76be7bb1c8178d
+    PickUserDialogComponent,
     
   ],
   imports: [
