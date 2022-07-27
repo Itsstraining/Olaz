@@ -1,20 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { docData, Firestore, getDoc } from '@angular/fire/firestore';
 import { doc } from '@firebase/firestore';
 import { environment } from '../../../../environments/environment';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //   }),
+  // };
   constructor(public httpClient: HttpClient, private firestore: Firestore) {}
   async getTaskListData(roomId: any) {
     // await this.httpClient.get(environment.endpoint+`task-list/${roomId}`)

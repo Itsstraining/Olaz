@@ -17,11 +17,11 @@ export class SingleTaskComponent implements OnInit, OnChanges {
   constructor(public datePipe: DatePipe) { 
   }
   ngOnChanges(): void {
-    this.deadline = this.datePipe.transform(new Date(this.task.deadline*1000), 'dd/MM/yyyy');
+    this.deadline = this.datePipe.transform(new Date(this.task.deadline), 'dd/MM/yyyy');
   }
 
   ngOnInit(): void {
-    this.deadline =this.datePipe.transform(new Date(this.task.deadline*1000), 'dd/MM/yyyy');
+    this.deadline =this.datePipe.transform(new Date(this.task.deadline), 'dd/MM/yyyy');
   }
 
   drop(event: any) {
