@@ -2,9 +2,9 @@
   <div>
  
     <div *ngIf="!this.ownerStatus.camOn" id="back_ground">
-      <img
+      <img 
         id="img"
-        src="../../../../../assets/119148422_182366610069243_8985745084837655824_n.jpg"
+      [srcset]="this.ownerInfo.photoURL"
       />
     </div>
   </div>
@@ -35,7 +35,7 @@
         ></i>
         <i
           *ngIf="!checkMic"
-          class="uil uil-msssssicrophone"
+          class="uil uil-microphone"
           style="font-size: 150%"
         ></i>
       </button>
