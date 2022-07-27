@@ -16,6 +16,7 @@ import { User } from './user';
 
 import {
   doc,
+  docSnapshots,
   collection,
   collectionData,
   addDoc,
@@ -97,13 +98,24 @@ export class UserService {
       this.user$.next(_user);
 
       collectionChanges(this.callRef).subscribe((data) => {
-        data.forEach(async (doc) => {
-          if (doc.type === 'added' && doc.doc.data()['opponentID'] === user.uid) {
+        data.forEach(async (docVal) => {
+          if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === user.uid) {
             let text = "Incoming Call...";
             if (confirm(text) == true) {
-              await this.answerCall(doc.doc.id);
-            } else {
-              text = 'Denied!';
+
+              await this.answerCall(docVal.doc.id);
+              // audio.pause();
+              // audio.currentTime=0;
+              await this.answerCall(docVal.doc.id);
+              // const audio = new Audio('../../assets/audios/incoming-call.wav');
+              // audio.play().then(()=>{
+              // });
+              // let user=(await getDoc(doc(this.fs,`users/${this.user.id}`))).data()?['incall']
+              let ownerID = docVal.doc.data()['owner']['id'];
+              // let callerData = (await getDoc(doc(this.fs, `users/${ownerID}`))).data()
+              // console.log(callerData);
+            }else{
+
             }
           }
         });
@@ -124,7 +136,7 @@ export class UserService {
     });
   }
   async answerCall(idDoc: any) {
-    this.route.navigate([`call/call/${idDoc}`]);
+    this.route.navigate([`ownspace/call/call/${idDoc}`]);
   }
 
   public user$ = new BehaviorSubject<any>(null);
@@ -139,7 +151,7 @@ export class UserService {
   //new fuction with server
   public getUserByEmail(email: string) {
     return this.http.get(
-      `https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/get-email?email=${email}`
+      `http://localhost:3333/api/user/get-email?email=${email}`
     );
   }
 
@@ -151,7 +163,7 @@ export class UserService {
   }
 
   public toggleRequest(check: boolean, frID: string, myID: string) {
-    return this.http.post('https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/add-friend', {
+    return this.http.post('http://localhost:3333/api/user/add-friend', {
       check,
       myID,
       frID,
@@ -193,14 +205,14 @@ export class UserService {
   }
 
   public sendRequest(myID: string, frID: string) {
-    return this.http.post('https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/send-request', {
+    return this.http.post('http://localhost:3333/api/user/send-request', {
       myID: myID,
       frID: frID,
     });
   }
 
   public suggestUsers() {
-    return this.http.get('https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/suggest-user');
+    return this.http.get('http://localhost:3333/api/user/suggest-user');
   }
 
   getListOfRoomId(userId: string) {

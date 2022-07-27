@@ -1,167 +1,3 @@
-<!-- <div id="Layout-parent">
-
-    <div id="Layout-left">
-
-        <div class="left-top">
-            <div *ngIf="user" style="display: flex;">
-
-                <img class="image-user" [src]="user.photoURL">
-
-                <div style="padding: 15px;">
-                    <P class="Font-user">{{user.displayName}}</P>
-                    <div style="display: flex;">
-                        <div class="Circle-green"></div>
-                        <div class="Online-left">online</div>
-                    </div>
-                </div>
-                
-                <div class="add-room">
-                    <img (click)="openDialogCreatRoom()" class="add-room-ava" src="../../../assets/assets/users-alt (2).png">
-                </div>
-                 
-            </div>
-
-
-            <input type="search" name="search" placeholder="Tìm Kiếm" id="Input-search1">
-
-            <div class="canle">
-                <div class="tatca">
-                    <button style="border:none; background-color: white;">Tất cả</button>
-                </div>
-
-                <div class="dadoc">
-                    <button style="border:none; background-color: white;">Đã đọc</button>
-                </div>
-            </div>
-        </div>
-        <div  style="overflow-y: scroll;">
-            <div *ngIf="rooms">
-                <div *ngFor="let room of rooms " (click)="changeMessage(room.id)" class="cha-1">
-                    <div class="ava">
-                        <img class="avachat" [src]="room.image" alt="">
-                    </div>
-    
-                    <div>
-                        <p class="ten-1">{{room.name}}</p>
-                        <p class="ten-1-1">Ferrari: Hello Ferrari</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="Layout-right">
-
-        <div *ngIf="room" class="right-top" style="display:flex;">
-
-            <div class="Circle-top-one">
-                <span style="display: flex;">
-                    <img class="image-message" [src]="room.image" alt="">
-                    <span>
-                        <p class="font-user-one">{{room.name}}</p>
-
-                        <div style="display: flex; padding: 0px 5px 5px 5px">
-
-                            <div class="circle-green-top-one"></div>
-
-                            <div class="online-right">online</div>
-                        </div>
-                    </span>
-                </span>
-            </div>
-
-            <span style="flex: 1 1 auto">
-
-            </span>
-
-            <div class="right-top-one">
-                             
-                <img class="icon-nav" src="../../../assets/assets/video.png" alt=""(click)="clickCall()">
-                <img class="icon-nav" src="../../../assets/assets/phone-call (1).png" alt="" >
-                <img class="icon-nav" src="../../../assets/assets/search (3).png" alt="">
-                <img class="icon-nav" src="../../../assets/assets/menu-dots-vertical (1).png" alt="">
-            </div>
-
-        </div>
-
-        <div id="right-center" *ngIf="!room">
-            <p>Loading...</p>
-        </div>
-
-        <div *ngIf="room" id="right-center">
-
-            <span *ngFor="let message of room.messages">
-                <div *ngIf="message.userId?.id === myId && !message.image" class="cha">
-                    <div class="my-message">
-                        <span style="flex: 1 1 auto;"></span>
-                        <p mat-raised-button #tooltip="matTooltip"
-                        matTooltip="{{message.createdTime | date: 'short'}}"                       
-                        aria-label="Button that displays a tooltip that hides when scrolled out of the container"
-                        class="noidungtinnhan">{{message.content}}</p>
-                    </div>
-                </div>
-                <div *ngIf="message.userId?.id !== myId && !message.image" class="cha">
-                    <div class="fr-message">
-                        <p mat-raised-button #tooltip="matTooltip"
-                        matTooltip="{{message.createdTime | date: 'short'}}"                       
-                        aria-label="Button that displays a tooltip that hides when scrolled out of the container"
-                        class="noidungtinnhan-fr">{{message.content}}</p>
-                    </div>
-                </div>
-                <div *ngIf="message.userId?.id === myId && !message.content && message.image !== ''">
-                    <div mat-raised-button #tooltip="matTooltip" matTooltip="{{message.createdTime | date: 'short'}}"
-                    aria-label="Button that displays a tooltip that hides when scrolled out of the container"
-                     class="my-image"> 
-                        <span style="flex: 1 1 auto;"></span>                       
-                       <img class="noidunghinhanh" style="float: right;width:30%;" [src]="message.image" alt="">
-                    </div>                   
-                </div>
-                <div *ngIf="message.userId?.id !== myId && !message.content">
-                    <div mat-raised-button #tooltip="matTooltip" matTooltip="{{message.createdTime | date: 'short'}}" 
-                    aria-label="Button that displays a tooltip that hides when scrolled out of the container" class="fr-image">                        
-                        <img class="noidunghinhanh-fr" style="width:30%" [src]="message.image" alt="">
-                    </div>                   
-                </div>
-            </span>
-
-        </div>
-
-        <div *ngIf="room" class="right-bottom">
-            <div class="input-message">
-                <input *ngIf="room" class="input-kichthuoc" (keydown)="onKeydown($event)" type="text"
-                    [(ngModel)]="content" placeholder="Enter your messages....">
-            </div>
-            <div class="icon-bottom">
-                <div class="hub-icon">
-                    <button class ="button-function"><img class="icon-logo-bottom" src="../../../assets/assets/link-free-icon-font.png" alt=""></button>
-                    
-                </div>
-
-                <div class="hub-icon">
-                    <form action="/action_page.php">
-                        <input type="file" (change)="onFileSelectedEvent($event)" >
-                        <button class ="button-function" type="file" (change)="onFileSelectedEvent($event)"><img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt=""></button>
-                      </form>
-                    
-                </div>
-
-                <div class="hub-icon">
-                    <button class ="button-function"><img class="icon-logo-bottom" src="../../../assets/assets/clock-five-free-icon-font.png" alt=""></button>
-                    <img class="icon-logo-bottom" src="../../../assets/assets/clock-five-free-icon-font.png" alt="">
-                </div>
-
-                <div class="hub-icon">
-                    <button class ="button-function"><img class="icon-logo-bottom" src="../../../assets/assets/smile-free-icon-font.png" alt=""></button>
-                    
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-</div> -->
-
 <div id="Layout-parent">
   <div id="Layout-left">
     <div style="padding: 10px;">
@@ -208,6 +44,7 @@
             </div>
             <div>
               <p class="ten-1">{{room.name}}</p>
+              <p class="ten-1-1">Ferrari: Hello Ferrari</p>
             </div>
           </div>
         </div>
@@ -216,7 +53,7 @@
   </div>
 
   <div id="Layout-right">
-    <div *ngIf="room" class="right-top" style="padding: 10px; display:flex; flex-direction: row;">
+    <div *ngIf="message===''" class="right-top" style="padding: 10px; display:flex; flex-direction: row;">
       <div class="Circle-top-one">
         <div style="display: flex; flex-direction: row;">
           <img class="image-message" [src]="room.image" alt="">
@@ -237,14 +74,10 @@
         <i class="uil uil-phone"></i>
         <i class="uil uil-search"></i>
         <i class="uil uil-ellipsis-v"></i>
-        <!-- <img class="icon-nav" src="../../../assets/assets/video.png" alt="" (click)="clickCall()"> -->
-        <!-- <img class="icon-nav" src="../../../assets/assets/phone-call (1).png" alt="">
-                  <img class="icon-nav" src="../../../assets/assets/search (3).png" alt="">
-                  <img class="icon-nav" src="../../../assets/assets/menu-dots-vertical (1).png" alt=""> -->
       </div>
     </div>
-    <div id="right-center" *ngIf="!room">
-      <p>Loading...</p>
+    <div id="right-center" *ngIf="message!==''">
+      <p style="padding: 20%; text-align: center;">{{message}}</p>
     </div>
     <div style="overflow-y: auto; height: 50%;">
       <div *ngIf="room" id="right-center">
