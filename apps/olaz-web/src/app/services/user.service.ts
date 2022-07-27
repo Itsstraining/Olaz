@@ -39,7 +39,7 @@ export class UserService {
   loggedIn = false;
   user!: any;
   userTodo: any;
-  
+
   callRef: any;
   offerDocRef: any;
   ansDocRef: any;
@@ -98,13 +98,24 @@ export class UserService {
       this.user$.next(_user);
 
       collectionChanges(this.callRef).subscribe((data) => {
-        data.forEach(async (doc) => {
-          if (doc.type === 'added' && doc.doc.data()['opponentID'] === user.uid) {
+        data.forEach(async (docVal) => {
+          if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === user.uid) {
             let text = "Incoming Call...";
             if (confirm(text) == true) {
-              await this.answerCall(doc.doc.id);
-            } else {
-              text = 'Denied!';
+
+              await this.answerCall(docVal.doc.id);
+              // audio.pause();
+              // audio.currentTime=0;
+              await this.answerCall(docVal.doc.id);
+              // const audio = new Audio('../../assets/audios/incoming-call.wav');
+              // audio.play().then(()=>{
+              // });
+              // let user=(await getDoc(doc(this.fs,`users/${this.user.id}`))).data()?['incall']
+              let ownerID = docVal.doc.data()['owner']['id'];
+              // let callerData = (await getDoc(doc(this.fs, `users/${ownerID}`))).data()
+              // console.log(callerData);
+            }else{
+
             }
           }
         });
