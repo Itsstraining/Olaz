@@ -4,6 +4,9 @@
     width: 100%;
 }
 
+.add-room:hover {
+    cursor: pointer;
+}
 
 #Layout-left {
     width: 30%;
@@ -60,12 +63,13 @@
     margin-bottom: 10px;
 }
 
-.add-room{
+.add-room {
     background-color: transparent;
     border: none;
     // margin-top: 20px;
     // margin-left: 100px;
 }
+
 // .add-room-ava{
 //     width: 20px;
 //     margin-right: 20px;
@@ -100,11 +104,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    .uil{
+
+    .uil {
         font-size: 25px;
         margin-left: 10px;
 
-        &:hover{
+        &:hover {
             cursor: pointer;
         }
     }
@@ -366,6 +371,7 @@
     flex: 1;
 
     overflow: auto;
+
     .icon-bottom {
         width: 25%;
         display: flex;
@@ -389,26 +395,27 @@
     width: 100%
 }
 
-.optionBtn{
+.optionBtn {
     font-size: 14pt;
-    width:50%;
-    button{
+    width: 50%;
+
+    button {
         letter-spacing: 1px;
-        font-size:  14px;
+        font-size: 14px;
         padding: 5px;
-        border:none; 
-        background-color: transparent; 
+        border: none;
+        background-color: transparent;
         width: 100%;
         font-weight: bold;
         border-radius: 5px;
 
-        &:hover{
+        &:hover {
             cursor: pointer;
         }
     }
 }
 
-.optionBtn button.active{
+.optionBtn button.active {
     background-color: #5A3E9E;
     color: white;
 }
@@ -441,7 +448,7 @@
 
 .ten-1 {
     font-size: 18pt;
-    margin-top: 38px;
+    margin-top: 45px;
     margin-left: 10px;
 }
 
