@@ -73,7 +73,9 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newDes = this.taskData.description;
       this.newPriority = this.taskData.priority;
       this.newStatus = this.taskData.status;
-      this.newDeadline.setValue(new Date(this.taskData['deadline']))
+      this.newDeadline.setValue(new Date(this.taskData['deadline']));
+      console.log(this.newDeadline.value)
+      console.log(this.taskData['deadline'])
     }
   }
 
@@ -82,10 +84,12 @@ export class DetailTaskComponent implements OnInit, OnChanges {
 
   show(status: any){
     this.newStatus = status;
+    this.updateTaskBtn();
   }
 
   showPrio(priority: any){
     this.newPriority = priority;
+    this.updateTaskBtn();
   }
 
   getDropdownClass():string{
@@ -143,9 +147,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   }
 
   updateTaskBtn(){
-    const temp = Date.parse(this.newDeadline.value)/1000;
-    // console.log(new Date(temp * 1000))
-    // console.log(new Date((Date.parse(this.newDeadline.value)/1000)*1000))
+    const temp = Date.parse(this.newDeadline.value);
     const data = { 
       id: this.taskData.id,
       title: this.newTitle,

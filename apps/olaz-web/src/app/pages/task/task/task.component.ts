@@ -6,8 +6,9 @@ import { transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TaskModel } from '../../../models/task.model';
 import { TaskService } from '../../../services/task/tasks/task.service';
 import { UserService } from '../../../services/user.service';
-import { doc, onSnapshot } from '@firebase/firestore';
-import { collection, collectionData, docData, Firestore } from '@angular/fire/firestore';
+import { doc, docSnapshots, Firestore } from '@angular/fire/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarComponent } from '../../../components/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'olaz-task',
@@ -17,9 +18,9 @@ import { collection, collectionData, docData, Firestore } from '@angular/fire/fi
 export class TaskComponent implements OnInit {
   taskListData: any;
   taskListFull: Array<any> = [];
-  todo: any[] =[];
-  doing: any[] =[];
-  done: any[] =[];
+  todo: any[] = [];
+  doing: any[] = [];
+  done: any[] = [];
   panelOpenState = true;
   isShowDetail = false;
   isActiveDropdown = false;
@@ -32,7 +33,8 @@ export class TaskComponent implements OnInit {
   constructor(
     private TaskService: TaskService,
     private userService: UserService,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -56,78 +58,61 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  async getTaskListData() {
-    this.taskListData = undefined;
-    this.taskListFull = [];
-    // onSnapshot()
-    // docData(doc(this.firestore, 'taskList', `TL1657869801036`)).subscribe(async (result) => {
-    //   this.taskListData = result;
-    //   console.log(this.taskListData); 
-    //   if(this.taskListData) {
-    //     for (let i = 0; i < this.taskListData.taskList.length; i++) {
-    //       const tempTask = await this.TaskService.getTaskDetail(this.taskListData.taskList[i]);
-    //       if (tempTask !== undefined) {
-    //         this.taskListFull.push(tempTask);
-    //       }
-    //     }
-    //     this.filterListTask();
-
-    //   };
-    // })
-    // this.taskListData = await this.TaskService.getTaskListData('1657869801036');
-    // onSnapshot(
-    //   doc(this.firestore, 'taskList', `TL1657869801036`),
-    //   async (doc) => {
-    //     if (doc.exists()) {
-    //       this.taskListData = doc.data();
-    //       console.log(this.taskListData);
-    //       const temp = this.taskListData.taskList;
-    //       if (this.taskListData) {
-    //         if (this.taskListData) {
-    //           for (let i = 0; i < temp.length; i++) {
-    //             const tempTask = await this.TaskService.getTaskDetail(temp[i]);
-    //             if (tempTask !== undefined) {
-    //               this.taskListFull.push(tempTask);
-    //             }
-    //           }
-    //         }
-    //         this.filterListTask();
-    //       }
-    //     }
-    //   }
-    // );
-    // setTimeout(this.getTaskList, 5000)
+  openSnackBar(message: any) {
+    this._snackBar.open(message.message, '',{
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      
+    });
   }
 
-  async getTaskList(taskListData: any){
+  async getTaskListData() {
+    this.taskListData = undefined;
+    this.taskListFull.length = 0;
 
-    const temp = taskListData.taskList;
-    if (this.taskListData) {
-      if (this.taskListData) {
-        for (let i = 0; i < temp.length; i++) {
-          const tempTask = await this.TaskService.getTaskDetail(temp[i]);
-          if (tempTask !== undefined) {
-            this.taskListFull.push(tempTask);
+    docSnapshots(doc(this.firestore, 'taskList', `TL1657869801036`)).subscribe(
+      async (result) => {
+        if (!result.metadata.fromCache) {
+          this.taskListFull.length = 0;
+
+          this.taskListData = result.data();
+          for (let i = 0; i < this.taskListData.taskList.length; i++) {
+            docSnapshots(
+              doc(this.firestore, 'tasks', this.taskListData.taskList[i])
+            ).subscribe((data) => {
+              console.log(data.data());
+              const temp = data.data();
+              // if (!data.metadata.fromCache) {
+              const index = this.taskListFull.findIndex(
+                (value) => value['id'] == temp
+              );
+              if (!index) {
+                this.taskListFull.push(temp);
+              }
+              {
+                this.taskListFull[i] = temp;
+              }
+              // }
+              this.filterListTask();
+            });
           }
         }
       }
-    console.log(taskListData);
-
-      this.filterListTask();
-    }
+    );
   }
 
   filterListTask() {
     this.todo = [];
     this.doing = [];
     this.done = [];
-    console.log(this.taskListFull)
     this.taskListFull.filter((value) => {
       if (value.status == 0) return this.todo.push(value);
       if (value.status == 1) return this.doing.push(value);
       if (value.status == 2) return this.done.push(value);
       return;
     });
+    console.log(this.todo, this.doing, this.done);
   }
 
   addNew() {
@@ -150,15 +135,16 @@ export class TaskComponent implements OnInit {
       };
       this.todo.push(temp);
       this.TaskService.createTask(temp, '1657869801036').subscribe(
-        (data) => (this.message = data)
+        (data) => this.openSnackBar(data)
       );
       this.newTaskTitle = '';
     }
+    this.taskListFull.length = 0;
   }
 
   deleteTask(taskId: any) {
     this.TaskService.deleteTask(taskId, '1657869801036').subscribe(
-      (data) => (this.message = data)
+      (data) => this.openSnackBar(data)
     );
     const tempIndex = this.taskListFull.findIndex((task: any) => {
       return task.id === taskId;
@@ -179,9 +165,10 @@ export class TaskComponent implements OnInit {
           this.taskListFull[i] = event.updateTaskData;
         }
       }
-      // this.getTaskListData();
+      this.getTaskListData();
+      this.openSnackBar({message: 'Update Success'})
 
-      this.filterListTask();
+      // this.filterListTask();
     }
   }
 
