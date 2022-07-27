@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditTodoDialogComponent } from './components/edit-todo-dialog/edit-todo-dialog.component';
 import { TodoService } from '../../../services/task/todo/todo.service';
 import { Todo } from '../../../models/todo.model';
-import { DeleteDialogComponent } from '../../../components/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../components/navbar/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'olaz-todo',

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
@@ -56,6 +57,7 @@ export class TaskComponent implements OnInit {
         event.currentIndex
       );
     }
+    
   }
 
   openSnackBar(message: any) {
@@ -81,7 +83,6 @@ export class TaskComponent implements OnInit {
             docSnapshots(
               doc(this.firestore, 'tasks', this.taskListData.taskList[i])
             ).subscribe((data) => {
-              console.log(data.data());
               const temp = data.data();
               // if (!data.metadata.fromCache) {
               const index = this.taskListFull.findIndex(
@@ -112,7 +113,6 @@ export class TaskComponent implements OnInit {
       if (value.status == 2) return this.done.push(value);
       return;
     });
-    console.log(this.todo, this.doing, this.done);
   }
 
   addNew() {
@@ -172,18 +172,23 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  updateTaskBtn() {
-    console.log(this.updateTaskData);
-    this.updateTaskData.updatedDate = Date.now();
-    const tempIndex = this.taskListFull.findIndex((task) => {
-      return task.id === this.updateTaskData.id;
-    });
-    for (let i = 0; i < this.taskListFull.length; i++) {
-      if (i == tempIndex) {
-        this.taskListFull[i] = this.updateTaskData;
-      }
+  updateTaskFunc(task: any, status: any){
+    const data = { 
+      id: this.taskData.id,
+      title: task.title,
+      description: task.description,
+      status: status,
+      priority: task.priority,
+      createdDate: this.taskData.createdDate,
+      deadline: task.deadline,
+      updatedDate: Date.now(),
+      createdBy: this.taskData.createdBy,
+      assignee: '',
+      reporter: '',
     }
-    this.filterListTask();
+    this.TaskService.updateTask(data, data.id).subscribe(
+      (message) => this.updateTaskEmit({message: message, updateTaskData: data})
+    );
   }
 
   getShowDetailsClass(): string {
