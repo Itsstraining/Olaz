@@ -23,11 +23,6 @@ export const navbarData = [
     icon: 'uil uil-edit',
     Label: 'To do',
   },
-  {
-    routeLink: 'profile',
-    icon: 'uil uil-user-circle',
-    Label: 'Profile',
-  },
 ];
 
 @Component({
@@ -36,24 +31,25 @@ export const navbarData = [
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(public userService: UserService, ) {
-   
-   }
+  constructor(public userService: UserService,) {
+
+  }
   @Output() isOpened: EventEmitter<SideNavToggle> = new EventEmitter();
   // @Output() isOpened: EventEmitter<boolean> = new EventEmitter();
 
 
   ngOnInit(): void {
     this.userService.user$.subscribe(data => {
+
       if (!data) return;
-      if (data.rooms.length !== 0) {
+      if (data.rooms.length != []) {
         navbarData[0].routeLink = `m/${data.rooms[0]}`;
       } else {
         navbarData[0].routeLink = `m/123456789`;
       }
       this.appear = data;
     })
-    
+
   }
   collapsed = false;
   screenWidth = 0;
