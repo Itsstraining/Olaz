@@ -50,7 +50,7 @@ export class MessageService {
       createdTime: messageID,
       roomID: roomID
     })
-    return this.HttpClient.post('http://localhost:3333/api/message/send-message', {
+    return this.HttpClient.post('https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/message/send-message', {
       userId: myID,
       id: messageID,
       content: content,
