@@ -18,7 +18,6 @@ export class RoomService {
   private _token!: string;
   constructor(private fs: Firestore, private UserService: UserService, private HttpClient: HttpClient) {
     this.UserService.user$.subscribe(user => {
-      console.log(user)
       if (!user) return;
       this._token = user.token;
     })
@@ -32,12 +31,12 @@ export class RoomService {
     return await (await getDoc(doc(this.fs, 'rooms', roomId))).data()
   }
 
-  checkRoom(roomId: string) {
-    if (!this._token) return;
+  checkRoom(roomId: string, token: string) {
+    if (!token) return;
     const header = {
       headers: new HttpHeaders()
-        .set('Authorization', `Bearer ${this._token}`)
+        .set('Authorization', `Bearer ${token}`)
     }
-    return this.HttpClient.get(`https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/room/check-room/${roomId}`, header)
+    return this.HttpClient.get(`http://localhost:3333/api/room/check-room/${roomId}`, header)
   }
 }
