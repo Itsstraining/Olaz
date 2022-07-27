@@ -155,7 +155,7 @@ export class UserService {
   //new fuction with server
   public getUserByEmail(email: string) {
     return this.http.get(
-      `https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/get-email?email=${email}`
+      `http://localhost:3333/api/user/get-email?email=${email}`
     );
   }
 
@@ -167,7 +167,7 @@ export class UserService {
   }
 
   public toggleRequest(check: boolean, frID: string, myID: string) {
-    return this.http.post('https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/add-friend', {
+    return this.http.post('http://localhost:3333/api/user/add-friend', {
       check,
       myID,
       frID,
@@ -209,14 +209,14 @@ export class UserService {
   }
 
   public sendRequest(myID: string, frID: string) {
-    return this.http.post('https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/send-request', {
+    return this.http.post('http://localhost:3333/api/user/send-request', {
       myID: myID,
       frID: frID,
     });
   }
 
   public suggestUsers() {
-    return this.http.get('https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/suggest-user');
+    return this.http.get('http://localhost:3333/api/user/suggest-user');
   }
 
   getListOfRoomId(userId: string) {

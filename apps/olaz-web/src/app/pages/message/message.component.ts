@@ -63,16 +63,11 @@ export class MessageComponent implements OnInit {
   user!: any
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      // console.log(params['roomId'])
-      if (!params['roomId']) return
-      this.getRoomId(params['roomId'])
-      this.roomId = params['roomId']
-    })
+
     this.UserService.user$.subscribe((user) => {
       if (!user) return
       console.log(user)
-  
+
       this.user = user
       this.myId = user.id;
       this.UserService.notifyCount(this.myId).subscribe((user: any) => {
@@ -105,14 +100,27 @@ export class MessageComponent implements OnInit {
         // console.log(this.rooms)
       })
     });
+    this.UserService.user$.subscribe(
+      user => {
+        if (!user) return;
+        this.route.params.subscribe(params => {
+          // console.log(params['roomId'])
+          if (!params['roomId']) return
+          this.getRoomId(params['roomId'], user.token)
+          this.roomId = params['roomId']
+        })
+      }
+    )
   }
 
-  async getRoomId(id: string) {
+  public message: string = "Loading...";
+  async getRoomId(id: string, token: string) {
 
-    const isCheck = await this.RoomService.checkRoom(id)?.toPromise();
-    console.log(`check::::::::::::::::::${isCheck}`)
-    if(!isCheck) {
+    const isCheck = await this.RoomService.checkRoom(id, token)?.toPromise();
+
+    if (!isCheck) {
       console.log("Bạn không có quyền truy cập vào phòng này!")
+      this.message = "Bạn không có quyền truy cập vào phòng này!"
       return;
     }
 
@@ -120,6 +128,7 @@ export class MessageComponent implements OnInit {
       // console.log(room.messages)
       if (!room) {
         console.log(`Room tim ko dc`)
+        this.message = "Phòng không tồn tại!"
         return;
       }
 
@@ -153,8 +162,7 @@ export class MessageComponent implements OnInit {
       }
 
       this.room = room;
-
-      console.log(room)
+      this.message = ""
     });
   }
 
@@ -198,7 +206,7 @@ export class MessageComponent implements OnInit {
     //       setDoc,
     //       updateDoc
     //     ])
-    if (!this.myId || content=='') return;
+    if (!this.myId || content == '') return;
     this.MessageService.sendMessage(
       content,
       image,
@@ -233,7 +241,7 @@ export class MessageComponent implements OnInit {
   }
 
   selectedFile!: File;
-  async onFileSelectedEvent(event: any){
+  async onFileSelectedEvent(event: any) {
     this.selectedFile = event.target.files[0]
     console.log(this.selectedFile)
     const url: string = await this.MessageService.uploadImage(this.selectedFile);
@@ -253,9 +261,9 @@ export class MessageComponent implements OnInit {
     console.log(this.myId)
     console.log(this.room);
     let userID;
-    this.room.users.forEach((user:any)=>{
-      if(user!=this.myId){
-        userID=user
+    this.room.users.forEach((user: any) => {
+      if (user != this.myId) {
+        userID = user
       }
     })
     this.callRequestRef = collection(this.fireStore, 'calls');
