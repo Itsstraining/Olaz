@@ -1,4 +1,4 @@
-<nav class="khung" *ngIf="userInfo !== undefined " >
+<nav class="khung" *ngIf="userInfo !== undefined">
   <div class="nav-icons">
     <div type="button" class="icon-button">
       <span
@@ -13,10 +13,14 @@
       <span
         class="uil uil-bell"
         mat-raised-button
-        matTooltip="Anouncement"
+        matTooltip="Notification"
         matTooltipPosition="below"
       ></span>
-      <span class="icon-button__badge" [ngStyle]="{'display': messageCount === 0? 'none' : 'block'}">{{ messageCount }}</span>
+      <span
+        class="icon-button__badge"
+        [ngStyle]="{ display: messageCount === 0 ? 'none' : 'block' }"
+        >{{ messageCount }}</span
+      >
     </div>
     <div type="button" class="icon-button">
       <span
@@ -26,31 +30,48 @@
         matTooltipPosition="below"
         (click)="openDialogAddRj()"
       ></span>
-      <span class="icon-button__badge" [ngStyle]="{'display': count === 0? 'none' : 'block'}">{{ count }}</span>
+      <span
+        class="icon-button__badge"
+        [ngStyle]="{ display: count === 0 ? 'none' : 'block' }"
+        >{{ count }}</span
+      >
     </div>
   </div>
   <button class="pic" mat-button [matMenuTriggerFor]="menu">
-    <img
-      [src]="userInfo['photoURL']"
-    />
+    <img [src]="userInfo['photoURL']" />
   </button>
-  <mat-menu #menu="matMenu" style="width: 500px;">
+  <mat-menu #menu="matMenu" style="width: 500px">
     <div class="user-info" mat-menu-item>
-      <img
-        class="small-ava"
-        [src]="userInfo['photoURL']"
-      />
+      <img class="small-ava" [src]="userInfo['photoURL']" />
       <div class="name-email">
-        <h3>{{userInfo['displayName']}}</h3>
-        <h4>{{userInfo['email']}}</h4>
+        <h3>{{ userInfo['displayName'] }}</h3>
+        <h4>{{ userInfo['email'] }}</h4>
       </div>
     </div>
     <hr />
     <button class="icon" mat-menu-item (click)="this.openDialogProfile()">
-    <i class ="uil uil-user-circle"></i>
-    <p class="logout">Profile</p>
+      <i class="uil uil-user-circle"></i>
+      <p class="logout">Profile</p>
     </button>
     <hr />
+    <button
+      class="icon mobile"
+      mat-menu-item
+      (click)="this.openDialogProfile()"
+    >
+      <i class="uil uil-bell" style="color: #000000"></i>
+      <p class="logout">Notification</p>
+    </button>
+    <hr class="mobile"/>
+    <button
+      class="icon mobile"
+      mat-menu-item
+      (click)="this.openDialogProfile()"
+    >
+      <i class="uil uil-users-alt" style="color: #000000"></i>
+      <p class="logout">Notification</p>
+    </button>
+    <hr class="mobile"/>
     <button class="icon" mat-menu-item (click)="this.UserService.logout()">
       <i class="uil uil-signout"></i>
       <p class="logout">Logout</p>

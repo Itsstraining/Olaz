@@ -11,7 +11,7 @@ import { VideoService } from 'apps/olaz-web/src/app/services/video-call/video.se
   styleUrls: ['./video-call.component.scss'],
 })
 export class VideoCallComponent implements OnInit {
-  constructor(public fs: Firestore, private route: ActivatedRoute,public userSrv:UserService, public videoSrv:VideoService, public router: Router) { }
+  constructor(public fs: Firestore, private route: ActivatedRoute, public userSrv: UserService, public videoSrv: VideoService, public router: Router) { }
 
   ngOnInit(): void {
     this.init();
@@ -24,15 +24,16 @@ export class VideoCallComponent implements OnInit {
   myFunction() {
     document.getElementById("menuBtnCalls")!.classList.toggle("menu-items");
   }
-
   onOffScreen = true;
   opponentStatus = {
     micOn: true,
     camOn: true,
+
   }
   ownerStatus = {
     micOn: true,
     camOn: true,
+
   }
   checkScreen = true;
   checkMic = true;
@@ -56,8 +57,16 @@ export class VideoCallComponent implements OnInit {
   callInf: any;
   camInProgress = false;
   micInProgress = false;
+  ownerInfo = {
+    name: '',
+    photoURL: '',
+  }
+  opponentInfo = {
+    name: '',
+    photoURL: '',
+  }
   pc = new RTCPeerConnection(this.servers);
-
+  userList = [];
   screenOff() {
     this.checkScreen = !this.checkScreen;
     if (this.checkScreen) {
@@ -72,10 +81,6 @@ export class VideoCallComponent implements OnInit {
 
   micOff() {
     this.checkMic = !this.checkMic;
-  }
-
-  onOff() {
-    this.onOffScreen = !this.onOffScreen;
   }
 
   async init() {
@@ -101,22 +106,48 @@ export class VideoCallComponent implements OnInit {
       if (this.pc.iceConnectionState == 'disconnected') {
         this.deleteRoom();
       }
+
     }
 
-    docData(doc(this.fs, `calls/${this.docId}`)).subscribe((data: any) => {
+    docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
+      console.log(this.ownerInfo)
+      // let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
+      // let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
       this.callInf = data;
-      this.opponentStatus.camOn = data.opponent.camOn;
-      this.opponentStatus.micOn = data.opponent.micOn;
-      this.ownerStatus.camOn = data.owner.camOn;
-      this.ownerStatus.micOn = data.owner.micOn;
-      console.log(this.ownerStatus);
+      if (this.userSrv.user.id === this.callInf.owner.id) {
+
+        // this.opponentInfo.name = opponent!['displayName'];
+        // this.opponentInfo.photoURL = opponent!['photoURL'];
+        // this.ownerInfo.name = owner!['displayName'];
+        // this.ownerInfo.photoURL = owner!['photoURL'];
+
+        this.opponentStatus.camOn = data['opponent']['id'];
+        this.opponentStatus.micOn = data['opponent']['id'];
+        this.ownerStatus.camOn = data['owner']['id'];
+        this.ownerStatus.micOn = data['owner']['id'];
+
+      } else {
+      
+        // this.opponentInfo.name = owner!['displayName'];
+        // this.opponentInfo.photoURL = owner!['photoURL'];
+        // this.ownerInfo.name = opponent!['displayName'];
+        // this.ownerInfo.photoURL = opponent!['photoURL'];
+        
+        this.opponentStatus.camOn = data['owner']['id'];
+        this.opponentStatus.micOn = data['owner']['id'];
+        this.ownerStatus.camOn = data['opponent']['id'];
+        this.ownerStatus.micOn = data['opponent']['id'];
+      }
+
+
+
     });
 
     collectionChanges(collection(this.fs, 'calls')).subscribe((data) => {
       data.forEach((doc) => {
         if (doc.type === 'removed' && doc.doc.id === this.docId) {
           alert("Cuộc gọi đã kết thúc");
-          this.router.navigate(["/call"]);
+          this.router.navigate(["ownspace/call"]);
         }
       })
     })

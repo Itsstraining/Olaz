@@ -44,6 +44,6 @@ export class TaskService {
 
   deleteTask(taskId: any, roomId: any) {
     const data = { taskId: taskId, roomsId: roomId };
-    return this.httpClient.delete(environment.endpoint+"task-list/task", );
+    return this.httpClient.delete(environment.endpoint+"task-list/task", {body: data});
   }
 }

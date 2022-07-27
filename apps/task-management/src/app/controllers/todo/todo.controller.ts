@@ -5,14 +5,14 @@ import { TodoService } from '../../services/todo/todo.service';
 @Controller('todo')
 export class TodoController {
     constructor(private todoService : TodoService){}
-    @Get('getAll/:userId')
-    async getAll(@Param() {userId}): Promise <any>{
-        return this.todoService.getAll(userId);
+    @Get('getTodoDetail/:todoId')
+    async getAll(@Param() {todoId}): Promise <any>{
+        return this.todoService.getTodoDetail(todoId);
     }
     @Post()
-    async create(@Body() data: any ){
+    async createTodo(@Body() data: any ){
         try{
-            await this.todoService.create(data.newTask, data.userId);
+            await this.todoService.create(data.newTask );
             return {message :"Create Successful"} 
         }catch(err){
             return {
@@ -25,7 +25,7 @@ export class TodoController {
     @Put()
     async update(@Body() body:any){
         try{
-            const result = await this.todoService.update(body.updateTask,body.userId,body.taskId);
+            const result = await this.todoService.update(body.updateTask);
             return {
                 message: "Successful",
                 retu: result
@@ -39,8 +39,20 @@ export class TodoController {
     }
     @Delete()
     async delete(@Body() data: any){
-        const result = this.todoService.delete(data.userId,data.taskId);
-        return result;
+        // console.log(data.id)
+        try {
+            const result = this.todoService.delete(data.id);
+        return {
+            message: "Delete Successful",
+            retu: result
+        }
+        }catch(err){
+            return{
+                message: "Delete Faile",
+                retu: err.toString()
+            }
+        }
+        
     }   
 }
 
