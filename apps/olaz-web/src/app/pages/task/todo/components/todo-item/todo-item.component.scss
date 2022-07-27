@@ -7,9 +7,9 @@
   
     cursor: pointer;
   
-    font-size: 18px;
+    font-size: 14px;
   
-    padding: 35px 15px;
+    padding: 15px;
   
     box-sizing: border-box;
     background: #ffffff;
@@ -21,6 +21,10 @@
     &.completed {
       color: #aaa;
     }
+
+    &:hover{
+      box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25);
+    }
   }
   
   .todo-item .check-box {
@@ -29,7 +33,7 @@
     flex-shrink: 0;
   
     border: 2px solid #eee;
-    // border-radius: 50%;
+    border-radius: 5px;
   
     margin-right: 20px;
   
@@ -125,7 +129,7 @@
   }
   
   .todo-controls-box .todo-control-button.is-danger:hover i.material-icons {
-    color: rgb(155, 27, 27);
+    color: #E74848;
   }
   
   .todo-controls-box .todo-control-button.is-danger:active i.material-icons {
@@ -134,6 +138,7 @@
   
   .todo-text{
     overflow: hidden;
-      text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    letter-spacing: 1px;
   }
   

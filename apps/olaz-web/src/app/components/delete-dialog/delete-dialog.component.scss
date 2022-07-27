@@ -1,12 +1,5 @@
-input {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    letter-spacing: 1px;
-    border: 1px solid #4d4d4d;
-  }
-
 .groupBtn{
+    margin-top: 15px;
     width: 100%;
     display: flex;
     justify-content: flex-end;
@@ -45,14 +38,14 @@ input {
         }
 
         .alt-gradient-button{
-            background-color: #9756e2;
+            background-color: #E74848;
             border: 1px solid #efefef;
             color: white;
             font-weight: bold;
             margin-right: 10px;
 
             &:hover{
-                background-color: #5a3e9e;
+                background-color: #e03333;
             }
         }
     }

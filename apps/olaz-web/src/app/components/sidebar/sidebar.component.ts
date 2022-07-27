@@ -23,11 +23,6 @@ export const navbarData = [
     icon: 'uil uil-edit',
     Label: 'To do',
   },
-  {
-    routeLink: 'profile',
-    icon: 'uil uil-user-circle',
-    Label: 'Profile',
-  },
 ];
 
 @Component({

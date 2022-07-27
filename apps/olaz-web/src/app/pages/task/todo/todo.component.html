@@ -1,44 +1,42 @@
-<div style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center;">
+<div
+  style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; overflow: hidden; position: relative;">
   <div class="heading-section">
     <h1 class="title1">Todos</h1>
   </div>
-
-  <div class="container">
-
-    <div class="add-todo-box-container">
-      <div class="add-todo-box">
-        <form #form="ngForm" (ngSubmit)="onFormSubmit(form)"
-          style="width: 95%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-          <h3 class="title2">New Todo</h3>
+  <div class="add-todo-box-container">
+    <div class="add-todo-box">
+      <form #form="ngForm" (ngSubmit)="onFormSubmit(form)"
+        style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <h3 class="title2">New Todo</h3>
+        <div class="addNewIpt">
           <input ngModel #todoTextField="ngModel" required minlength="2" name="text" type="text"
             placeholder="What to do?" />
-          <button type="submit" class="button alt-gradient-button">
-            <i class="material-icons">add</i>
-            <p>Add</p>
-          </button>
-
           <div *ngIf="todoTextField.invalid && showValidationErrors">
-            <p class="help is-danger" style="color:red" *ngIf="todoTextField.errors!['required']">
+            <p class="help is-danger" style="color:#E74848" *ngIf="todoTextField.errors!['required']">
               Please enter the text of your todo
             </p>
-            <p class="help is-danger" style="color:red" *ngIf="todoTextField.errors!['minlength']">
+            <p class="help is-danger" style="color:#E74848" *ngIf="todoTextField.errors!['minlength']">
               Todo text must be at least 2 characters
             </p>
           </div>
-        </form>
-      </div>
+        </div>
+        <button type="submit" class="button alt-gradient-button">
+          <i class="material-icons">add</i>
+          <p>Add</p>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="todos-list-container">
+    <!-- <div class="section">
+      <div> -->
+    <div class="todos-list">
+      <olaz-todo-item *ngFor="let todo of todos" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
+        (editClicked)="editTodo(todo)" (deleteClicked)="deleteTodo(todo)"></olaz-todo-item>
     </div>
 
-    <section class="section">
-      <div class="container">
-
-        <div class="todos-list">
-
-          <olaz-todo-item *ngFor="let todo of todos" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
-            (editClicked)="editTodo(todo)" (deleteClicked)="deleteTodo(todo)"></olaz-todo-item>
-        </div>
-
-      </div>
-    </section>
   </div>
+  <!-- </div> -->
+  <!-- </div> -->
 </div>

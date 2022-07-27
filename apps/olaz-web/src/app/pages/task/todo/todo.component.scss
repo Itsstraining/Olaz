@@ -1,68 +1,104 @@
 .heading-section {
-    // background: linear-gradient(to right, rgb(2, 228, 171), rgb(74, 215, 240));
+  // background: linear-gradient(to right, rgb(2, 228, 171), rgb(74, 215, 240));
   /* Created with https://www.css-gradient.com */
   background: #A077EA;
   background: -webkit-linear-gradient(top left, #A077EA, #734EBF);
   background: -moz-linear-gradient(top left, #A077EA, #734EBF);
   background: linear-gradient(to bottom right, #A077EA, #734EBF);
-  
-    // padding: 3rem;
-    // padding-bottom: 150px;
-    width: 100%;
-    padding: 2.5rem 2.5rem 4.5rem 2.5rem;
-  
-    h1.title1 {
-      font-weight: bold;
-      color: white;
-      letter-spacing: 1px;
-      text-shadow: 0px 1px 2px rba(black, 0.12);
-    }
-  }
-  
-  .container {
-    max-width: 90%;
-  }
-  
-  .add-todo-box-container {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .add-todo-box {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    background: white;
-    border-radius: 4px;
-    margin-top: -30px;
-    box-shadow: 0 4px 12px rgba(black, 0.08);
 
-    h3{
-      display: inline-block;
-      letter-spacing: 1px;
-    }
+  // padding: 3rem;
+  // padding-bottom: 150px;
+  width: 100%;
+  padding: 2.5rem 2.5rem 4.5rem 2.5rem;
 
-    input{
-      width: 75%;
-      padding: 5px;
-      border-radius: 5px;
-      letter-spacing: 1px;
-      border: 1px solid #4d4d4d;
-    }
+  h1.title1 {
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
+    text-shadow: 0px 1px 2px rba(black, 0.12);
   }
-  
-  
+}
+
+.todos-list-container {
+  // padding-top: 60px/;
+  max-width: 100%;
+  padding-bottom: 60px;
+  height: 30rem;
+  max-height: 50rem;
+  min-height: 10rem;
+  overflow-y: hidden;
+  background-color: #f7f7f7;
+}
+
+.todos-list{
+  margin: 60px 0 0 30px;
+  padding-right: 30px;
+  height: 100%;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.add-todo-box-container {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-todo-box {
+  // width: 100%;
+  width: 80%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px 30px;
+  background: white;
+  border-radius: 4px;
+  // margin-top: -30px;
+  box-shadow: 0 4px 12px rgba(black, 0.08);
+
+  h3 {
+    display: inline-block;
+    letter-spacing: 1px;
+  }
+}
+
+.addNewIpt {
+  margin: 0 10px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+
+  input {
+    padding: 8px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    border: 1px solid #4d4d4d;
+  }
+
+  p{
+    letter-spacing: 1px;
+  }
+}
+
+
 
 
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body { height: 100%; }
-body { margin: 0; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
 
 .alt-gradient-button {
   background: #9756e2;
@@ -70,28 +106,29 @@ body { margin: 0; }
   border: none;
   color: white;
   font-weight: 600;
-  opacity: 0.92; 
+  opacity: 0.92;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 5px 10px; 
-  
-  p{
+  padding: 5px 10px;
+
+  p {
     margin: 0;
     letter-spacing: 1px;
   }
 
-  &:hover{
+  &:hover {
     opacity: 1;
     color: white;
     box-shadow: 0px 0px 0px 4px rgba(black, 0.05);
+    cursor: pointer;
   }
 
   &:active {
     opacity: 0.8;
   }
-  
+
   &:focus {
     color: white;
     opacity: 1;
@@ -103,3 +140,11 @@ body { margin: 0; }
   }
 }
 
+
+
+// todos section
+.section {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}

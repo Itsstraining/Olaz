@@ -1,0 +1,15 @@
+<div>
+  <div>
+    <h3>Are you sure you want to delete this?</h3>
+    <div class="groupBtn">
+      <div mat-dialog-actions>
+        <button type="button" class="button is-light" (click)="close()">
+          <p>Cancel</p>
+        </button>
+        <button type="submit" class="button alt-gradient-button" [mat-dialog-close]="data">
+          <p>Delete</p>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
