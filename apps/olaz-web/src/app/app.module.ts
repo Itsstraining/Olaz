@@ -35,9 +35,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/video-call/components/login/login.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { provideStorage, getStorage } from '@angular/fire/storage';
-// <<<<<<< HEAD
+
 import { DialogCallComponent } from './pages/video-call/components/dialog-call/dialog-call.component';
-// =======
+
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { PickUserDialogComponent } from './pages/task/components/pick-user-dialog/pick-user-dialog.component';
 
@@ -46,9 +46,7 @@ import { PickUserDialogComponent } from './pages/task/components/pick-user-dialo
     AppComponent,
     NxWelcomeComponent,
     LoginComponent,
-// <<<<<<< HEAD
     DialogCallComponent,
-// =======
     SnackBarComponent,
     PickUserDialogComponent,
     
