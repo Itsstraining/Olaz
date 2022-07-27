@@ -1,9 +1,6 @@
 <div class="task-details" [ngStyle]="{display: isShowDetail === false ? 'none': 'block'}">
   <div class="delete-n-closeDetail-board-container">
     <div class="delete-n-closeDetail-board">
-      <button matTooltip="Save change" matTooltipPosition="below">
-        <i class="uil uil-pen" (click)="updateTaskBtn()"></i>
-      </button>
       <button matTooltip="Delete task" matTooltipPosition="below">
         <i class="uil uil-trash-alt" (click)="deleteTask(taskData.id)"></i>
       </button>
@@ -16,7 +13,7 @@
   <div class="title-detail">
     <h3 class="label">Title</h3>
     <div class="wrap-title-Description">
-      <input type="text" [value]="taskData['title']" [(ngModel)]="newTitle">
+      <input type="text" [value]="taskData['title']" [(ngModel)]="newTitle" (keydown.enter)="updateTaskBtn()" (blur)="updateTaskBtn()">
     </div>
   </div>
 
@@ -35,7 +32,7 @@
 
   <div class="description-detail">
     <h3 class="label">Description</h3>
-    <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']" [(ngModel)]="newDes"></textarea>
+    <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']" [(ngModel)]="newDes" (keydown.enter)="updateTaskBtn()" (blur)="updateTaskBtn()"></textarea>
   </div>
 
   <div class="other-detail">
@@ -66,11 +63,11 @@
         <div class="detail-row" style="margin: 0;">
           <p>Deadline</p>
           <div class="datePicker-ipt">
-            <input [matDatepicker]="picker" readonly [value]="newDeadline" [formControl]="newDeadline"/>
+            <input [matDatepicker]="picker" readonly [value]="newDeadline" [formControl]="newDeadline" (blur)="updateTaskBtn()"/>
             <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
           </div>
         </div>
-        <mat-datepicker #picker></mat-datepicker>
+        <mat-datepicker (closed)="updateTaskBtn()" #picker></mat-datepicker>
 
         <div class="detail-row">
           <p>Priority</p>
