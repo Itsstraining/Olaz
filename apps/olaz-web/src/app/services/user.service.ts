@@ -55,47 +55,69 @@ export class UserService {
     authState(this.auth).subscribe(async (user: any) => {
       if (!user) return;
       let userDoc = doc(collection(this.fs, 'users'), user!.uid);
+
       let todoCollection = collection(userDoc, 'Todo');
       let todoID;
 
       this.callRef = collection(this.fs, 'calls');
+      this.userTodo = collection(this.fs, 'todo');
+      this.loggedIn = true;
 
-      if (user) {
-        this.userTodo = collection(this.fs, 'todo');
-        this.loggedIn = true;
-        this.user = await (await this.getUserByID(user.uid)).data();
+      this.user = await (await this.getUserByID(user.uid)).data();
 
-        let _user = {
-          ...this.user,
-          token: user.accessToken
-        }
-
-        console.log(_user)
-
-        this.user$.next(_user);
-
-
-        collectionChanges(this.callRef).subscribe((data) => {
-          data.forEach(async (doc) => {
-            if (doc.type === 'added' && doc.doc.data()['opponentID'] === this.user.id) {
-              let text = "Incoming Call...";
-              if (confirm(text) == true) {
-
-                await this.answerCall(doc.doc.id);
-              } else {
-                text = 'Denied!';
-              }
-            }
-          });
+      if (!this.user) {
+        console.log({
+          message: "Không tìm được người dùng!"
         });
-
-        if ((await this.userFirstLogin()) == false) {
-          await setDoc(doc(this.fs, 'users', this.user.id), this.user);
-          todoID = await await addDoc(todoCollection, {
-            content: 'This is todo',
-            status: 'Done',
-          });
+        try {
+          let _userRegister = {
+            id: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            friends: [],
+            photoURL: user.photoURL,
+            incall: false,
+            requests: [],
+            rooms: [],
+            todos: []
+          }
+          await setDoc(doc(this.fs, 'users', _userRegister.id), _userRegister);
+        } catch (err) {
+          console.log(err);
         }
+      }
+
+      let _user = {
+        ...this.user,
+        token: user.accessToken
+      }
+
+      this.user$.next(_user);
+
+      collectionChanges(this.callRef).subscribe((data) => {
+        data.forEach(async (doc) => {
+          if (doc.type === 'added' && doc.doc.data()['opponentID'] === user.uid) {
+            let text = "Incoming Call...";
+            if (confirm(text) == true) {
+              await this.answerCall(doc.doc.id);
+            } else {
+              text = 'Denied!';
+            }
+          }
+        });
+      });
+
+      console.log("haha")
+      console.log(await this.userFirstLogin())
+
+      if ((await this.userFirstLogin()) == false) {
+        // await setDoc(doc(this.fs, 'users', ...user.uid), this.user);
+        // await addDoc(todoCollection, {
+        //   content: 'This is todo',
+        //   status: 'Done',
+        // });
+      } else {
+        console.log('user exists');
       }
     });
   }
@@ -127,38 +149,6 @@ export class UserService {
   }
 
   public toggleRequest(check: boolean, frID: string, myID: string) {
-    // if (check) {
-    //   const roomId = Date.now().toString();
-    //   const myUpdate = updateDoc(doc(this.fs, 'users', myID), {
-    //     friends: arrayUnion(frID),
-    //     requests: arrayRemove(frID),
-    //     rooms: arrayUnion(roomId)
-    //   });
-    //   const frUpdate = updateDoc(doc(this.fs, 'users', frID), {
-    //     friends: arrayUnion(myID),
-    //     requests: arrayRemove(myID),
-    //     rooms: arrayUnion(roomId)
-    //   })
-    //   const createRoom = setDoc(doc(this.fs, 'rooms', roomId), {
-    //     id: roomId,
-    //     messages: [],
-    //     users: [frID, myID],
-    //     name: ""
-    //   })
-    //   await Promise.all([
-    //     myUpdate,
-    //     frUpdate,
-    //     createRoom
-    //   ])
-    // }
-    // else {
-    //   await updateDoc(doc(this.fs, 'users', myID), {
-    //     requests: arrayRemove(frID),
-    //   });
-    //   await updateDoc(doc(this.fs, 'users', frID), {
-    //     requests: arrayRemove(myID),
-    //   });
-    // }
     return this.http.post('https://messenger-server-api-oolzqmo74q-uc.a.run.app/api/user/add-friend', {
       check,
       myID,
