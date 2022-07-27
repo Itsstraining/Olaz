@@ -113,6 +113,14 @@
     align-items: center;
     border-radius: 50%;
   }
+
+  .mobile{
+    display: none;
+  }
+
+  .icon.mobile{
+    display: none;
+  }
   // .uil-bell:hover{
   //   background-color: #ffffff;
   //   color: #000000;
@@ -152,7 +160,13 @@
   }
   @media (max-width: 740px){
     .nav-icons{
+      display: none;
+    }
+    .mobile{
       display: block;
     } 
+    .icon.mobile{
+      display: block;
+    }
   }
   
