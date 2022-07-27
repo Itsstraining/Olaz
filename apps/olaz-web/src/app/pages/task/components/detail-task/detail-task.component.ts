@@ -17,7 +17,8 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   @Input() isShowDetail: any;
   @Output() isShowDetailToggle: EventEmitter<any> = new EventEmitter<any>();
   @Input() taskData: any;
-  @Output() updateTaskEmit: EventEmitter<any> = new EventEmitter<any>()
+  @Output() updateTaskEmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteTaskEmit: EventEmitter<any> = new EventEmitter<any>();
 
   panelOpenState = false;
   isActiveDropdown = false;
@@ -144,10 +145,10 @@ export class DetailTaskComponent implements OnInit, OnChanges {
 
   updateTaskBtn(){
     const temp = Date.parse(this.newDeadline.value)/1000;
-    console.log(temp)
+   
     // console.log(new Date(temp * 1000))
     // console.log(new Date((Date.parse(this.newDeadline.value)/1000)*1000))
-    console.log(this.newDeadline.value)
+    
     const data = { 
       id: this.taskData.id,
       title: this.newTitle,
@@ -167,7 +168,9 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   }
 
   deleteTask(taskId: any){
-    
+    this.taskService.deleteTask( taskId, '1657869801036' ).subscribe (
+      (message) => this.deleteTaskEmit.emit({message: message, taskId: taskId })
+    )
   }
 
   closeShowDetails(){

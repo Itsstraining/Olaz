@@ -57,5 +57,9 @@
   </div>
 
   <!-- SHOW DETAILS IN THE RIGHT SIDE -->
-  <olaz-detail-task *ngIf="isShowDetail" [taskData]="taskData" [isShowDetail]="isShowDetail" (isShowDetailToggle)="isShowDetail = $event" (updateTaskEmit)="updateTaskEmit($event)"></olaz-detail-task>
+  <olaz-detail-task *ngIf="isShowDetail" [taskData]="taskData" [isShowDetail]="isShowDetail" 
+    (isShowDetailToggle)="isShowDetail = $event" 
+    (updateTaskEmit)="updateTaskEmit($event)"
+    (deleteTaskEmit)="deleteTask($event)"
+    ></olaz-detail-task>
 </div>

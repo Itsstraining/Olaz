@@ -6,6 +6,7 @@ import { transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TaskModel } from '../../../models/task.model';
 import { TaskService } from '../../../services/task/tasks/task.service';
 import { UserService } from '../../../services/user.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'olaz-task',
@@ -26,11 +27,16 @@ export class TaskComponent implements OnInit {
   updateTaskData!: TaskModel;
   newTaskTitle: any = '';
   message: any;
+  private readonly notifier: NotifierService;
 
   constructor(
     private TaskService: TaskService,
-    private userService: UserService
-  ) {}
+    private userService: UserService, notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
+  
+  
 
   ngOnInit(): void {
     this.getTaskListData();
@@ -104,21 +110,23 @@ export class TaskComponent implements OnInit {
     
   }
 
-  deleteTask(taskId: any) {
-    this.TaskService.deleteTask(taskId, '1657869801036').subscribe(
-      (data) => (this.message = data)
-    );
-    const tempIndex = this.taskListFull.findIndex((task: any) => {
-      return task.id === taskId;
-    });
-    this.taskListFull = this.taskListFull
-      .slice(0, tempIndex)
-      .concat(this.taskListFull.slice(tempIndex + 1));
-    this.filterListTask();
+  deleteTask(event: any) {
+    // this.TaskService.deleteTask(taskId, '1657869801036').subscribe(
+    //   (data) => (this.message = data)
+    // );
+    if(event.message.message.includes('Delete Success')){
+      const tempIndex = this.taskListFull.findIndex((task: any) => {
+        return task.id === event.taskId;
+      });
+      this.taskListFull = this.taskListFull
+        .slice(0, tempIndex)
+        .concat(this.taskListFull.slice(tempIndex + 1));
+      this.filterListTask();
+    }
   }
 
   updateTaskEmit(event: any) {
-    if(event.message.message.includes('Update Success')){
+    if(event.message.message.includes('Update Success')){this.notifier.notify('success', 'You are awesome! I mean it!');
       const tempIndex = this.taskListFull.findIndex((task) => {
         return task.id === event.updateTaskData.id;
       });
