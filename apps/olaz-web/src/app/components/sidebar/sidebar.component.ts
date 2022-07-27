@@ -31,15 +31,16 @@ export const navbarData = [
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(public userService: UserService, ) {
-   
-   }
+  constructor(public userService: UserService,) {
+
+  }
   @Output() isOpened: EventEmitter<SideNavToggle> = new EventEmitter();
   // @Output() isOpened: EventEmitter<boolean> = new EventEmitter();
 
 
   ngOnInit(): void {
     this.userService.user$.subscribe(data => {
+      console.log(data)
       if (!data) return;
       if (data.rooms.length !== 0) {
         navbarData[0].routeLink = `m/${data.rooms[0]}`;
@@ -48,7 +49,7 @@ export class SidebarComponent implements OnInit {
       }
       this.appear = data;
     })
-    
+
   }
   collapsed = false;
   screenWidth = 0;
