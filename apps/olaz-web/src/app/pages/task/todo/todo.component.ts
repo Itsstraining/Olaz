@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +17,7 @@ import { DeleteDialogComponent } from '../../../components/navbar/delete-dialog/
 export class TodoComponent implements OnInit {
   todos: Todo[] = [];
   showValidationErrors!: boolean;
-
+  checkedAll: boolean = false;
   constructor(private todoService: TodoService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -37,7 +38,31 @@ export class TodoComponent implements OnInit {
 
   toggleCompleted(todo: Todo) {
     //set todo to completed
-    todo.completed = !todo.completed;
+    todo.isCompleted = !todo.isCompleted;
+  }
+
+  toggleCompleteAll(){
+    if(!this.checkedAll){
+      for(let i = 0; i < this.todos.length; i++){
+        if(this.todos[i].isCompleted == false){
+          this.todos[i].isCompleted = true;
+        }
+      }
+    }else{
+      for(let i = 0; i < this.todos.length; i++){
+        this.todos[i].isCompleted = false;
+      }
+    }
+    this.checkedAll = !this.checkedAll;
+  }
+
+  deleteMultiTask(){
+    for(let i = 0; i < this.todos.length; i++){
+      if(this.todos[i].isCompleted == true){
+        console.log(this.todos[i])
+        this.todoService.deleteTodo(i);
+      }
+    }
   }
 
   editTodo(todo: Todo) {
@@ -69,4 +94,5 @@ export class TodoComponent implements OnInit {
       }
     });
   }
+
 }

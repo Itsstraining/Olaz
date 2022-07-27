@@ -9,10 +9,10 @@
         </div>
 
         <div *ngIf="todoTextField.invalid">
-          <p class="help is-danger" *ngIf="todoTextField.errors!['required']">
+          <p class="help is-danger" style="color:#E74848" *ngIf="todoTextField.errors!['required']">
             Please enter the text of your todo
           </p>
-          <p class="help is-danger" *ngIf="todoTextField.errors!['minlength']">
+          <p class="help is-danger" style="color:#E74848" *ngIf="todoTextField.errors!['minlength']">
             Todo text must be at least 2 characters
           </p>
         </div>

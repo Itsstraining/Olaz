@@ -28,15 +28,17 @@
     </div>
   </div>
 
-  <div class="todos-list-container">
-    <!-- <div class="section">
-      <div> -->
-    <div class="todos-list">
-      <olaz-todo-item *ngFor="let todo of todos" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
-        (editClicked)="editTodo(todo)" (deleteClicked)="deleteTodo(todo)"></olaz-todo-item>
-    </div>
 
+  <div class="todos-list-container">
+    <div class="todo-list-content">
+      <div class="groupBtn">
+        <button (click)="toggleCompleteAll()">{{!checkedAll ? 'Check All' : 'Uncheck All'}}</button> |
+        <button (click)="deleteMultiTask()">Delete tasks</button>
+      </div>
+      <div class="todos-list">
+        <olaz-todo-item *ngFor="let todo of todos" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
+          (editClicked)="editTodo(todo)" (deleteClicked)="deleteTodo(todo)"></olaz-todo-item>
+      </div>
+    </div>
   </div>
-  <!-- </div> -->
-  <!-- </div> -->
 </div>
