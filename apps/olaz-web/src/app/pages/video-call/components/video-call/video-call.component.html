@@ -14,33 +14,11 @@
 
     <video autoplay id="user2video" height="100%" width="100%"></video>
     <div class="btn-container">
-      <button id="btn-call-end" (click)="endCall()" mat-fab>
-        <i class="uil uil-phone-slash" style="font-size: 150%"></i>
-      </button>
-    </div>
-  </div>
-</div>
-
-<div>
-  <div class="menuItems">
-    <button
-      mat-icon-button
-      class="btn-menu"
-      mat-icon-button
-    >
-      <i class="uil uil-ellipsis-v" style="font-size: 150%"></i>
-    </button>
-  </div>
-    <div id="menuBtnCalls" class="menu-items">
-      <button class="btn-call" mat-icon-button>
-        <i class="uil uil-signout" style="font-size: 150%"></i>
-      </button>
-      <button class="btn-call" [disabled]="this.camInProgress" mat-icon-button (click)="turnWebCam()">
+      <button class="btn-call" [disabled]="this.camInProgress" mat-fab (click)="turnWebCam()">
         <i
           *ngIf="checkScreen"
           class="uil uil-video-slash"
           style="font-size: 150%"
-          
         ></i>
         <i
           *ngIf="!checkScreen"
@@ -48,7 +26,10 @@
           style="font-size: 150%"
         ></i>
       </button>
-      <button class="btn-call" [disabled]="this.micInProgress" mat-icon-button (click)="turnMic()">
+      <button class="btn-call" id="btn-call-end" (click)="endCall()" mat-fab>
+        <i class="uil uil-phone-slash" style="font-size: 150%"></i>
+      </button>
+      <button class="btn-call" [disabled]="this.micInProgress" mat-fab (click)="turnMic()">
         <i
           *ngIf="checkMic"
           class="uil uil-microphone-slash"
@@ -60,14 +41,7 @@
           style="font-size: 150%"
         ></i>
       </button>
-      <button class="btn-call" mat-icon-button>
-        <i class="uil uil-users-alt" style="font-size: 150%"></i>
-      </button>
-      <button class="btn-call" mat-icon-button>
-        <i class="uil uil-grin" style="font-size: 150%"></i>
-      </button>
-      <button class="btn-call" mat-icon-button>
-        <i class="uil uil-setting" style="font-size: 150%"></i>
-      </button>
     </div>
+  </div>
 </div>
+
