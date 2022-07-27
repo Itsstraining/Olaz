@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NotifierModule } from 'angular-notifier';
 import { TaskRoutingModule } from './task-routing.module';
 import { TaskComponent } from './task.component';
 import { MaterialModule } from '@olaz/material';
@@ -21,7 +20,6 @@ import { DatePipe } from '@angular/common';
     TaskRoutingModule,
     MaterialModule,
     ShareModule,
-    NotifierModule
   ],
   exports:[
     SingleTaskComponent,
