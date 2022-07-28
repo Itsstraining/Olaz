@@ -3,53 +3,36 @@
   <!-- <h3>Develop across all platforms</h3> -->
   <div class="forward-pop-up">
     <div class="Top-bar">
-      <h1>Lời mời kết bạn</h1>
+      <h1>Friend Request</h1>
     </div>
     <div class="Body-bar">
-      <!-- <div class="body-searching-bar">
-                <div class="search-user-email">
-                    <input class="enter-email" placeholder="Enter an email...">
-                </div>
-                <div class="search-user-icon">
-                    <span><i class="uil uil-message"></i></span>
-                </div>
-            </div> -->
-      <!-- <form class="example-form">
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Enter an email here..." />
-        </mat-form-field>
-      </form> -->
       <mat-list>
-        <mat-selection-list>  
-     
-            <mat-list-item  *ngFor="let user of request">
-              <img
-                matListAvatar
-                [src]="user.photoURL"
-              />
-             
-              <div matLine class="user-email">
-                <span> {{user.email}} </span>
-              </div>
-              <button  *ngIf="requestStatus === 'Chưa kết bạn'" (click)="toggleRequest(true, user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
-              <button disabled *ngIf="requestStatus === 'Đang kết bạn'" class="btn" ><i class="uil uil-user-plus"></i></button>
-              <button *ngIf="requestStatus === 'Kết bạn thành công'" class="btn" ><i class="uil-check"></i></button>
-              <button (click)="toggleRequest(false , user.id )" class="btn"><i class="uil uil-user-times"></i></button>
-            </mat-list-item>
+        <mat-selection-list>
 
-            <mat-list-item  *ngFor="let user of listOfFriend">
-              <img
-              matListAvatar
-              src="{{user.photoURL}}"
-              />
-              <div matLine class="user-email">
-                <span> {{user.email}} </span>
-              </div>
-              <button (click)="addFriend(user.id)" class="btn" ><i class="uil uil-user-plus"></i></button>
-            </mat-list-item>
-          
-            <!-- <mat-list-item>
+          <mat-list-item *ngFor="let user of request">
+            <img matListAvatar [src]="user.photoURL" />
+
+            <div matLine class="user-email">
+              <span> {{user.email}} </span>
+            </div>
+            <button matTooltip="Chấp nhận kết bạn" *ngIf="requestStatus === 'Chưa kết bạn'"
+              (click)="toggleRequest(true, user.id)" class="btn"><i class="uil uil-user-plus"></i></button>
+            <button disabled *ngIf="requestStatus === 'Đang kết bạn'" class="btn"><i
+                class="uil uil-user-plus"></i></button>
+            <button *ngIf="requestStatus === 'Kết bạn thành công'" class="btn"><i class="uil-check"></i></button>
+            <button matTooltip="Từ chối kết bạn" (click)="toggleRequest(false , user.id )" class="btn"><i
+                class="uil uil-user-times"></i></button>
+          </mat-list-item>
+
+          <mat-list-item *ngFor="let user of listOfFriend">
+            <img matListAvatar src="{{user.photoURL}}" />
+            <div matLine class="user-email">
+              <span> {{user.email}} </span>
+            </div>
+            <button (click)="addFriend(user.id)" class="btn"><i class="uil uil-user-plus"></i></button>
+          </mat-list-item>
+
+          <!-- <mat-list-item>
               <img
                 matListAvatar
                 src="https://giaxeoto.vn/admin/upload/images/resize/640-ngoai-that-lamborghini-huracan-evo.jpg"

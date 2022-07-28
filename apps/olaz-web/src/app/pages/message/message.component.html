@@ -4,7 +4,7 @@
       <div class="left-top">
         <div *ngIf="user" style="display: flex; flex-direction: row; justify-content: space-between;">
           <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-            <img class="image-user" [src]="user.photoURL">
+            <img class="image-user" [src]="user.photoURL" (error)="handleError($event)">
             <div style="margin-left: 10px">
               <p class="Font-user">{{user.displayName}}</p>
               <div style="display: flex; flex-direction: row;">
@@ -42,7 +42,7 @@
             <div style=" background-color: rgb(182, 182, 182);
             border-radius: 15px;" *ngIf="room.id === roomId" (click)="changeMessage(room.id)" class="cha-1">
               <div class="ava">
-                <img class="avachat" [src]="room.image" alt="HE" (error)="handleError($event)">
+                <img class="avachat" [src]="room.image" alt="avatar" (error)="handleError($event)">
               </div>
               <div>
                 <p class="ten-1">{{room.name}}</p>
@@ -149,7 +149,6 @@
             <img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt="">
             <input #fileInput type="file" (change)="onFileSelectedEvent($event)" style="display: none;" />
           </button>
-
         </div>
       </div>
       <div class="input-message">
