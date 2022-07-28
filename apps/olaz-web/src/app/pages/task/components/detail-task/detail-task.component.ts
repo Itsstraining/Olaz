@@ -81,8 +81,6 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newPriority = this.taskData.priority;
       this.newStatus = this.taskData.status;
       this.newDeadline.setValue(new Date(this.taskData['deadline']));
-      console.log(this.newDeadline.value)
-      console.log(this.taskData['deadline'])
     }
   }
 

@@ -42,7 +42,7 @@
             <div style=" background-color: rgb(182, 182, 182);
             border-radius: 15px;" *ngIf="room.id === roomId" (click)="changeMessage(room.id)" class="cha-1">
               <div class="ava">
-                <img class="avachat" [src]="room.image" alt="">
+                <img class="avachat" [src]="room.image" alt="HE" (error)="handleError($event)" >
               </div>
               <div>
                 <p class="ten-1">{{room.name}}</p>

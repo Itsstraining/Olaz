@@ -37,6 +37,6 @@ export class RoomService {
       headers: new HttpHeaders()
         .set('Authorization', `Bearer ${token}`)
     }
-    return this.HttpClient.get(`http://localhost:3333/api/room/check-room/${roomId}`, header)
+    return this.HttpClient.get(`http://localhost:3331/api/room/check-room/${roomId}`, header)
   }
 }

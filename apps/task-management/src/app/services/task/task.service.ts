@@ -40,7 +40,6 @@ export class TaskService {
         return result;
     }
     async update(updateTask, taskId){
-        console.log(updateTask)
         const result = await this.firestore.collection('tasks').doc(taskId).update({
             title: updateTask.title, 
             description: updateTask.description,
@@ -54,7 +53,6 @@ export class TaskService {
         return result;
     }
     async delete(roomsId, taskId){
-        console.log(taskId)
         const tempTaskList = await this.firestore.collection('taskList').doc('TL'+roomsId).update({
             taskList: admin.firestore.FieldValue.arrayRemove(taskId)
         }); 
