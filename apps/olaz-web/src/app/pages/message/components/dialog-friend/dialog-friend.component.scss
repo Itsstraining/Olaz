@@ -1,27 +1,25 @@
-.Top-bar{
-    display: flex;  
-    border-bottom-width: 3px black;
-    border-bottom-style: solid;
-}
-    
-h1{
-  margin-bottom:0%;
+.Top-bar {
+  display: flex;
 }
 
-.Body-bar{
+h1 {
+  margin-bottom: 0%;
+}
+
+.Body-bar {
   margin-top: 1%;
 }
 
 .example-form {
-    // min-width: 150px;
-    // max-width: 500px;
-    width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
+  // min-width: 150px;
+  // max-width: 500px;
+  width: 100%;
+}
 
-.btn{
+.example-full-width {
+  width: 100%;
+}
+
+.btn {
   font-size: 25px;
 }

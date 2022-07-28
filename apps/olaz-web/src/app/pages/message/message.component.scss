@@ -223,7 +223,6 @@
     width: 100%;
 }
 
-
 .hinhanhdaidien {
     width: 50px;
     height: 50px;
@@ -288,6 +287,13 @@
     width: 100%;
     overflow: auto;
     // padding: 30px;
+    margin-top: 10px;
+}
+
+.cha-1:hover {
+    cursor: pointer;
+    background-color: rgb(229, 229, 229);
+    border-radius: 15px;
 }
 
 .tinnhan-1 {
@@ -435,8 +441,7 @@
 }
 
 .ava {
-    margin-left: 40px;
-    margin-top: 40px;
+    padding: 20px;
 }
 
 .avachat {
@@ -448,8 +453,7 @@
 
 .ten-1 {
     font-size: 18pt;
-    margin-top: 45px;
-    margin-left: 10px;
+    padding: 25px 0px 15px 10px;
 }
 
 .ten-1-1 {

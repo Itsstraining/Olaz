@@ -103,12 +103,18 @@ export class MessageComponent implements OnInit {
     this.UserService.user$.subscribe(
       user => {
         if (!user) return;
-        this.route.params.subscribe(params => {
-          // console.log(params['roomId'])
-          if (!params['roomId']) return
-          this.getRoomId(params['roomId'], user.token)
-          this.roomId = params['roomId']
-        })
+        console.log(user);
+        if (user.rooms.length === 0) {
+          this.message = "Vui lòng kết bạn!"
+          return;
+        } else {
+          this.route.params.subscribe(params => {
+            // console.log(params['roomId'])
+            if (!params['roomId']) return
+            this.getRoomId(params['roomId'], user.token)
+            this.roomId = params['roomId']
+          })
+        }
       }
     )
   }
