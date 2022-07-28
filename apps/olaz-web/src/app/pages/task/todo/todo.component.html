@@ -1,4 +1,4 @@
-<div
+<div *ngIf="this.appear !== undefined"
   style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; overflow: hidden; position: relative;">
   <div class="heading-section">
     <h1 class="title1">Todos</h1>
@@ -33,16 +33,20 @@
     <div class="todo-list-content">
       <div class="groupBtn">
         <div>
-          <button [class.active]="currentList === item.value" class="btn-filter" *ngFor="let item of arr" (click)="toggleList(item)">{{item.value}}</button>
+          <button [class.active]="currentList === item.value" class="btn-filter" *ngFor="let item of arr"
+            (click)="toggleList(item)">{{item.value}}</button>
         </div>
         <div>
           <button class="btn" (click)="toggleCompleteAll()">{{!checkedAll ? 'Check All' : 'Uncheck All'}}</button> |
           <button class="btn" (click)="deleteMultiTask()">Delete tasks</button>
         </div>
       </div>
-      <div class="todos-list">
+      <div class="todos-list" *ngIf="todos.length !== 0">
         <olaz-todo-item *ngFor="let todo of todos" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
           (editClicked)="editTodo(todo)" (deleteClicked)="deleteTodo(todo)"></olaz-todo-item>
+      </div>
+      <div class="todos-list" style="justify-content: center;" *ngIf="todos.length === 0">
+        <h3 style="text-align: center; margin-top: 50px; letter-spacing: 1px; font-weight: bold;">You have <span style="color: #9756e2;">0</span> to do task right now!</h3>
       </div>
     </div>
   </div>

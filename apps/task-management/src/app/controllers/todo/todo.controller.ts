@@ -41,7 +41,7 @@ export class TodoController {
     async delete(@Body() data: any){
         // console.log(data.id)
         try {
-            const result = this.todoService.delete(data.id);
+            const result = this.todoService.delete(data.todo);
         return {
             message: "Delete Successful",
             retu: result

@@ -31,7 +31,7 @@ export class TaskComponent implements OnInit {
   newTaskTitle: any = '';
   message: any;
   currentRoomId: any;
-
+  appear:any;
   constructor(
     private TaskService: TaskService,
     public userService: UserService,
@@ -40,6 +40,10 @@ export class TaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userService.user$.subscribe(data => {
+      if (!data) return;
+      this.appear = data;
+    });
     this.currentRoomId = localStorage.getItem('roomId')
     this.getTaskListData();
   }
@@ -123,7 +127,8 @@ export class TaskComponent implements OnInit {
 
   addNew() {
     if (this.newTaskTitle == '') {
-      alert('You have to fill the task title!!');
+      // alert('You have to fill the task title!!');
+      this.openSnackBar('You have to fill the task title!!')
       return;
     } else {
       const temp = {
