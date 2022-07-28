@@ -270,8 +270,7 @@ export class MessageComponent implements OnInit {
     });
   }
   async clickCall() {
-    console.log(this.myId)
-    console.log(this.room);
+
     let userID;
     this.room.users.forEach((user: any) => {
       if (user != this.myId) {
@@ -279,10 +278,16 @@ export class MessageComponent implements OnInit {
       }
     })
     this.callRequestRef = collection(this.fireStore, 'calls');
-    await addDoc(this.callRequestRef, { ownerID: this.UserService.user.id, opponentID: userID }).then((data) => {
+    await addDoc(this.callRequestRef,
+      {
+        owner: { id: this.UserService.user.id, camOn: true, micOn: true },
+        opponent: { id: userID, camOn: true, micOn: true }
+      }
+    ).then((data) => {
       this.Router.navigate([`ownspace/call/call/${data.id}`])
     })
   }
+
 }
 function token(content: string, image: string, type: string, myId: string, roomId: string, token: any) {
   throw new Error('Function not implemented.');
