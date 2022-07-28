@@ -32,6 +32,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MessageService } from './message/message.service';
+import { DialogCallComponent } from '../pages/video-call/components/dialog-call/dialog-call.component';
+import { MatDialog } from '@angular/material/dialog';
 @Injectable({
   providedIn: 'root',
 })
@@ -51,7 +53,9 @@ export class UserService {
     private route: Router,
     private fs: Firestore,
     private auth: Auth,
-    private http: HttpClient
+    private http: HttpClient,
+    private dialogComponent: DialogCallComponent,
+    private dialog: MatDialog,
   ) {
     authState(this.auth).subscribe(async (user: any) => {
       if (!user) return;
@@ -100,25 +104,28 @@ export class UserService {
       collectionChanges(this.callRef).subscribe((data) => {
         data.forEach(async (docVal) => {
           if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === user.uid) {
+            
             let userInCall = (await getDoc(doc(this.fs, `users/${user.uid}`))).data()!['incall'];
             if (!userInCall){
-              let text = "Incoming Call...";
-              if (confirm(text) == true) {
+              const dialogRef = this.dialog.open(DialogCallComponent, {
+                width: 'fit-content', height: 'fit-content',
+              });
+              // if (confirm(text) == true) {
   
-                await this.answerCall(docVal.doc.id);
-                // audio.pause();
-                // audio.currentTime=0;
-                await this.answerCall(docVal.doc.id);
-                // const audio = new Audio('../../assets/audios/incoming-call.wav');
-                // audio.play().then(()=>{
-                // });
+              //   await this.answerCall(docVal.doc.id);
+              //   // audio.pause();
+              //   // audio.currentTime=0;
+              //   await this.answerCall(docVal.doc.id);
+              //   // const audio = new Audio('../../assets/audios/incoming-call.wav');
+              //   // audio.play().then(()=>{
+              //   // });
   
-                let ownerID = docVal.doc.data()['owner']['id'];
-                // let callerData = (await getDoc(doc(this.fs, `users/${ownerID}`))).data()
-                // console.log(callerData);
-              } else {
+              //   let ownerID = docVal.doc.data()['owner']['id'];
+              //   // let callerData = (await getDoc(doc(this.fs, `users/${ownerID}`))).data()
+              //   // console.log(callerData);
+            //   } else {
   
-              }
+            //   }
             }
         
           }

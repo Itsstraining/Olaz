@@ -26,7 +26,7 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -35,23 +35,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/video-call/components/login/login.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { provideStorage, getStorage } from '@angular/fire/storage';
-// <<<<<<< HEAD
+
 import { DialogCallComponent } from './pages/video-call/components/dialog-call/dialog-call.component';
-// =======
+
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
-// >>>>>>> f76133577a1e13e0e54c5bec7f76be7bb1c8178d
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
     LoginComponent,
-// <<<<<<< HEAD
     DialogCallComponent,
-// =======
     SnackBarComponent,
-// >>>>>>> f76133577a1e13e0e54c5bec7f76be7bb1c8178d
-    
   ],
   imports: [
     BrowserModule,
@@ -98,7 +94,7 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
     MatIconModule,
     LayoutModule,
   ],
-  providers: [],
+  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

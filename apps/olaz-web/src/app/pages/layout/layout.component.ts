@@ -15,6 +15,7 @@ export class LayoutComponent implements OnInit {
   constructor(public userService: UserService) { }
 
   ngOnInit(): void {
+    
   }
 
 

@@ -111,15 +111,15 @@ export class VideoCallComponent implements OnInit {
 
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
       console.log(this.ownerInfo)
-      // let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
-      // let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
+      let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
+      let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
       this.callInf = data;
       if (this.userSrv.user.id === this.callInf.owner.id) {
 
-        // this.opponentInfo.name = opponent!['displayName'];
-        // this.opponentInfo.photoURL = opponent!['photoURL'];
-        // this.ownerInfo.name = owner!['displayName'];
-        // this.ownerInfo.photoURL = owner!['photoURL'];
+        this.opponentInfo.name = opponent!['displayName'];
+        this.opponentInfo.photoURL = opponent!['photoURL'];
+        this.ownerInfo.name = owner!['displayName'];
+        this.ownerInfo.photoURL = owner!['photoURL'];
 
         this.opponentStatus.camOn = data['opponent']['id'];
         this.opponentStatus.micOn = data['opponent']['id'];
@@ -128,10 +128,10 @@ export class VideoCallComponent implements OnInit {
 
       } else {
       
-        // this.opponentInfo.name = owner!['displayName'];
-        // this.opponentInfo.photoURL = owner!['photoURL'];
-        // this.ownerInfo.name = opponent!['displayName'];
-        // this.ownerInfo.photoURL = opponent!['photoURL'];
+        this.opponentInfo.name = owner!['displayName'];
+        this.opponentInfo.photoURL = owner!['photoURL'];
+        this.ownerInfo.name = opponent!['displayName'];
+        this.ownerInfo.photoURL = opponent!['photoURL'];
         
         this.opponentStatus.camOn = data['owner']['id'];
         this.opponentStatus.micOn = data['owner']['id'];
