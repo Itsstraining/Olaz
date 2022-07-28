@@ -1,8 +1,12 @@
 import { Component, OnInit, } from '@angular/core';
 import { doc, Firestore, collection, addDoc, setDoc, docData, getDoc, collectionChanges, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from 'apps/olaz-web/src/app/services/user.service';
-import { VideoService } from 'apps/olaz-web/src/app/services/video-call/video.service';
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { UserService } from '../../../../services/user.service';
+import { VideoService } from '../../../../services/video-call/video.service';
 
 
 @Component({
@@ -111,15 +115,15 @@ export class VideoCallComponent implements OnInit {
 
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
       console.log(this.ownerInfo)
-      // let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
-      // let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
+      let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
+      let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
       this.callInf = data;
       if (this.userSrv.user.id === this.callInf.owner.id) {
 
-        // this.opponentInfo.name = opponent!['displayName'];
-        // this.opponentInfo.photoURL = opponent!['photoURL'];
-        // this.ownerInfo.name = owner!['displayName'];
-        // this.ownerInfo.photoURL = owner!['photoURL'];
+        this.opponentInfo.name = opponent!['displayName'];
+        this.opponentInfo.photoURL = opponent!['photoURL'];
+        this.ownerInfo.name = owner!['displayName'];
+        this.ownerInfo.photoURL = owner!['photoURL'];
 
         this.opponentStatus.camOn = data['opponent']['id'];
         this.opponentStatus.micOn = data['opponent']['id'];
@@ -127,12 +131,12 @@ export class VideoCallComponent implements OnInit {
         this.ownerStatus.micOn = data['owner']['id'];
 
       } else {
-      
-        // this.opponentInfo.name = owner!['displayName'];
-        // this.opponentInfo.photoURL = owner!['photoURL'];
-        // this.ownerInfo.name = opponent!['displayName'];
-        // this.ownerInfo.photoURL = opponent!['photoURL'];
-        
+
+        this.opponentInfo.name = owner!['displayName'];
+        this.opponentInfo.photoURL = owner!['photoURL'];
+        this.ownerInfo.name = opponent!['displayName'];
+        this.ownerInfo.photoURL = opponent!['photoURL'];
+
         this.opponentStatus.camOn = data['owner']['id'];
         this.opponentStatus.micOn = data['owner']['id'];
         this.ownerStatus.camOn = data['opponent']['id'];
@@ -238,6 +242,7 @@ export class VideoCallComponent implements OnInit {
   turnWebCam() {
     this.camInProgress = true;
     this.checkScreen = !this.checkScreen;
+    console.log(this.ownerInfo.photoURL)
     let status = { micOn: this.checkMic, camOn: this.checkScreen }
     this.videoSrv.updateData(this.docId, this.userSrv.user.id, status).subscribe(() => {
       this.camInProgress = false;
