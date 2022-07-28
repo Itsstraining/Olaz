@@ -1,6 +1,7 @@
 import { Component, OnInit, } from '@angular/core';
 import { doc, Firestore, collection, addDoc, setDoc, docData, getDoc, collectionChanges, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable prefer-const */
@@ -61,6 +62,7 @@ export class VideoCallComponent implements OnInit {
   callInf: any;
   camInProgress = false;
   micInProgress = false;
+  public isLoaded$ = new BehaviorSubject<any>(null);
   ownerInfo = {
     name: '',
     photoURL: '',
@@ -114,6 +116,7 @@ export class VideoCallComponent implements OnInit {
     }
 
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
+      this.isLoaded$.next(data['offer']);
       console.log(this.ownerInfo)
       let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
       let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
@@ -203,40 +206,45 @@ export class VideoCallComponent implements OnInit {
   }
 
   async answerCall() {
-    this.callRef = collection(this.fs, 'calls');
-    this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
-    this.ansDocRef = collection(doc(this.callRef, this.docId), 'answerCandidates');
-    const callRef = collection(this.fs, 'calls');
-    const callDoc = doc(callRef, this.docId);
+    this.isLoaded$.subscribe(async (load) => {
+      if (load != null) {
+        this.callRef = collection(this.fs, 'calls');
+        this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
+        this.ansDocRef = collection(doc(this.callRef, this.docId), 'answerCandidates');
+        const callRef = collection(this.fs, 'calls');
+        const callDoc = doc(callRef, this.docId);
 
 
-    this.pc.onicecandidate = ((event) => {
-      event.candidate && addDoc(this.ansDocRef, event.candidate.toJSON());
-    });
+        this.pc.onicecandidate = ((event) => {
+          event.candidate && addDoc(this.ansDocRef, event.candidate.toJSON());
+        });
 
-    const callData = ((await getDoc(callDoc)).data());
+        const callData = ((await getDoc(callDoc)).data());
 
-    const offerDescription = callData!['offer'];
-    await this.pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
+        const offerDescription = callData!['offer'];
+        await this.pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
 
-    const answerDescription = await this.pc.createAnswer();
+        const answerDescription = await this.pc.createAnswer();
 
-    await this.pc.setLocalDescription(answerDescription);
+        await this.pc.setLocalDescription(answerDescription);
 
-    const answer = {
-      sdp: answerDescription.sdp,
-      type: answerDescription.type
-    }
-
-    updateDoc(callDoc, { answer });
-    collectionChanges(this.offerDocRef).subscribe((data) => {
-      data.forEach((doc) => {
-        if (doc.type === 'added') {
-          let data = doc.doc.data();
-          this.pc.addIceCandidate(new RTCIceCandidate(data));
+        const answer = {
+          sdp: answerDescription.sdp,
+          type: answerDescription.type
         }
-      })
+
+        updateDoc(callDoc, { answer });
+        collectionChanges(this.offerDocRef).subscribe((data) => {
+          data.forEach((doc) => {
+            if (doc.type === 'added') {
+              let data = doc.doc.data();
+              this.pc.addIceCandidate(new RTCIceCandidate(data));
+            }
+          })
+        })
+      }
     })
+
   }
 
   turnWebCam() {
