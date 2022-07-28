@@ -250,6 +250,12 @@ export class MessageComponent implements OnInit {
     e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
   }
 
+  onClickTask(roomId:any){
+    // this.taskService.roomId = roomId;
+    localStorage.setItem('roomId',roomId)
+    this.Router.navigate(['/ownspace/task'])
+  }
+
   changeMessage(idMessage: string) {
     this.Router.navigate([`ownspace/m/${idMessage}`]);
   }
