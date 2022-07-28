@@ -129,29 +129,6 @@
 
       </div>
     </div>
-<<<<<<< HEAD
-    <div *ngIf="room" class="right-bottom">
-      <div class="icon-bottom">
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/link-free-icon-font.png" alt="">
-          </button>
-        </div>
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/clock-five-free-icon-font.png" alt=""></button>
-        </div>
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/smile-free-icon-font.png" alt=""></button>
-        </div>
-        <div class="hub-icon">
-          <button (click)="fileInput.click()" class="button-function">
-            <img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt="">
-            <input #fileInput type="file" (change)="onFileSelectedEvent($event)" style="display: none;" />
-          </button>
-        </div>
-=======
     <div class="right-bottom">
       <div style="display: flex; justify-content: flex-end">
         <button class="button-function"><i class="uil uil-paperclip"></i>
@@ -162,7 +139,6 @@
           <i class="uil uil-image-upload"></i>
           <input #fileInput type="file" (change)="onFileSelectedEvent($event)" style="display: none;" />
         </button>
->>>>>>> 30e8c87b3806365c9f773f0ce745fe5cc2312baa
       </div>
       <div style="display: flex; justify-content: space-between; flex-direction: row;">
         <input *ngIf="room" class="sendMessageIpt" placeholder="Enter your messages...." (keydown)="onKeydown($event)"
