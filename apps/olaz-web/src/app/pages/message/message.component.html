@@ -42,7 +42,7 @@
             <div style=" background-color: rgb(182, 182, 182);
             border-radius: 15px;" *ngIf="room.id === roomId" (click)="changeMessage(room.id)" class="cha-1">
               <div class="ava">
-                <img class="avachat" [src]="room.image" alt="HE" (error)="handleError($event)" >
+                <img class="avachat" [src]="room.image" alt="HE" (error)="handleError($event)">
               </div>
               <div>
                 <p class="ten-1">{{room.name}}</p>
@@ -85,7 +85,7 @@
         <i matTooltip="Video call" class="uil uil-video"></i>
         <i matTooltip="Audio call" class="uil uil-phone"></i>
         <i matTooltip="Search message" class="uil uil-search"></i>
-        <i matTooltip="Task list" class="uil uil-clipboard-notes"></i>
+        <i matTooltip="Task list" class="uil uil-clipboard-notes" (click)="onClickTask(room.id)"></i>
         <i matTooltip="Settings" class="uil uil-ellipsis-v"></i>
       </div>
     </div>

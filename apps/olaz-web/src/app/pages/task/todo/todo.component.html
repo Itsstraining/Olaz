@@ -32,8 +32,13 @@
   <div class="todos-list-container">
     <div class="todo-list-content">
       <div class="groupBtn">
-        <button (click)="toggleCompleteAll()">{{!checkedAll ? 'Check All' : 'Uncheck All'}}</button> |
-        <button (click)="deleteMultiTask()">Delete tasks</button>
+        <div>
+          <button [class.active]="currentList === item.value" class="btn-filter" *ngFor="let item of arr" (click)="toggleList(item)">{{item.value}}</button>
+        </div>
+        <div>
+          <button class="btn" (click)="toggleCompleteAll()">{{!checkedAll ? 'Check All' : 'Uncheck All'}}</button> |
+          <button class="btn" (click)="deleteMultiTask()">Delete tasks</button>
+        </div>
       </div>
       <div class="todos-list">
         <olaz-todo-item *ngFor="let todo of todos" [todo]="todo" (todoClicked)="toggleCompleted(todo)"

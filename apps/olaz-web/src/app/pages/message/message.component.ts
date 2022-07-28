@@ -27,6 +27,7 @@ import { Router } from '@angular/router';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 import { ActivatedRoute } from '@angular/router';
 import { idToken } from '@angular/fire/auth';
+import { TaskService } from '../../services/task/tasks/task.service';
 
 @Component({
   selector: 'olaz-message',
@@ -41,7 +42,8 @@ export class MessageComponent implements OnInit {
     private MessageService: MessageService,
     private RoomService: RoomService,
     private route: ActivatedRoute,
-    private Router: Router
+    private Router: Router,
+    private taskService: TaskService
   ) { }
   public myId!: string;
   public room: any;
@@ -245,6 +247,12 @@ export class MessageComponent implements OnInit {
   handleError(e:any){
     console.log(e)
     e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
+  }
+
+  onClickTask(roomId:any){
+    // this.taskService.roomId = roomId;
+    localStorage.setItem('roomId',roomId)
+    this.Router.navigate(['/ownspace/task'])
   }
 
   changeMessage(idMessage: string) {

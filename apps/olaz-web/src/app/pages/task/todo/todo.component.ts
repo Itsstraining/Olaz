@@ -15,13 +15,34 @@ import { DeleteDialogComponent } from '../../../components/delete-dialog/delete-
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent implements OnInit {
+  arr = [
+    {
+      value: 'All',
+      status: true,
+    },
+    {
+      value: 'To do',
+      status: false,
+    },
+    {
+      value: 'Done',
+      status: false,
+    },
+  ]
+
   todos: Todo[] = [];
+  currentList = 'All';
   showValidationErrors!: boolean;
   checkedAll: boolean = false;
   constructor(private todoService: TodoService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.todos = this.todoService.getAllTodos();
+  }
+
+  toggleList(title: any){
+    this.currentList = title.value;
+    console.log(this.currentList)
   }
 
   onFormSubmit(form: NgForm) {

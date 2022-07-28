@@ -15,6 +15,8 @@ export class TaskService {
   //     'Content-Type': 'application/json',
   //   }),
   // };
+
+  roomId: any;
   constructor(public httpClient: HttpClient, private firestore: Firestore) {}
   async getTaskListData(roomId: any) {
     // await this.httpClient.get(environment.endpoint+`task-list/${roomId}`)
