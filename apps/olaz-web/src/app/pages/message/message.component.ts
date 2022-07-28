@@ -28,6 +28,7 @@ import { RejectAddComponent } from './components/reject-add/reject-add.component
 import { ActivatedRoute } from '@angular/router';
 import { idToken } from '@angular/fire/auth';
 import { MessageLogService } from '../../components/message-log';
+import { VideoService } from '../../services/video-call/video.service';
 
 @Component({
   selector: 'olaz-message',
@@ -44,7 +45,8 @@ export class MessageComponent implements OnInit {
     private RoomService: RoomService,
     private route: ActivatedRoute,
     private Router: Router,
-    private _message: MessageLogService
+    private _message: MessageLogService,
+    private VideoService:VideoService
   ) { }
   public myId!: string;
   public room: any;
@@ -250,9 +252,9 @@ export class MessageComponent implements OnInit {
     e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
   }
 
-  onClickTask(roomId:any){
+  onClickTask(roomId: any) {
     // this.taskService.roomId = roomId;
-    localStorage.setItem('roomId',roomId)
+    localStorage.setItem('roomId', roomId)
     this.Router.navigate(['/ownspace/task'])
   }
 
@@ -290,7 +292,12 @@ export class MessageComponent implements OnInit {
         opponent: { id: userID, camOn: true, micOn: true }
       }
     ).then((data) => {
-      this.Router.navigate([`ownspace/call/call/${data.id}`])
+      this.VideoService.updateUserStatus(this.UserService.userInfoFb$.value.id).subscribe(() => {
+        const url = this.Router.serializeUrl(
+          this.Router.createUrlTree([`ownspace/call/call/${data.id}`])
+        );
+        window.open(url, '_blank');
+      })
     })
   }
 

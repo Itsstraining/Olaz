@@ -29,7 +29,7 @@ export class AppController {
     if (await this.appService.updateDoc(data.data.id, data.data.userId, data.data.status)) {
       return true;
     }
-    else 
+    else
     {
       return false;
     }
@@ -37,10 +37,11 @@ export class AppController {
 
   @Put('update-user-call-status')
   async updateUserStatus(@Body() data: any){
+
     if (await this.appService.updateUserStatus(data.id)){
       return true;
     }
-    else 
+    else
     {
       return false;
     }
