@@ -243,6 +243,7 @@
     padding: 20px;
     border-radius: 20px;
     line-height: 1.5rem;
+    margin: 5px 20px 5px 0px;
 }
 
 .noidungtinnhan-fr {
@@ -258,6 +259,8 @@
     padding: 20px;
     border-radius: 20px;
     line-height: 1.5rem;
+    margin: 5px 0px 5px 20px;
+
 }
 
 .my-message {
@@ -373,14 +376,15 @@
 
 .right-bottom {
     width: 100%;
-    display: flex;
     flex: 1;
 
     overflow: auto;
 
     .icon-bottom {
-        width: 25%;
+        width: 20%;
         display: flex;
+        padding: 10px;
+        float: right;
     }
 }
 
@@ -476,22 +480,43 @@
     padding-left: 13px;
 }
 
+.button-function:hover {
+    cursor: pointer;
+}
+
 .input-kichthuoc {
-    width: 90%;
-    border: none;
+    border: solid 0.2px;
     outline: none;
-    padding: 12px 20px;
+    padding: 14px 28px;
     display: block;
     margin: 0 auto;
+    width: 100%;
+    border-radius: 5px;
 }
 
 .input-message {
-    width: 75%;
+    width: 100%;
+    display: flex;
+    background-color: #9F99B7;
+    padding: 15px;
 }
-
-
 
 .button-function {
     border: none;
     background-color: white;
+}
+
+.bottom-input-left {
+    width: 95%;
+}
+
+.bottom-input-right {
+    width: 5%;
+}
+
+.btn-send {
+    background-color: #5A3E9E;
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
 }
