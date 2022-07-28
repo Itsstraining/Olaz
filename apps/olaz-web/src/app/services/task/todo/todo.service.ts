@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { Todo } from '../../../models/todo.model';
 
 @Injectable({
@@ -13,13 +16,21 @@ export class TodoService {
     new Todo('Has been done!', true)
   ]
 
-  constructor() { }
-  getAllTodos() {
-    return this.todos
-  }
+  constructor(public httpClient: HttpClient,) { }
+  // getAllTodos() {
+  //   return this.todos
+  // }
 
-  addTodo(todo: Todo) {
-    this.todos.push(todo)
+  // getTodoDetails(todoId: any){
+  //   this.
+  // }
+
+  addTodo(todo: any) {
+    const data = {
+      newTask: todo
+    }
+    return this.httpClient.post(environment.endpoint+"todo", data);
+    // this.todos.push(todo)
   }
 
   updateTodo(index: number, updateTodo: Todo) {
