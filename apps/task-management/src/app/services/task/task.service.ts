@@ -40,7 +40,6 @@ export class TaskService {
         return result;
     }
     async update(updateTask, taskId){
-        console.log(updateTask)
         const result = await this.firestore.collection('tasks').doc(taskId).update({
             title: updateTask.title, 
             description: updateTask.description,

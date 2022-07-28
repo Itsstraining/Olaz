@@ -1,9 +1,9 @@
-<div class="todo-item " (click)="onTodoClicked()" [class.completed]="todo.completed">
+<div class="todo-item " (click)="onTodoClicked()" [class.completed]="todo.isCompleted">
     <div class="check-box">
         <i class="material-icons">check</i>
     </div>
 
-    <div class="todo-text" [ngStyle]="{'text-decoration-line':todo.completed?'line-through':'none'}">
+    <div class="todo-text" [ngStyle]="{'text-decoration-line':todo.isCompleted?'line-through':'none'}">
         {{ todo.text }}
     </div>
 

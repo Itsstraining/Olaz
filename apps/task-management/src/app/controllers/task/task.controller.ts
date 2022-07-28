@@ -65,7 +65,6 @@ export class TaskController {
     }
     @Delete('task')
     async delete(@Body() data: any){
-    console.log(data)
 
         try{
             await this.TaskService.delete(data.roomsId, data.taskId);

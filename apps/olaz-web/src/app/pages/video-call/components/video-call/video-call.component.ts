@@ -1,8 +1,12 @@
 import { Component, OnInit, } from '@angular/core';
 import { doc, Firestore, collection, addDoc, setDoc, docData, getDoc, collectionChanges, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from 'apps/olaz-web/src/app/services/user.service';
-import { VideoService } from 'apps/olaz-web/src/app/services/video-call/video.service';
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { UserService } from '../../../../services/user.service';
+import { VideoService } from '../../../../services/video-call/video.service';
 
 
 @Component({
@@ -127,12 +131,10 @@ export class VideoCallComponent implements OnInit {
         this.ownerStatus.micOn = data['owner']['id'];
 
       } else {
-      
         this.opponentInfo.name = owner!['displayName'];
         this.opponentInfo.photoURL = owner!['photoURL'];
         this.ownerInfo.name = opponent!['displayName'];
         this.ownerInfo.photoURL = opponent!['photoURL'];
-        
         this.opponentStatus.camOn = data['owner']['id'];
         this.opponentStatus.micOn = data['owner']['id'];
         this.ownerStatus.camOn = data['opponent']['id'];
@@ -238,6 +240,7 @@ export class VideoCallComponent implements OnInit {
   turnWebCam() {
     this.camInProgress = true;
     this.checkScreen = !this.checkScreen;
+    console.log(this.ownerInfo.photoURL)
     let status = { micOn: this.checkMic, camOn: this.checkScreen }
     this.videoSrv.updateData(this.docId, this.userSrv.user.id, status).subscribe(() => {
       this.camInProgress = false;

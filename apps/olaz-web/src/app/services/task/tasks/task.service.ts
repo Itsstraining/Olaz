@@ -15,6 +15,8 @@ export class TaskService {
   //     'Content-Type': 'application/json',
   //   }),
   // };
+
+  roomId: any;
   constructor(public httpClient: HttpClient, private firestore: Firestore) {}
   async getTaskListData(roomId: any) {
     // await this.httpClient.get(environment.endpoint+`task-list/${roomId}`)
@@ -44,6 +46,6 @@ export class TaskService {
 
   deleteTask(taskId: any, roomId: any) {
     const data = { taskId: taskId, roomsId: roomId };
-    return this.httpClient.delete(environment.endpoint+"task-list/task", );
+    return this.httpClient.delete(environment.endpoint+"task-list/task", {body: data});
   }
 }

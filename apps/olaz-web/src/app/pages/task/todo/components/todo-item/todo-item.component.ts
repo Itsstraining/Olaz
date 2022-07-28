@@ -32,5 +32,6 @@ export class TodoItemComponent implements OnInit {
   onDeleteClicked() {
     this.deleteClicked.emit()
   }
+
   
 }

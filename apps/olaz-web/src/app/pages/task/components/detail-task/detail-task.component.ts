@@ -5,8 +5,10 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { TaskModel } from 'apps/olaz-web/src/app/models/task.model';
 import { TaskService } from 'apps/olaz-web/src/app/services/task/tasks/task.service';
+import { PickUserDialogComponent } from '../pick-user-dialog/pick-user-dialog.component';
 
 @Component({
   selector: 'olaz-detail-task',
@@ -17,15 +19,16 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   @Input() isShowDetail: any;
   @Output() isShowDetailToggle: EventEmitter<any> = new EventEmitter<any>();
   @Input() taskData: any;
-  @Output() updateTaskEmit: EventEmitter<any> = new EventEmitter<any>()
-
+  @Output() updateTaskEmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteTaskEmit: EventEmitter<any> = new EventEmitter<any>();
+  
   panelOpenState = false;
   isActiveDropdown = false;
   isActiveDropdownPrio = false;
   statusColor!: string;
   statusBgColor!: string;
   updateTaskInfo!: TaskModel;
-
+  currentRoomId: any;
   newTitle!: string
   newDes!: string
   // newDeadline: any
@@ -64,7 +67,11 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     }
   ]
 
-  constructor(private taskService: TaskService) { 
+  constructor(private taskService: TaskService, public dialog: MatDialog) { 
+    
+  }
+  openDialog() {
+    this.dialog.open(PickUserDialogComponent);
   }
 
   ngOnChanges(): void {
@@ -74,12 +81,11 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newPriority = this.taskData.priority;
       this.newStatus = this.taskData.status;
       this.newDeadline.setValue(new Date(this.taskData['deadline']));
-      console.log(this.newDeadline.value)
-      console.log(this.taskData['deadline'])
     }
   }
 
   ngOnInit(): void {
+    this.currentRoomId = localStorage.getItem('roomId')
   }
 
   show(status: any){
@@ -167,7 +173,10 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   }
 
   deleteTask(taskId: any){
-    this.taskService.deleteTask(taskId, `1657869801036`)
+    this.taskService.deleteTask( taskId, this.currentRoomId ).subscribe (
+      (message) => this.deleteTaskEmit.emit({message: message, taskId: taskId })
+    )
+    // this.taskService.deleteTask(taskId, `1657869801036`)
   }
 
   closeShowDetails(){
@@ -184,5 +193,6 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     }
     return styleClass;
   }
+
 
 }

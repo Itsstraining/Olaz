@@ -10,7 +10,7 @@ export class TodoService {
 
   todos: Todo[] = [
     new Todo('This is a test!', false),
-    new Todo('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto facilis provident perferendis officiis sapiente quam doloremque numquam! Eveniet, dolorum vero culpa dolore nam, quasi beatae placeat explicabo repellat assumenda libero!', true)
+    new Todo('Has been done!', true)
   ]
 
   constructor() { }
@@ -28,5 +28,7 @@ export class TodoService {
 
   deleteTodo(index: number) {
     this.todos?.splice(index, 1)
+    // this.todos = this.todos?.slice(0, index).concat(this.todos?.slice(index+1));
+    // console.log(this.todos)
   }
 }

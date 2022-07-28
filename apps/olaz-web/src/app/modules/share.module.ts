@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditTodoDialogComponent } from '../pages/task/todo/components/edit-todo-dialog/edit-todo-dialog.component';
 import { TodoItemComponent } from '../pages/task/todo/components/todo-item/todo-item.component';
-import { DeleteDialogComponent } from '../components/navbar/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [

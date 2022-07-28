@@ -13,7 +13,8 @@
   <div class="title-detail">
     <h3 class="label">Title</h3>
     <div class="wrap-title-Description">
-      <input type="text" [value]="taskData['title']" [(ngModel)]="newTitle" (keydown.enter)="updateTaskBtn()" (blur)="updateTaskBtn()">
+      <input type="text" [value]="taskData['title']" [(ngModel)]="newTitle" (keydown.enter)="updateTaskBtn()"
+        (blur)="updateTaskBtn()">
     </div>
   </div>
 
@@ -21,8 +22,7 @@
     <h3 class="label">Status</h3>
     <div class="dropdownBtn" [ngClass]="getDropdownClass()" (click)="toggleDropdown()">
       <input type="text" class="textBox" placeholder="Choose option" readonly
-        [value]="newStatus === 0 ? 'To do' : newStatus === 1 ? 'Doing' : 'Done'"
-        [ngClass]="getDropdownColorClass()">
+        [value]="newStatus === 0 ? 'To do' : newStatus === 1 ? 'Doing' : 'Done'" [ngClass]="getDropdownColorClass()">
       <div class="option">
         <div [class.chose]="option.id === newStatus" *ngFor="let option of arr" (click)="show(option.id)">
           {{option.value}}</div>
@@ -32,7 +32,8 @@
 
   <div class="description-detail">
     <h3 class="label">Description</h3>
-    <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']" [(ngModel)]="newDes" (keydown.enter)="updateTaskBtn()" (blur)="updateTaskBtn()"></textarea>
+    <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']" [(ngModel)]="newDes"
+      (keydown.enter)="updateTaskBtn()" (blur)="updateTaskBtn()"></textarea>
   </div>
 
   <div class="other-detail">
@@ -46,24 +47,35 @@
       <div class="detail-Expand">
         <div class="detail-row">
           <p>Assignee</p>
-          <div class="detail-row-data">
-            <img class="user-img"
-              src="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/284781432_2881526582155047_7043290483571551769_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HhFZrAQ4OuMAX-9lm-X&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVJbKm_pJmGES4wahfXm2M-wDgQntVDa5xxpPTAW4HAyhQ&oe=62E9DFE3">
-            <p>Trong</p>
-          </div>
+          <!-- <div class="detail-row-data"> -->
+          <button (click)="openDialog()" class="detail-row-data">
+            <div style="display:flex; flex-direction: row; align-items: center;">
+              <img class="user-img"
+                src="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/284781432_2881526582155047_7043290483571551769_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HhFZrAQ4OuMAX-9lm-X&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVJbKm_pJmGES4wahfXm2M-wDgQntVDa5xxpPTAW4HAyhQ&oe=62E9DFE3">
+              <p>Trong</p>
+            </div>
+            <i class="uil uil-sync" style="font-size: 18px;"></i>
+          </button>
+          <!-- </div> -->
         </div>
         <div class="detail-row">
           <p>Reporter</p>
-          <div class="detail-row-data">
-            <img class="user-img"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWbxT6GMI5BJJd9ixuP2ijrKzKxaQREiDl1g&usqp=CAU">
-            <p>Trung</p>
-          </div>
+          <!-- <div class="detail-row-data"> -->
+          <button (click)="openDialog()" class="detail-row-data">
+            <div style="display:flex; flex-direction: row; align-items: center;">
+              <img class="user-img"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWbxT6GMI5BJJd9ixuP2ijrKzKxaQREiDl1g&usqp=CAU">
+              <p>Trung</p>
+            </div>
+            <i class="uil uil-sync" style="font-size: 18px;"></i>
+          </button>
+          <!-- </div> -->
         </div>
         <div class="detail-row" style="margin: 0;">
           <p>Deadline</p>
           <div class="datePicker-ipt">
-            <input [matDatepicker]="picker" readonly [value]="newDeadline" [formControl]="newDeadline" (blur)="updateTaskBtn()"/>
+            <input [matDatepicker]="picker" readonly [value]="newDeadline" [formControl]="newDeadline"
+              (blur)="updateTaskBtn()" />
             <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
           </div>
         </div>
@@ -84,6 +96,5 @@
         </div>
       </div>
     </mat-expansion-panel>
-
   </div>
 </div>

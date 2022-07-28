@@ -27,11 +27,13 @@ import { Router } from '@angular/router';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 import { ActivatedRoute } from '@angular/router';
 import { idToken } from '@angular/fire/auth';
+import { MessageLogService } from '../../components/message-log';
 
 @Component({
   selector: 'olaz-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
+  providers: [MessageLogService],
 })
 export class MessageComponent implements OnInit {
   constructor(
@@ -41,7 +43,8 @@ export class MessageComponent implements OnInit {
     private MessageService: MessageService,
     private RoomService: RoomService,
     private route: ActivatedRoute,
-    private Router: Router
+    private Router: Router,
+    private _message: MessageLogService
   ) { }
   public myId!: string;
   public room: any;
@@ -103,12 +106,18 @@ export class MessageComponent implements OnInit {
     this.UserService.user$.subscribe(
       user => {
         if (!user) return;
-        this.route.params.subscribe(params => {
-          // console.log(params['roomId'])
-          if (!params['roomId']) return
-          this.getRoomId(params['roomId'], user.token)
-          this.roomId = params['roomId']
-        })
+        console.log(user);
+        if (user.rooms.length === 0) {
+          this.message = "Vui lòng kết bạn!"
+          return;
+        } else {
+          this.route.params.subscribe(params => {
+            // console.log(params['roomId'])
+            if (!params['roomId']) return
+            this.getRoomId(params['roomId'], user.token)
+            this.roomId = params['roomId']
+          })
+        }
       }
     )
   }
@@ -236,6 +245,17 @@ export class MessageComponent implements OnInit {
     }
   }
 
+  handleError(e: any) {
+    console.log(e)
+    e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
+  }
+
+  onClickTask(roomId:any){
+    // this.taskService.roomId = roomId;
+    localStorage.setItem('roomId',roomId)
+    this.Router.navigate(['/ownspace/task'])
+  }
+
   changeMessage(idMessage: string) {
     this.Router.navigate([`ownspace/m/${idMessage}`]);
   }
@@ -243,9 +263,7 @@ export class MessageComponent implements OnInit {
   selectedFile!: File;
   async onFileSelectedEvent(event: any) {
     this.selectedFile = event.target.files[0]
-    console.log(this.selectedFile)
     const url: string = await this.MessageService.uploadImage(this.selectedFile);
-    console.log(url)
 
     this.MessageService.sendMessage(
       "",
@@ -258,8 +276,7 @@ export class MessageComponent implements OnInit {
     });
   }
   async clickCall() {
-    console.log(this.myId)
-    console.log(this.room);
+
     let userID;
     this.room.users.forEach((user: any) => {
       if (user != this.myId) {
@@ -267,10 +284,16 @@ export class MessageComponent implements OnInit {
       }
     })
     this.callRequestRef = collection(this.fireStore, 'calls');
-    await addDoc(this.callRequestRef, { ownerID: this.UserService.user.id, opponentID: userID }).then((data) => {
+    await addDoc(this.callRequestRef,
+      {
+        owner: { id: this.UserService.user.id, camOn: true, micOn: true },
+        opponent: { id: userID, camOn: true, micOn: true }
+      }
+    ).then((data) => {
       this.Router.navigate([`ownspace/call/call/${data.id}`])
     })
   }
+
 }
 function token(content: string, image: string, type: string, myId: string, roomId: string, token: any) {
   throw new Error('Function not implemented.');
