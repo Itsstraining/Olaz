@@ -12,7 +12,7 @@ import { Todo } from '../../../../../models/todo.model';
 export class EditTodoDialogComponent implements OnInit {
 
   constructor( public dialogRef: MatDialogRef<EditTodoDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public todo: Todo) { }
+    @Inject(MAT_DIALOG_DATA) public todo: any) { }
 
   ngOnInit(): void {
   }
@@ -25,7 +25,7 @@ export class EditTodoDialogComponent implements OnInit {
     
     const updatedTodo = {
       ...this.todo,
-      ...form.value
+      title: form.value.text
     }
 
     this.dialogRef.close(updatedTodo)

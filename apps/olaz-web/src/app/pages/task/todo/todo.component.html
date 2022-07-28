@@ -41,11 +41,11 @@
           <button class="btn" (click)="deleteMultiTask()">Delete tasks</button>
         </div>
       </div>
-      <div class="todos-list" *ngIf="todos.length !== 0">
+      <div class="todos-list" *ngIf="tempTodos.todos.length !== 0 && tempTodos !== undefined">
         <olaz-todo-item *ngFor="let todo of todos" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
           (editClicked)="editTodo(todo)" (deleteClicked)="deleteTodo(todo)"></olaz-todo-item>
       </div>
-      <div class="todos-list" style="justify-content: center;" *ngIf="todos.length === 0">
+      <div class="todos-list" style="justify-content: center;" *ngIf="tempTodos.todos.length === 0">
         <h3 style="text-align: center; margin-top: 50px; letter-spacing: 1px; font-weight: bold;">You have <span style="color: #9756e2;">0</span> to do task right now!</h3>
       </div>
     </div>
