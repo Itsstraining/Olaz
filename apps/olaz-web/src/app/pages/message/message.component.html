@@ -92,7 +92,7 @@
     <div id="right-center" *ngIf="message!==''">
       <p style="padding: 20%; text-align: center;">{{message}}</p>
     </div>
-    <div style="overflow-y: auto; height: 57%; margin-bottom: 5px;">
+    <div style="overflow-y: auto; height: 68vh;  margin-bottom: 5px;">
       <div *ngIf="room" id="right-center">
         <div *ngFor="let message of room.messages">
           <div *ngIf="message.userId?.id === myId && !message.image" class="cha">
