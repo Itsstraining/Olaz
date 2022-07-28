@@ -27,12 +27,13 @@ import { Router } from '@angular/router';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 import { ActivatedRoute } from '@angular/router';
 import { idToken } from '@angular/fire/auth';
-import { TaskService } from '../../services/task/tasks/task.service';
+import { MessageLogService } from '../../components/message-log';
 
 @Component({
   selector: 'olaz-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
+  providers: [MessageLogService],
 })
 export class MessageComponent implements OnInit {
   constructor(
@@ -43,7 +44,7 @@ export class MessageComponent implements OnInit {
     private RoomService: RoomService,
     private route: ActivatedRoute,
     private Router: Router,
-    private taskService: TaskService
+    private _message: MessageLogService
   ) { }
   public myId!: string;
   public room: any;
@@ -244,7 +245,7 @@ export class MessageComponent implements OnInit {
     }
   }
 
-  handleError(e:any){
+  handleError(e: any) {
     console.log(e)
     e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
   }
@@ -262,9 +263,7 @@ export class MessageComponent implements OnInit {
   selectedFile!: File;
   async onFileSelectedEvent(event: any) {
     this.selectedFile = event.target.files[0]
-    console.log(this.selectedFile)
     const url: string = await this.MessageService.uploadImage(this.selectedFile);
-    console.log(url)
 
     this.MessageService.sendMessage(
       "",

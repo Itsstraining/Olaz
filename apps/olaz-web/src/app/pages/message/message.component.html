@@ -92,7 +92,7 @@
     <div id="right-center" *ngIf="message!==''">
       <p style="padding: 20%; text-align: center;">{{message}}</p>
     </div>
-    <div style="overflow-y: auto; height: 50%;">
+    <div style="overflow-y: auto; height: 57%; margin-bottom: 5px;">
       <div *ngIf="room" id="right-center">
         <div *ngFor="let message of room.messages">
           <div *ngIf="message.userId?.id === myId && !message.image" class="cha">
@@ -115,55 +115,39 @@
               aria-label="Button that displays a tooltip that hides when scrolled out of the container"
               class="my-image">
               <span style="flex: 1 1 auto;"></span>
-              <img class="noidunghinhanh" style="float: right;width:30%;" [src]="message.image" alt="">
+              <img class="noidunghinhanh" style="float: right;width:20%;" [src]="message.image" alt="">
             </div>
           </div>
           <div *ngIf="message.userId?.id !== myId && !message.content">
             <div mat-raised-button #tooltip="matTooltip" matTooltip="{{message.createdTime | date: 'short'}}"
               aria-label="Button that displays a tooltip that hides when scrolled out of the container"
               class="fr-image">
-              <img class="noidunghinhanh-fr" style="width:30%" [src]="message.image" alt="">
+              <img class="noidunghinhanh-fr" style="width:20%" [src]="message.image" alt="">
             </div>
           </div>
         </div>
 
       </div>
     </div>
-    <div *ngIf="room" class="right-bottom">
-      <div class="input-message">
-        <input *ngIf="room" class="input-kichthuoc" (keydown)="onKeydown($event)" type="text" [(ngModel)]="content"
-          placeholder="Enter your messages....">
+    <div class="right-bottom">
+      <div style="display: flex; justify-content: flex-end">
+        <button class="button-function"><i class="uil uil-paperclip"></i>
+        </button>
+        <button class="button-function"><i class="uil uil-clock"></i></button>
+        <button class="button-function"><i class="uil uil-grin"></i></button>
+        <button (click)="fileInput.click()" class="button-function">
+          <i class="uil uil-image-upload"></i>
+          <input #fileInput type="file" (change)="onFileSelectedEvent($event)" style="display: none;" />
+        </button>
       </div>
-      <div class="icon-bottom">
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/link-free-icon-font.png" alt=""></button>
-
-        </div>
-
-        <div class="hub-icon">
-          <form action="/action_page.php">
-            <input type="file" (change)="onFileSelectedEvent($event)">
-            <button class="button-function" type="file" (change)="onFileSelectedEvent($event)"><img
-                class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt=""></button>
-          </form>
-
-        </div>
-
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/clock-five-free-icon-font.png" alt=""></button>
-          <img class="icon-logo-bottom" src="../../../assets/assets/clock-five-free-icon-font.png" alt="">
-        </div>
-
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/smile-free-icon-font.png" alt=""></button>
-
-        </div>
-
-
+      <div style="display: flex; justify-content: space-between; flex-direction: row;">
+        <input *ngIf="room" class="sendMessageIpt" placeholder="Enter your messages...." (keydown)="onKeydown($event)"
+          type="text" [(ngModel)]="content" />
+        <button class="btn-send" mat-mini-fab color="primary">
+          <mat-icon>send</mat-icon>
+        </button>
       </div>
+
     </div>
   </div>
 </div>
