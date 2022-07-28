@@ -60,9 +60,10 @@ export class VideoCallComponent implements OnInit {
   inputAnswer!: string;
   docId: any;
   callInf: any;
+  stopload = false;
   camInProgress = false;
   micInProgress = false;
-  public isLoaded$ = new BehaviorSubject<any>(null);
+  public isLoaded: any
   ownerInfo = {
     name: '',
     photoURL: '',
@@ -116,7 +117,9 @@ export class VideoCallComponent implements OnInit {
     }
 
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
-      this.isLoaded$.next(data['offer']);
+      if (data['offer'] != null) {
+        this.isLoaded = true
+      }
       console.log(this.ownerInfo)
       let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
       let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
@@ -201,49 +204,50 @@ export class VideoCallComponent implements OnInit {
         })
       })
     } else {
-      this.answerCall();
+      if (this.isLoaded == true) {
+        this.answerCall();
+      }
     }
   }
 
   async answerCall() {
-    this.isLoaded$.subscribe(async (load) => {
-      if (load != null) {
-        this.callRef = collection(this.fs, 'calls');
-        this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
-        this.ansDocRef = collection(doc(this.callRef, this.docId), 'answerCandidates');
-        const callRef = collection(this.fs, 'calls');
-        const callDoc = doc(callRef, this.docId);
+
+    this.callRef = collection(this.fs, 'calls');
+    this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
+    this.ansDocRef = collection(doc(this.callRef, this.docId), 'answerCandidates');
+    const callRef = collection(this.fs, 'calls');
+    const callDoc = doc(callRef, this.docId);
 
 
-        this.pc.onicecandidate = ((event) => {
-          event.candidate && addDoc(this.ansDocRef, event.candidate.toJSON());
-        });
+    this.pc.onicecandidate = ((event) => {
+      event.candidate && addDoc(this.ansDocRef, event.candidate.toJSON());
+    });
 
-        const callData = ((await getDoc(callDoc)).data());
+    const callData = ((await getDoc(callDoc)).data());
 
-        const offerDescription = callData!['offer'];
-        await this.pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
+    const offerDescription = callData!['offer'];
+    await this.pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
 
-        const answerDescription = await this.pc.createAnswer();
+    const answerDescription = await this.pc.createAnswer();
 
-        await this.pc.setLocalDescription(answerDescription);
+    await this.pc.setLocalDescription(answerDescription);
 
-        const answer = {
-          sdp: answerDescription.sdp,
-          type: answerDescription.type
+    const answer = {
+      sdp: answerDescription.sdp,
+      type: answerDescription.type
+    }
+
+    updateDoc(callDoc, { answer });
+    collectionChanges(this.offerDocRef).subscribe((data) => {
+      data.forEach((doc) => {
+        if (doc.type === 'added') {
+          let data = doc.doc.data();
+          this.pc.addIceCandidate(new RTCIceCandidate(data));
         }
-
-        updateDoc(callDoc, { answer });
-        collectionChanges(this.offerDocRef).subscribe((data) => {
-          data.forEach((doc) => {
-            if (doc.type === 'added') {
-              let data = doc.doc.data();
-              this.pc.addIceCandidate(new RTCIceCandidate(data));
-            }
-          })
-        })
-      }
+      })
     })
+
+
 
   }
 

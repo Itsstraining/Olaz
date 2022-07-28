@@ -37,6 +37,7 @@ import { MessageService } from './message/message.service';
 })
 export class UserService {
   loggedIn = false;
+
   user!: any;
   userTodo: any;
   callRef: any;
@@ -89,6 +90,7 @@ export class UserService {
       ////
       let userRef = doc(this.fs, 'users', user.uid);
       docData(userRef).subscribe((data) => {
+        console.log(data)
         this.userInfoFb$.next(data);
       })
       ///
