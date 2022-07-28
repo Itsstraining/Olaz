@@ -1,10 +1,11 @@
-<h1 mat-dialog-title style="text-align: center;">USERNAME</h1>
+<h1 mat-dialog-title style="text-align: center;">{{data.userData.displayName}}</h1>
 <h2 mat-dialog-title style="text-align: center;">Calling ...</h2>
 <img style="justify-content: center;">
 <div mat-dialog-content>
   Would you like to accept this call?
 </div>
+<img src="{{data.userData.photoURL}}" alt="">
 <div mat-dialog-actions style="justify-content: center;">
-  <button mat-button mat-dialog-close cdkFocusInitial style="color: rgb(77, 243, 77);">Yes</button>
-  <button mat-button mat-dialog-close cdkFocusInitial style="color: rgb(232, 57, 57);">No</button>
+  <button mat-button mat-dialog-close cdkFocusInitial style="color: rgb(77, 243, 77); " (click)="answerCall()">Yes</button>
+  <button mat-button mat-dialog-close cdkFocusInitial style="color: rgb(232, 57, 57);" (click)="deleteCall()">No</button>
 </div>

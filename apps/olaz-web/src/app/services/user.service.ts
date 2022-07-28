@@ -97,33 +97,9 @@ export class UserService {
 
       this.user$.next(_user);
 
-      collectionChanges(this.callRef).subscribe((data) => {
-        data.forEach(async (docVal) => {
-          if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === user.uid) {
-            let userInCall = (await getDoc(doc(this.fs, `users/${user.uid}`))).data()!['incall'];
-            if (!userInCall) {
-              let text = "Incoming Call...";
-              if (confirm(text) == true) {
 
-                await this.answerCall(docVal.doc.id);
-                // audio.pause();
-                // audio.currentTime=0;
-                await this.answerCall(docVal.doc.id);
-                // const audio = new Audio('../../assets/audios/incoming-call.wav');
-                // audio.play().then(()=>{
-                // });
 
-                let ownerID = docVal.doc.data()['owner']['id'];
-                // let callerData = (await getDoc(doc(this.fs, `users/${ownerID}`))).data()
-                // console.log(callerData);
-              }
-            }
 
-          }
-        });
-      });
-
-      console.log("haha")
       console.log(await this.userFirstLogin())
 
       if ((await this.userFirstLogin()) == false) {
@@ -137,9 +113,7 @@ export class UserService {
       }
     });
   }
-  async answerCall(idDoc: any) {
-    this.route.navigate([`ownspace/call/call/${idDoc}`]);
-  }
+
 
   public user$ = new BehaviorSubject<any>(null);
 
