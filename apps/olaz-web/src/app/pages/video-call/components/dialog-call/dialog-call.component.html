@@ -4,7 +4,8 @@
 <div mat-dialog-content>
   Would you like to accept this call?
 </div>
-<img src="{{data.userData.photoURL}}" alt="">
+<audio  id="audio" style="display:none" ></audio>
+<img src="{{data.userData.photoURL}}" alt="" >
 <div mat-dialog-actions style="justify-content: center;">
   <button mat-button mat-dialog-close cdkFocusInitial style="color: rgb(77, 243, 77); " (click)="answerCall()">Yes</button>
   <button mat-button mat-dialog-close cdkFocusInitial style="color: rgb(232, 57, 57);" (click)="deleteCall()">No</button>
