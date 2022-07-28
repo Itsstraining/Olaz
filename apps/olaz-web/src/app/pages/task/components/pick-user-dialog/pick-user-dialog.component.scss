@@ -1,13 +1,76 @@
-.example-form {
-    height: 70%;
-    width: 67%;
-  }
+h1{
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.ipt{
+  width: 100%;
+  padding: 10px 20px;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  border: 1px solid #dadada;
+}
+
+.participant-container{
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  margin: 10px 0;
+  overflow-y: auto;
+
+  div{
+      display: flex;
+      flex-direction: row;
+
+      .user-info{
+          margin-left: 10px;
+          display: flex;
+          flex-direction: column;
   
-  .example-full-width {
-    width: 150%;
+          h3{
+              font-weight: bold;
+              letter-spacing: 1px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+          }
+          p{
+              letter-spacing: 1px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+          }
+      }
+  
+      img{
+          width: 50px;
+          height: 50px;
+          border: 1px solid black;
+          border-radius: 50%;
+      }
+  
+  }
+  .chooseBtn{
+      padding: 5px 10px;
+      color: white;
+      background-color: #5a3e9e;
+      border: 1px solid #5a3e9e;
+      border-radius: 5px;
+      letter-spacing: 1px;
+      font-weight: bold;
+
+      &:hover{
+          cursor: pointer;
+          background-color: white;
+          color: #5a3e9e;
+      }
   }
 
-  .mat-dialog-content {
-    width: 500px;
-    height: 300px;
+  &:hover{
+      background-color: #f0f0f0;
   }
+
+}

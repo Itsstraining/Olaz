@@ -13,7 +13,7 @@
   <div class="title-detail">
     <h3 class="label">Title</h3>
     <div class="wrap-title-Description">
-      <input type="text" [value]="taskData['title']" [(ngModel)]="newTitle" (keydown.enter)="updateTaskBtn()"
+      <input type="text" [value]="newTitle" [(ngModel)]="newTitle" (keydown.enter)="updateTaskBtn()"
         (blur)="updateTaskBtn()">
     </div>
   </div>
@@ -32,7 +32,7 @@
 
   <div class="description-detail">
     <h3 class="label">Description</h3>
-    <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']" [(ngModel)]="newDes"
+    <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="newDes" [(ngModel)]="newDes"
       (keydown.enter)="updateTaskBtn()" (blur)="updateTaskBtn()"></textarea>
   </div>
 

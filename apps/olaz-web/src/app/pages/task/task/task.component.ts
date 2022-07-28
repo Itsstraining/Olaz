@@ -34,7 +34,7 @@ export class TaskComponent implements OnInit {
 
   constructor(
     private TaskService: TaskService,
-    private userService: UserService,
+    public userService: UserService,
     private firestore: Firestore,
     private _snackBar: MatSnackBar
   ) {}
@@ -79,26 +79,27 @@ export class TaskComponent implements OnInit {
       async (result) => {
         if (!result.metadata.fromCache) {
           this.taskListFull.length = 0;
-console.log(result.data())
           this.taskListData = result.data();
-          for (let i = 0; i < this.taskListData.taskList.length; i++) {
-            docSnapshots(
-              doc(this.firestore, 'tasks', this.taskListData.taskList[i])
-            ).subscribe((data) => {
-              const temp = data.data();
-              // if (!data.metadata.fromCache) {
-              const index = this.taskListFull.findIndex(
-                (value) => value['id'] == temp
-              );
-              if (!index) {
-                this.taskListFull.push(temp);
-              }
-              {
-                this.taskListFull[i] = temp;
-              }
-              // }
-              this.filterListTask();
-            });
+          if(this.taskListData.taskList.length != 0){
+            for (let i = 0; i < this.taskListData.taskList.length; i++) {
+              docSnapshots(
+                doc(this.firestore, 'tasks', this.taskListData.taskList[i])
+              ).subscribe((data) => {
+                const temp = data.data();
+                // if (!data.metadata.fromCache) {
+                const index = this.taskListFull.findIndex(
+                  (value) => value['id'] == temp
+                );
+                if (!index) {
+                  this.taskListFull.push(temp);
+                }
+                {
+                  this.taskListFull[i] = temp;
+                }
+                // }
+                this.filterListTask();
+              });
+            }
           }
         }
       }
@@ -109,12 +110,15 @@ console.log(result.data())
     this.todo = [];
     this.doing = [];
     this.done = [];
-    this.taskListFull.filter((value) => {
-      if (value.status == 0) return this.todo.push(value);
-      if (value.status == 1) return this.doing.push(value);
-      if (value.status == 2) return this.done.push(value);
-      return;
-    });
+    console.log(this.taskListFull.length)
+    if(this.taskListFull.length != 0){
+      this.taskListFull.filter((value) => {
+        if (value.status == 0) return this.todo.push(value);
+        if (value.status == 1) return this.doing.push(value);
+        if (value.status == 2) return this.done.push(value);
+        return;
+      });
+    }
   }
 
   addNew() {
@@ -128,8 +132,8 @@ console.log(result.data())
         description: '',
         deadline: Date.now(),
         status: 0,
-        assignee: [],
-        reporter: [],
+        assignee: '',
+        reporter: '',
         priority: 0,
         createdBy: this.userService.user.id,
         createdDate: Date.now(),
@@ -144,35 +148,6 @@ console.log(result.data())
     this.taskListFull.length = 0;
   }
 
-  deleteTask(taskId: any) {
-    this.TaskService.deleteTask(taskId, this.currentRoomId).subscribe(
-      (data) => this.openSnackBar(data)
-    );
-    const tempIndex = this.taskListFull.findIndex((task: any) => {
-      return task.id === taskId;
-    });
-    this.taskListFull = this.taskListFull
-      .slice(0, tempIndex)
-      .concat(this.taskListFull.slice(tempIndex + 1));
-    this.filterListTask();
-  }
-
-  updateTaskEmit(event: any) {
-    if (event.message.message.includes('Update Success')) {
-      const tempIndex = this.taskListFull.findIndex((task) => {
-        return task.id === event.updateTaskData.id;
-      });
-      for (let i = 0; i < this.taskListFull.length; i++) {
-        if (i == tempIndex) {
-          this.taskListFull[i] = event.updateTaskData;
-        }
-      }
-      this.getTaskListData();
-      this.openSnackBar({message: 'Update Success'})
-
-      // this.filterListTask();
-    }
-  }
 
   updateTaskFunc(task: any, status: any){
     const data = { 
@@ -189,8 +164,12 @@ console.log(result.data())
       reporter: '',
     }
     this.TaskService.updateTask(data, data.id).subscribe(
-      (message) => this.updateTaskEmit({message: message, updateTaskData: data})
+      (message) => console.log(message)
     );
+  }
+
+  deleteeEmit(event :any){
+    this.getTaskListData();
   }
 
   getShowDetailsClass(): string {

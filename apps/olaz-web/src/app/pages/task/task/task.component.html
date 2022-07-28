@@ -1,4 +1,4 @@
-<div class="wrapper-container" *ngIf="todo !== [] && doing !== [] &&done !== []">
+<div class="wrapper-container" *ngIf="taskListData !== undefined && this.userService.user !== undefined">
   <div class="content-wrapper">
     <div class="content-title">
       <button class="backBtn" matTooltip="Back to conversation" matTooltipPosition="below">
@@ -57,9 +57,6 @@
   </div>
 
   <!-- SHOW DETAILS IN THE RIGHT SIDE -->
-  <olaz-detail-task *ngIf="isShowDetail" [taskData]="taskData" [isShowDetail]="isShowDetail" 
-    (isShowDetailToggle)="isShowDetail = $event" 
-    (updateTaskEmit)="updateTaskEmit($event)"
-    (deleteTaskEmit)="deleteTask($event)"
-    ></olaz-detail-task>
+  <olaz-detail-task *ngIf="isShowDetail" [taskData]="taskData" [taskListData]="taskListData" [isShowDetail]="isShowDetail"
+    (deleteTaskEmit)="deleteeEmit($event)" (isShowDetailToggle)="isShowDetail = $event"></olaz-detail-task>
 </div>

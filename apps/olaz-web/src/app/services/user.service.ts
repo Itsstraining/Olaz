@@ -203,7 +203,7 @@ export class UserService {
   }
 
   async getUserByID(id: string) {
-    return await await getDoc(doc(this.fs, 'users', id));
+    return await await (await getDoc(doc(this.fs, 'users', id)));
   }
 
   public sendRequest(myID: string, frID: string) {
