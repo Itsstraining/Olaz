@@ -3,25 +3,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeleteDialogComponent } from 'apps/olaz-web/src/app/components/delete-dialog/delete-dialog.component';
 import { TaskModel } from 'apps/olaz-web/src/app/models/task.model';
 import { TaskService } from 'apps/olaz-web/src/app/services/task/tasks/task.service';
+import { UserService } from 'apps/olaz-web/src/app/services/user.service';
 import { PickUserDialogComponent } from '../pick-user-dialog/pick-user-dialog.component';
 
 @Component({
   selector: 'olaz-detail-task',
   templateUrl: './detail-task.component.html',
-  styleUrls: ['./detail-task.component.scss']
+  styleUrls: ['./detail-task.component.scss'],
 })
 export class DetailTaskComponent implements OnInit, OnChanges {
   @Input() isShowDetail: any;
-  @Output() isShowDetailToggle: EventEmitter<any> = new EventEmitter<any>();
   @Input() taskData: any;
-  @Output() updateTaskEmit: EventEmitter<any> = new EventEmitter<any>();
+  @Input() taskListData: any;
+
+  @Output() isShowDetailToggle: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteTaskEmit: EventEmitter<any> = new EventEmitter<any>();
-  
+
   panelOpenState = false;
   isActiveDropdown = false;
   isActiveDropdownPrio = false;
@@ -29,13 +41,16 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   statusBgColor!: string;
   updateTaskInfo!: TaskModel;
   currentRoomId: any;
-  newTitle!: string
-  newDes!: string
+  participantList: any[] = [];
+  newAssignee: any;
+  newReporter: any;
+  newTitle!: string;
+  newDes!: string;
   // newDeadline: any
   newDeadline = new FormControl();
 
-  newPriority: any
-  newStatus: any
+  newPriority: any;
+  newStatus: any;
 
   arr = [
     {
@@ -49,7 +64,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     {
       id: 2,
       value: 'Done',
-    }
+    },
   ];
 
   arrPrio = [
@@ -64,97 +79,154 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     {
       id: 2,
       value: 'Important',
-    }
-  ]
+    },
+  ];
 
-  constructor(private taskService: TaskService, public dialog: MatDialog) { 
-    
-  }
+  constructor(
+    private taskService: TaskService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private userService: UserService
+  ) {}
   openDialog() {
-    this.dialog.open(PickUserDialogComponent);
+    const dialogRef = this.dialog.open(PickUserDialogComponent, {
+      width: '500px',
+      data: this.participantList
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.newAssignee = result;
+      }
+    });
   }
 
   ngOnChanges(): void {
-    if(this.taskData !== undefined){
+    if (this.taskData !== undefined) {
       this.newTitle = this.taskData.title;
       this.newDes = this.taskData.description;
       this.newPriority = this.taskData.priority;
       this.newStatus = this.taskData.status;
       this.newDeadline.setValue(new Date(this.taskData['deadline']));
+
+      // this.newAssignee = this.userService.getUserByID(this.taskData.assignee);
     }
   }
 
   ngOnInit(): void {
-    this.currentRoomId = localStorage.getItem('roomId')
+    this.currentRoomId = localStorage.getItem('roomId');
+    if (this.taskData !== undefined) {
+      this.newTitle = this.taskData.title;
+      this.newDes = this.taskData.description;
+      this.newPriority = this.taskData.priority;
+      this.newStatus = this.taskData.status;
+      this.newDeadline.setValue(new Date(this.taskData['deadline']));
+    };
+    this.getParticipantList();
   }
 
-  show(status: any){
+  async getParticipantList(){
+    this.participantList.length = 0;
+    for(let i = 0; i < this.taskListData.participants.length; i++){
+      const temp =(await this.userService.getUserByID(this.taskListData.participants[i])).data();
+      this.participantList.push(temp);
+      this.getAssignee_Reporter(temp);
+    }
+  }
+
+  getAssignee_Reporter(temp: any){
+    
+    if(this.taskData.assignee == ''){
+      this.newAssignee = {displayName: 'No assignee', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
+    }else{
+      if(temp['id'] == this.newAssignee){
+        this.newAssignee = temp;
+      }
+    }
+    if(this.taskData.reporter == ''){
+      this.newReporter = {displayName: 'No assignee', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
+    }else{
+      if(temp['id'] == this.newAssignee){
+        this.newReporter = temp;
+      }
+    }
+  }
+
+  show(status: any) {
     this.newStatus = status;
     this.updateTaskBtn();
   }
 
-  showPrio(priority: any){
+  showPrio(priority: any) {
     this.newPriority = priority;
     this.updateTaskBtn();
   }
 
-  getDropdownClass():string{
-    let styleClass ='';
-    if(this.isActiveDropdown == true){
+  getDropdownClass(): string {
+    let styleClass = '';
+    if (this.isActiveDropdown == true) {
       styleClass = 'active';
-    }else {
+    } else {
       styleClass = '';
     }
-    if(this.newStatus !== 0){
+    if (this.newStatus !== 0) {
       styleClass += ' lightFont';
-    }else{
+    } else {
       styleClass += ' blackFont';
     }
     return styleClass;
   }
 
-  getDropdownColorClass():string{
-    let styleClass ='';
-    if(this.newStatus == 0){
+  getDropdownColorClass(): string {
+    let styleClass = '';
+    if (this.newStatus == 0) {
       styleClass = 'todo-active';
-    }else if(this.newStatus == 1){
+    } else if (this.newStatus == 1) {
       styleClass = 'doing-active';
-    }else{
+    } else {
       styleClass = 'done-active';
     }
     return styleClass;
   }
 
-  getDropdownPrioClass():string{
-    let styleClass ='';
-    if(this.isActiveDropdownPrio == true){
+  getDropdownPrioClass(): string {
+    let styleClass = '';
+    if (this.isActiveDropdownPrio == true) {
       styleClass = 'active';
-    }else {
+    } else {
       styleClass = '';
     }
-    if(this.newPriority !== 0){
+    if (this.newPriority !== 0) {
       styleClass += ' lightFont';
-      if(this.newPriority == 1){
+      if (this.newPriority == 1) {
         styleClass += ' medium-active';
-      }else {
+      } else {
         styleClass += ' important-active';
       }
-    }else{
+    } else {
       styleClass += ' blackFont normal-active';
     }
     return styleClass;
   }
 
-  toggleDropdown(){
+  toggleDropdown() {
     this.isActiveDropdown = !this.isActiveDropdown;
   }
-  toggleDropdownPrio(){
+  toggleDropdownPrio() {
     this.isActiveDropdownPrio = !this.isActiveDropdownPrio;
   }
 
-  updateTaskBtn(){
+  openSnackBar(message: any) {
+    this._snackBar.open(message.message, '', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+
+  async updateTaskBtn() {
     const temp = Date.parse(this.newDeadline.value);
-    const data = { 
+    const data = {
       id: this.taskData.id,
       title: this.newTitle,
       description: this.newDes,
@@ -164,27 +236,38 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       deadline: temp,
       updatedDate: Date.now(),
       createdBy: this.taskData.createdBy,
-      assignee: '',
+      assignee: this.newAssignee,
       reporter: '',
-    }
-    this.taskService.updateTask(data, data.id).subscribe(
-      (message) => this.updateTaskEmit.emit({message: message, updateTaskData: data})
-    );
+    };
+    this.taskService
+      .updateTask(data, data.id)
+      .subscribe((message) => this.openSnackBar(message));
   }
 
-  deleteTask(taskId: any){
-    this.taskService.deleteTask( taskId, this.currentRoomId ).subscribe (
-      (message) => this.deleteTaskEmit.emit({message: message, taskId: taskId })
-    )
-    // this.taskService.deleteTask(taskId, `1657869801036`)
+  deleteTask(taskId: any) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '500px',
+      data: taskId
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        await this.taskService
+          .deleteTask(taskId, this.currentRoomId)
+          .subscribe((message) => this.openSnackBar(message));
+        this.isShowDetail = false;
+        this.isShowDetailToggle.emit(this.isShowDetail);
+        this.deleteTaskEmit.emit('delete');
+      }
+    });
   }
 
-  closeShowDetails(){
+  closeShowDetails() {
     this.isShowDetail = false;
     this.isShowDetailToggle.emit(this.isShowDetail);
   }
 
-  getShowDetailsClass(){
+  getShowDetailsClass() {
     let styleClass = '';
     if (this.isShowDetail == true) {
       styleClass = 'task-details';
@@ -193,6 +276,4 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     }
     return styleClass;
   }
-
-
 }

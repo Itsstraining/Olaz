@@ -1,8 +1,10 @@
 <mat-drawer-container class="container" *ngIf="this.userService.user !== undefined">
-    <mat-drawer ><olaz-sidebar (isOpened)="isOpened($event)"></olaz-sidebar></mat-drawer>
+  <mat-drawer>
+    <olaz-sidebar (isOpened)="isOpened($event)"></olaz-sidebar>
+  </mat-drawer>
 
-    <mat-drawer-content class="body-content" [ngClass]="getBodyClass()">
-      <olaz-navbar></olaz-navbar>
-      <router-outlet></router-outlet>
-    </mat-drawer-content>
-  </mat-drawer-container>
+  <mat-drawer-content class="body-content" [ngClass]="getBodyClass()">
+    <olaz-navbar></olaz-navbar>
+    <router-outlet ></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

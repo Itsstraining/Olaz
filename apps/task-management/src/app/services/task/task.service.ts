@@ -45,8 +45,8 @@ export class TaskService {
             description: updateTask.description,
             status: updateTask.status,
             deadline: updateTask.deadline,
-            assignee: admin.firestore.FieldValue.arrayUnion(updateTask.assignee),
-            reporter: admin.firestore.FieldValue.arrayUnion(updateTask.reporter),
+            assignee: updateTask.assignee,
+            reporter: updateTask.reporter,
             updatedDate: Date.now(),
             priority: updateTask.priority
         });
