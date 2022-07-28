@@ -19,11 +19,11 @@ export class UserController {
         }
     }
     @Get('suggest-user')
-    async suggestUsers(@Query('email') email: string){
+    async suggestUsers(@Query('email') email: string) {
         const users: any = await this.UserService.suggestUsers()
         const userSuggests = []
-        for(let i = 0; i<users.length; i++){
-            if(i>4){
+        for (let i = 0; i < users.length; i++) {
+            if (i > 4) {
                 return userSuggests
             }
             userSuggests.push(users[i])
@@ -34,7 +34,7 @@ export class UserController {
                     .toLocaleLowerCase()
                     .includes(email.toLocaleLowerCase())
             })
-            return newArr
+        return newArr
     }
 
     @Post('add-friend')
@@ -47,11 +47,11 @@ export class UserController {
     }
 
     @Post('send-request')
-    addFriend(@Body() body){
-        try{
+    addFriend(@Body() body) {
+        try {
             return this.UserService.sendRequest(body.frID, body.myID)
         }
-        catch(error) {
+        catch (error) {
             return new HttpException(error.message, HttpStatus.BAD_REQUEST)
         }
     }
@@ -59,14 +59,7 @@ export class UserController {
     @Get('get-email')
     async gerUser(@Query('email') email: string) {
         const users: any = await this.UserService.getUserByEmail()
-        // for(let i = 0; i<users.length; i++){
-        //     if(users[i].email == email ){
-        //         return users[i];
-        //     }
-        // }
-        // return "Không có kết quả nào!"
-        // const newArr =  users.some( ai => ai.email.includes(email));
-        const newArr =  users.filter(
+        const newArr = users.filter(
             (user) => {
                 return user.email
                     .toLocaleLowerCase()

@@ -5,7 +5,7 @@ import { RoomService } from '../room/room.service';
 
 @Injectable()
 export class MessageService {
-  constructor(private RoomService:RoomService) {}
+  constructor(private RoomService: RoomService) { }
 
   async sendMessage(
     content: string,
@@ -19,18 +19,12 @@ export class MessageService {
     const fs = firebase.firestore();
     const messID = Date.now().toString();
     try {
-      console.log({
-        userId: myID,
-        id: messID,
-        content: content,
-        image: image,
-        type: type,
-        createdTime: createdTime,
-      });
       const _isToken = token.split(" ")[1]
       const isValid = await this.RoomService.checkToken(_isToken)
-      if(isValid){
-        return //some thing here
+      if (isValid) {
+        return {
+          message: "Token invalid"
+        }
       }
       const createMessage = fs.collection('messages').doc(messID).create({
         userId: myID,

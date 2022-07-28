@@ -49,6 +49,11 @@ export class RejectAddComponent implements OnInit {
     })
   }
 
+  handleError(e: any) {
+    console.log(e)
+    e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
+  }
+
   public request: any = [];
   public _user: any;
   async getAllRequests(myID: string) {

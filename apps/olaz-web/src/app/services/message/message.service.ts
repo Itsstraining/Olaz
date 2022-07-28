@@ -5,6 +5,7 @@ import { Firestore, getDoc, doc } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 import { Storage, uploadBytesResumable, ref, percentage, getDownloadURL } from '@angular/fire/storage';
 import { from } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class MessageService {
       createdTime: messageID,
       roomID: roomID
     })
-    return this.HttpClient.post('http://localhost:3331/api/message/send-message', {
+    return this.HttpClient.post(environment.endPointMessenger + 'message/send-message', {
       userId: myID,
       id: messageID,
       content: content,
