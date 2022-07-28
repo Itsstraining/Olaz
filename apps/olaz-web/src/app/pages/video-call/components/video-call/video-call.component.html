@@ -1,10 +1,10 @@
 <div style="height: fit-content">
   <div>
- 
-    <div *ngIf="!this.ownerStatus.camOn" id="back_ground">
-      <img 
+
+    <div *ngIf="!this.checkScreen" id="back_ground">
+      <img
         id="img"
-      [srcset]="this.ownerInfo.photoURL"
+        src="{{this.ownerInfo.photoURL}}"
       />
     </div>
   </div>

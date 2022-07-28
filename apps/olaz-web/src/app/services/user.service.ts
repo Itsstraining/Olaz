@@ -116,8 +116,6 @@ export class UserService {
                 let ownerID = docVal.doc.data()['owner']['id'];
                 // let callerData = (await getDoc(doc(this.fs, `users/${ownerID}`))).data()
                 // console.log(callerData);
-              } else {
-
               }
             }
 
