@@ -43,6 +43,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   currentRoomId: any;
   participantList: any[] = [];
   newAssignee: any;
+  newReporter: any;
   newTitle!: string;
   newDes!: string;
   // newDeadline: any
@@ -107,6 +108,8 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newPriority = this.taskData.priority;
       this.newStatus = this.taskData.status;
       this.newDeadline.setValue(new Date(this.taskData['deadline']));
+
+      // this.newAssignee = this.userService.getUserByID(this.taskData.assignee);
     }
   }
 
@@ -118,7 +121,6 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newPriority = this.taskData.priority;
       this.newStatus = this.taskData.status;
       this.newDeadline.setValue(new Date(this.taskData['deadline']));
-      this.newAssignee = this.userService.getUserByID(this.taskData.assignee[0])
     };
     this.getParticipantList();
   }
@@ -128,6 +130,25 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     for(let i = 0; i < this.taskListData.participants.length; i++){
       const temp =(await this.userService.getUserByID(this.taskListData.participants[i])).data();
       this.participantList.push(temp);
+      this.getAssignee_Reporter(temp);
+    }
+  }
+
+  getAssignee_Reporter(temp: any){
+    
+    if(this.taskData.assignee == ''){
+      this.newAssignee = {displayName: 'No assignee', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
+    }else{
+      if(temp['id'] == this.newAssignee){
+        this.newAssignee = temp;
+      }
+    }
+    if(this.taskData.reporter == ''){
+      this.newReporter = {displayName: 'No assignee', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
+    }else{
+      if(temp['id'] == this.newAssignee){
+        this.newReporter = temp;
+      }
     }
   }
 
@@ -215,7 +236,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       deadline: temp,
       updatedDate: Date.now(),
       createdBy: this.taskData.createdBy,
-      assignee: '',
+      assignee: this.newAssignee,
       reporter: '',
     };
     this.taskService

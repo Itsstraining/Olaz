@@ -15,7 +15,6 @@ export class PickUserDialogComponent implements OnInit {
   
   
   ngOnInit(): void {
-    console.log(this.data)
   }
 
   handleError(e: any) {
