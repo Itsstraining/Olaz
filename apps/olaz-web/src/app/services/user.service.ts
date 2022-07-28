@@ -39,14 +39,13 @@ export class UserService {
   loggedIn = false;
   user!: any;
   userTodo: any;
-
   callRef: any;
   offerDocRef: any;
   ansDocRef: any;
   opponentId!: any;
   ownerId!: any;
   statemanager = false;
-
+  public userInfoFb$ = new BehaviorSubject<any>(null);
   constructor(
     private route: Router,
     private fs: Firestore,
@@ -87,7 +86,12 @@ export class UserService {
           console.log(err);
         }
       }
-
+      ////
+      let userRef = doc(this.fs, 'users', user.uid);
+      docData(userRef).subscribe((data) => {
+        this.userInfoFb$.next(data);
+      })
+      ///
       this.user = await (await this.getUserByID(user.uid)).data();
 
       let _user = {
@@ -112,9 +116,8 @@ export class UserService {
         console.log('user exists');
       }
     });
+
   }
-
-
   public user$ = new BehaviorSubject<any>(null);
 
   private readonly refUser = collection(this.fs, 'users');
@@ -122,6 +125,7 @@ export class UserService {
   //
   public getUsers(): Observable<Array<any>> {
     return collectionData(this.refUser);
+
   }
 
   //new fuction with server

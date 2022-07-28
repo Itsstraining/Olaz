@@ -24,14 +24,15 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.user$.subscribe((user) => {
+    this.userService.userInfoFb$.subscribe((user) => {
+
       console.log(user)
       if (user != null) {
         this.callRef = collection(this.fs, 'calls');
         collectionChanges(this.callRef).subscribe((data) => {
           data.forEach(async (docVal) => {
             if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === user.id) {
-              let userInCall = (await getDoc(doc(this.fs, `users/${user.id}`))).data()!['incall'];
+              let userInCall = user.incall;
               if (!userInCall) {
                 let owner = (await getDoc(doc(this.fs, `users/${docVal.doc.data()['owner']['id']}`))).data()!;
                 this.openIncomingCallDialog(owner,docVal.doc.id);

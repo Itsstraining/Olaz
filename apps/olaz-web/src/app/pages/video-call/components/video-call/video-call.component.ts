@@ -148,10 +148,10 @@ export class VideoCallComponent implements OnInit {
     });
 
     collectionChanges(collection(this.fs, 'calls')).subscribe((data) => {
-      data.forEach((doc) => {
+      data.forEach(async (doc) => {
         if (doc.type === 'removed' && doc.doc.id === this.docId) {
-          alert("Cuộc gọi đã kết thúc");
-          this.router.navigate(["ownspace/call"]);
+          await alert("Cuộc gọi đã kết thúc");
+          window.close();
         }
       })
     })

@@ -30,7 +30,11 @@ export class DialogCallComponent implements OnInit {
   async answerCall() {
     this.audio.pause();
     this.audio.currentTime=0;
-    this.route.navigate([`ownspace/call/call/${this.data.idRoom}`]);
+    const url = this.route.serializeUrl(
+      this.route.createUrlTree([`ownspace/call/call/${this.data.idRoom}`])
+
+    );
+    window.open(url, '_blank');
   }
   deleteCall() {
     this.audio.pause();

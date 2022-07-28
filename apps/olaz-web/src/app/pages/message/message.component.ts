@@ -290,7 +290,12 @@ export class MessageComponent implements OnInit {
         opponent: { id: userID, camOn: true, micOn: true }
       }
     ).then((data) => {
-      this.Router.navigate([`ownspace/call/call/${data.id}`])
+      const url = this.Router.serializeUrl(
+        this.Router.createUrlTree([`ownspace/call/call/${data.id}`])
+      );
+
+      window.open(url, '_blank');
+      // this.Router.navigate([`ownspace/call/call/${data.id}`])
     })
   }
 
