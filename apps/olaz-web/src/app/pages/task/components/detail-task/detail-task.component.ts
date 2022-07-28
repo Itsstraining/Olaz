@@ -28,7 +28,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   statusColor!: string;
   statusBgColor!: string;
   updateTaskInfo!: TaskModel;
-
+  currentRoomId: any;
   newTitle!: string
   newDes!: string
   // newDeadline: any
@@ -85,6 +85,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.currentRoomId = localStorage.getItem('roomId')
   }
 
   show(status: any){
@@ -172,7 +173,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   }
 
   deleteTask(taskId: any){
-    this.taskService.deleteTask( taskId, '1657869801036' ).subscribe (
+    this.taskService.deleteTask( taskId, this.currentRoomId ).subscribe (
       (message) => this.deleteTaskEmit.emit({message: message, taskId: taskId })
     )
     // this.taskService.deleteTask(taskId, `1657869801036`)

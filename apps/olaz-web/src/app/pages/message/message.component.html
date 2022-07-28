@@ -85,14 +85,14 @@
         <i matTooltip="Video call" class="uil uil-video" (click)="clickCall()"></i>
         <i matTooltip="Audio call" class="uil uil-phone"></i>
         <i matTooltip="Search message" class="uil uil-search"></i>
-        <i matTooltip="Task list" class="uil uil-clipboard-notes"></i>
+        <i matTooltip="Task list" class="uil uil-clipboard-notes" (click)="onClickTask(room.id)"></i>
         <i matTooltip="Settings" class="uil uil-ellipsis-v"></i>
       </div>
     </div>
     <div id="right-center" *ngIf="message!==''">
       <p style="padding: 20%; text-align: center;">{{message}}</p>
     </div>
-    <div style="overflow-y: auto; height: 50%;">
+    <div style="overflow-y: auto; height: 68vh;  margin-bottom: 5px;">
       <div *ngIf="room" id="right-center">
         <div *ngFor="let message of room.messages">
           <div *ngIf="message.userId?.id === myId && !message.image" class="cha">
@@ -129,39 +129,23 @@
 
       </div>
     </div>
-    <div *ngIf="room" class="right-bottom">
-      <div class="icon-bottom">
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/link-free-icon-font.png" alt="">
-          </button>
-        </div>
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/clock-five-free-icon-font.png" alt=""></button>
-        </div>
-        <div class="hub-icon">
-          <button class="button-function"><img class="icon-logo-bottom"
-              src="../../../assets/assets/smile-free-icon-font.png" alt=""></button>
-        </div>
-        <div class="hub-icon">
-          <button (click)="fileInput.click()" class="button-function">
-            <img class="icon-logo-bottom" src="../../../assets/assets/picture-free-icon-font.png" alt="">
-            <input #fileInput type="file" (change)="onFileSelectedEvent($event)" style="display: none;" />
-          </button>
-
-        </div>
+    <div class="right-bottom">
+      <div style="display: flex; justify-content: flex-end">
+        <button class="button-function"><i class="uil uil-paperclip"></i>
+        </button>
+        <button class="button-function"><i class="uil uil-clock"></i></button>
+        <button class="button-function"><i class="uil uil-grin"></i></button>
+        <button (click)="fileInput.click()" class="button-function">
+          <i class="uil uil-image-upload"></i>
+          <input #fileInput type="file" (change)="onFileSelectedEvent($event)" style="display: none;" />
+        </button>
       </div>
-      <div class="input-message">
-        <div class="bottom-input-left">
-          <input *ngIf="room" class="input-kichthuoc" (keydown)="onKeydown($event)" type="text" [(ngModel)]="content"
-            placeholder="Enter your messages....">
-        </div>
-        <div class="bottom-input-right">
-          <button class="btn-send" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <mat-icon>send</mat-icon>
-          </button>
-        </div>
+      <div style="display: flex; justify-content: space-between; flex-direction: row;">
+        <input *ngIf="room" class="sendMessageIpt" placeholder="Enter your messages...." (keydown)="onKeydown($event)"
+          type="text" [(ngModel)]="content" />
+        <button class="btn-send" mat-mini-fab color="primary">
+          <mat-icon>send</mat-icon>
+        </button>
       </div>
 
     </div>

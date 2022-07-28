@@ -30,6 +30,7 @@ export class TaskComponent implements OnInit {
   updateTaskData!: TaskModel;
   newTaskTitle: any = '';
   message: any;
+  currentRoomId: any;
 
   constructor(
     private TaskService: TaskService,
@@ -39,6 +40,7 @@ export class TaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentRoomId = localStorage.getItem('roomId')
     this.getTaskListData();
   }
 
@@ -73,11 +75,11 @@ export class TaskComponent implements OnInit {
     this.taskListData = undefined;
     this.taskListFull.length = 0;
 
-    docSnapshots(doc(this.firestore, 'taskList', `TL1657869801036`)).subscribe(
+    docSnapshots(doc(this.firestore, 'taskList', `TL${this.currentRoomId}`)).subscribe(
       async (result) => {
         if (!result.metadata.fromCache) {
           this.taskListFull.length = 0;
-
+console.log(result.data())
           this.taskListData = result.data();
           for (let i = 0; i < this.taskListData.taskList.length; i++) {
             docSnapshots(
@@ -134,7 +136,7 @@ export class TaskComponent implements OnInit {
         updatedDate: Date.now(),
       };
       this.todo.push(temp);
-      this.TaskService.createTask(temp, '1657869801036').subscribe(
+      this.TaskService.createTask(temp, this.currentRoomId).subscribe(
         (data) => this.openSnackBar(data)
       );
       this.newTaskTitle = '';
@@ -143,7 +145,7 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTask(taskId: any) {
-    this.TaskService.deleteTask(taskId, '1657869801036').subscribe(
+    this.TaskService.deleteTask(taskId, this.currentRoomId).subscribe(
       (data) => this.openSnackBar(data)
     );
     const tempIndex = this.taskListFull.findIndex((task: any) => {
