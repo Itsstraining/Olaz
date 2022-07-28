@@ -37,16 +37,16 @@ import { MessageService } from './message/message.service';
 })
 export class UserService {
   loggedIn = false;
+
   user!: any;
   userTodo: any;
-
   callRef: any;
   offerDocRef: any;
   ansDocRef: any;
   opponentId!: any;
   ownerId!: any;
   statemanager = false;
-
+  public userInfoFb$ = new BehaviorSubject<any>(null);
   constructor(
     private route: Router,
     private fs: Firestore,
@@ -87,7 +87,13 @@ export class UserService {
           console.log(err);
         }
       }
-
+      ////
+      let userRef = doc(this.fs, 'users', user.uid);
+      docData(userRef).subscribe((data) => {
+        console.log(data)
+        this.userInfoFb$.next(data);
+      })
+      ///
       this.user = await (await this.getUserByID(user.uid)).data();
 
       let _user = {
@@ -97,33 +103,9 @@ export class UserService {
 
       this.user$.next(_user);
 
-      collectionChanges(this.callRef).subscribe((data) => {
-        data.forEach(async (docVal) => {
-          if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === user.uid) {
-            let userInCall = (await getDoc(doc(this.fs, `users/${user.uid}`))).data()!['incall'];
-            if (!userInCall) {
-              let text = "Incoming Call...";
-              if (confirm(text) == true) {
 
-                await this.answerCall(docVal.doc.id);
-                // audio.pause();
-                // audio.currentTime=0;
-                await this.answerCall(docVal.doc.id);
-                // const audio = new Audio('../../assets/audios/incoming-call.wav');
-                // audio.play().then(()=>{
-                // });
 
-                let ownerID = docVal.doc.data()['owner']['id'];
-                // let callerData = (await getDoc(doc(this.fs, `users/${ownerID}`))).data()
-                // console.log(callerData);
-              }
-            }
 
-          }
-        });
-      });
-
-      console.log("haha")
       console.log(await this.userFirstLogin())
 
       if ((await this.userFirstLogin()) == false) {
@@ -136,11 +118,8 @@ export class UserService {
         console.log('user exists');
       }
     });
-  }
-  async answerCall(idDoc: any) {
-    this.route.navigate([`ownspace/call/call/${idDoc}`]);
-  }
 
+  }
   public user$ = new BehaviorSubject<any>(null);
 
   private readonly refUser = collection(this.fs, 'users');
@@ -148,6 +127,7 @@ export class UserService {
   //
   public getUsers(): Observable<Array<any>> {
     return collectionData(this.refUser);
+
   }
 
   //new fuction with server

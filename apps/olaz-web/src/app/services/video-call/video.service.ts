@@ -10,6 +10,10 @@ export class VideoService {
   getData() {
     return this.http.get(this.serverURL)
   }
+  updateUserStatus(id: any) {
+
+    return this.http.put(`${this.serverURL}/update-user-call-status`, {  id: id });
+  }
 
   delData(id: any) {
     return this.http.delete(`${this.serverURL}/delete-Item?id=${id}`, { responseType: 'text' });
