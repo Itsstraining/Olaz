@@ -21,7 +21,7 @@ export class MessageService {
     try {
       const _isToken = token.split(" ")[1]
       const isValid = await this.RoomService.checkToken(_isToken)
-      if (isValid) {
+      if (!isValid) {
         return {
           message: "Token invalid"
         }
