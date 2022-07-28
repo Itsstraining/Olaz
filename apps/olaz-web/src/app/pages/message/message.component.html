@@ -21,16 +21,16 @@
         </div>
       </div>
       <div>
-        <input type="search" name="search" placeholder="Tìm Kiếm" id="Input-search1">
+        <input type="search" name="search" placeholder="Search..." id="Input-search1">
       </div>
       <div>
         <div class="canle">
           <div class="optionBtn">
-            <button class="active">Tất cả</button>
+            <button class="active">ALL</button>
           </div>
 
           <div class="optionBtn">
-            <button>Đã đọc</button>
+            <button>READ</button>
           </div>
         </div>
       </div>
@@ -38,15 +38,27 @@
       <!-- conversation List -->
       <div style="overflow-y: auto;">
         <div *ngIf="rooms">
-          <div *ngFor="let room of rooms " (click)="changeMessage(room.id)" class="cha-1">
-            <div class="ava">
-              <img class="avachat" [src]="room.image" alt="">
+          <span *ngFor="let room of rooms ">
+            <div style=" background-color: rgb(182, 182, 182);
+            border-radius: 15px;" *ngIf="room.id === roomId" (click)="changeMessage(room.id)" class="cha-1">
+              <div class="ava">
+                <img class="avachat" [src]="room.image" alt="">
+              </div>
+              <div>
+                <p class="ten-1">{{room.name}}</p>
+              </div>
             </div>
-            <div>
-              <p class="ten-1">{{room.name}}</p>
-              <p class="ten-1-1">Ferrari: Hello Ferrari</p>
+
+            <div *ngIf="room.id !== roomId" (click)="changeMessage(room.id)" class="cha-1">
+              <div class="ava">
+                <img class="avachat" [src]="room.image" alt="">
+              </div>
+              <div>
+                <p class="ten-1">{{room.name}}</p>
+              </div>
             </div>
-          </div>
+          </span>
+
         </div>
       </div>
     </div>
@@ -70,10 +82,11 @@
         </div>
       </div>
       <div class="right-top-one">
-        <i class="uil uil-video"></i>
-        <i class="uil uil-phone"></i>
-        <i class="uil uil-search"></i>
-        <i class="uil uil-ellipsis-v"></i>
+        <i matTooltip="Video call" class="uil uil-video"></i>
+        <i matTooltip="Audio call" class="uil uil-phone"></i>
+        <i matTooltip="Search message" class="uil uil-search"></i>
+        <i matTooltip="Task list" class="uil uil-clipboard-notes"></i>
+        <i matTooltip="Settings" class="uil uil-ellipsis-v"></i>
       </div>
     </div>
     <div id="right-center" *ngIf="message!==''">
@@ -148,6 +161,8 @@
               src="../../../assets/assets/smile-free-icon-font.png" alt=""></button>
 
         </div>
+
+
       </div>
     </div>
   </div>
