@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
 import { addDoc, doc, collection, collectionChanges, collectionData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
+import { DialogCallComponent} from '../components/dialog-call/dialog-call.component'
 
 
 @Component({
@@ -25,7 +27,7 @@ export class CallComponent implements OnInit {
     iceCandidatePoolSize: 10,
   }
   pc = new RTCPeerConnection(this.servers);
-  constructor(public db: Firestore, public UsrSv: UserService, private router: Router) { }
+  constructor(public db: Firestore, public UsrSv: UserService, private router: Router,public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -41,7 +43,10 @@ export class CallComponent implements OnInit {
     ).then((data) => {
       this.router.navigate([`ownspace/call/call/${data.id}`])
     })
-
-
   }
+  openDialogCreatRoom() {
+    const dialogRef = this.dialog.open(DialogCallComponent, {
+      width: 'fit-content', height: 'fit-content',
+    });
+}
 }

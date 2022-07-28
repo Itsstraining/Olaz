@@ -4,20 +4,27 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class TodoService {
     firestore = admin.firestore();
-    async getAll(userId): Promise<any>{
-        const result = (await this.firestore.collection('users').doc(userId).collection('Todo').get()).docs.map(doc => doc.data())
+    async getTodoDetail(todoId): Promise<any>{
+        const result = (await this.firestore.collection('todos').doc(todoId).get())
         return result;
     }
-    async create(newTask: any, userId){
-        const result = await this.firestore.collection('users').doc(userId).collection('Todo').add(newTask);
+    async create(newTask: any){
+        const uniqueId = Date.now().toString()
+        const result = await this.firestore.collection('todos').doc(uniqueId).set({
+            id: uniqueId, 
+            title: newTask.title,
+            status: newTask.status,
+            createdDate: newTask.createdDate,
+            createdBy: newTask.createdBy
+        });
         return result;
     }
-    async update(updateTask: any, userId, taskId){
-        const result = await this.firestore.collection('users').doc(userId).collection('Todo').doc(taskId).update(updateTask);
+    async update(updateTask: any){
+        const result = await this.firestore.collection('todos').doc(updateTask.id).update(updateTask);
         return result;
     }
-    async delete(userId,taskId){
-        const result = await this.firestore.collection('users').doc(userId).collection('Todo').doc(taskId).delete();
+    async delete(todoId,){
+        const result = await this.firestore.collection('todos').doc(todoId).delete();
         return result;
     }
 
