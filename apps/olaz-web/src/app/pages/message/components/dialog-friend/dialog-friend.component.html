@@ -16,11 +16,13 @@
           <!-- <mat-list-option> -->
           <div *ngFor="let usr of listOfEmail">
             <mat-list-item>
-              <img matListAvatar [src]="usr.photoURL">
+              <img matListAvatar (error)="handleError($event)" [src]="usr.photoURL">
               <p matLine>
                 <span> {{usr.email}} </span>
               </p>
-              <button (click)="addFriend(usr.id)"><i class="uil uil-user-plus"></i></button>
+              <button *ngIf="!isSent" (click)="addFriend(usr.id)"><i class="uil uil-user-plus"></i></button>
+              <button *ngIf="isSent" disabled><i class="uil uil-user-plus"></i></button>
+
             </mat-list-item>
           </div>
 
@@ -30,7 +32,7 @@
     </div>
     <div *ngFor="let usr of listOfFriend">
       <mat-list-item>
-        <img matListAvatar [src]="usr.photoURL">
+        <img (error)="handleError($event)" matListAvatar [src]="usr.photoURL">
         <p matLine>
           <span> {{usr.email}} </span>
         </p>

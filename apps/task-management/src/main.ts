@@ -19,7 +19,7 @@ async function bootstrap() {
     credential: admin.credential.cert(key)
   });
 
-  const app = await NestFactory.create(AppModule,{bodyParser:true, cors: true});
+  const app = await NestFactory.create(AppModule, { bodyParser: true, cors: true });
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3333;

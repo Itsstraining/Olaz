@@ -1,48 +1,26 @@
 <nav class="khung" *ngIf="this.userInfo !== undefined">
   <div class="nav-icons">
     <div type="button" class="icon-button">
-      <span
-        class="uil uil-search"
-        mat-raised-button
-        matTooltip="Search"
-        matTooltipPosition="below"
-        (click)="openDialogAddFr()"
-      ></span>
+      <span class="uil uil-search" mat-raised-button matTooltip="Search" matTooltipPosition="below"
+        (click)="openDialogAddFr()"></span>
     </div>
     <div type="button" class="icon-button">
-      <span
-        class="uil uil-bell"
-        mat-raised-button
-        matTooltip="Notification"
-        matTooltipPosition="below"
-      ></span>
-      <span
-        class="icon-button__badge"
-        [ngStyle]="{ display: messageCount === 0 ? 'none' : 'block' }"
-        >{{ messageCount }}</span
-      >
+      <span class="uil uil-bell" mat-raised-button matTooltip="Notification" matTooltipPosition="below"></span>
+      <span class="icon-button__badge" [ngStyle]="{ display: messageCount === 0 ? 'none' : 'block' }">{{ messageCount
+        }}</span>
     </div>
     <div type="button" class="icon-button">
-      <span
-        class="uil uil-users-alt"
-        mat-raised-button
-        matTooltip="Add Friend"
-        matTooltipPosition="below"
-        (click)="openDialogAddRj()"
-      ></span>
-      <span
-        class="icon-button__badge"
-        [ngStyle]="{ display: count === 0 ? 'none' : 'block' }"
-        >{{ count }}</span
-      >
+      <span class="uil uil-users-alt" mat-raised-button matTooltip="Add Friend" matTooltipPosition="below"
+        (click)="openDialogAddRj()"></span>
+      <span class="icon-button__badge" [ngStyle]="{ display: count === 0 ? 'none' : 'block' }">{{ count }}</span>
     </div>
   </div>
   <button class="pic" mat-button [matMenuTriggerFor]="menu">
-    <img [src]="userInfo['photoURL']" />
+    <img (error)="handleError($event)" [src]="userInfo['photoURL']" />
   </button>
   <mat-menu #menu="matMenu" style="width: 500px">
     <div class="user-info" mat-menu-item>
-      <img class="small-ava" [src]="userInfo['photoURL']" />
+      <img (error)="handleError($event)" class="small-ava" [src]="userInfo['photoURL']" />
       <div class="name-email">
         <h3>{{ userInfo['displayName'] }}</h3>
         <h4>{{ userInfo['email'] }}</h4>
@@ -54,24 +32,16 @@
       <p class="logout">Profile</p>
     </button>
     <hr />
-    <button
-      class="icon mobile"
-      mat-menu-item
-      (click)="this.openDialogProfile()"
-    >
+    <button class="icon mobile" mat-menu-item (click)="this.openDialogProfile()">
       <i class="uil uil-bell" style="color: #000000"></i>
       <p class="logout">Notification</p>
     </button>
-    <hr class="mobile"/>
-    <button
-      class="icon mobile"
-      mat-menu-item
-      (click)="this.openDialogProfile()"
-    >
+    <hr class="mobile" />
+    <button class="icon mobile" mat-menu-item (click)="this.openDialogProfile()">
       <i class="uil uil-users-alt" style="color: #000000"></i>
       <p class="logout">Notification</p>
     </button>
-    <hr class="mobile"/>
+    <hr class="mobile" />
     <button class="icon" mat-menu-item (click)="this.UserService.logout()">
       <i class="uil uil-signout"></i>
       <p class="logout">Logout</p>

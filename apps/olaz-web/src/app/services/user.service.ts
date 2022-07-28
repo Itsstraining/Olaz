@@ -32,6 +32,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MessageService } from './message/message.service';
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -133,7 +135,7 @@ export class UserService {
   //new fuction with server
   public getUserByEmail(email: string) {
     return this.http.get(
-      `http://localhost:3331/api/user/get-email?email=${email}`
+      `${environment.endPointMessenger}user/get-email?email=${email}`
     );
   }
 
@@ -145,7 +147,7 @@ export class UserService {
   }
 
   public toggleRequest(check: boolean, frID: string, myID: string) {
-    return this.http.post('http://localhost:3331/api/user/add-friend', {
+    return this.http.post(environment.endPointMessenger + 'user/add-friend', {
       check,
       myID,
       frID,
@@ -187,14 +189,14 @@ export class UserService {
   }
 
   public sendRequest(myID: string, frID: string) {
-    return this.http.post('http://localhost:3331/api/user/send-request', {
+    return this.http.post(environment.endPointMessenger + 'user/send-request', {
       myID: myID,
       frID: frID,
     });
   }
 
   public suggestUsers() {
-    return this.http.get('http://localhost:3331/api/user/suggest-user');
+    return this.http.get(environment.endPointMessenger + 'user/suggest-user');
   }
 
   getListOfRoomId(userId: string) {
