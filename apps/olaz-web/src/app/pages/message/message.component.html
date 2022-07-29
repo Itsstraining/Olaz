@@ -66,7 +66,7 @@
   </div>
 
   <div id="Layout-right">
-    <div *ngIf="message===''" class="right-top" style="padding: 10px; display:flex; flex-direction: row;">
+    <div *ngIf="isLoading" class="right-top" style="padding: 10px; display:flex; flex-direction: row;">
       <div class="Circle-top-one">
         <div style="display: flex; flex-direction: row;">
           <img class="image-message" [src]="room.image" alt="" (error)="handleError($event)">
@@ -90,10 +90,10 @@
         <i matTooltip="Settings" class="uil uil-ellipsis-v"></i>
       </div>
     </div>
-    <div id="right-center" *ngIf="message!==''">
+    <div id="right-center" *ngIf="!isLoading">
       <olaz-snack-bar></olaz-snack-bar>
     </div>
-    <div *ngIf="message===''" style="overflow-y: auto; height: 68vh;  margin-bottom: 5px;">
+    <div *ngIf="isLoading" style="overflow-y: auto; height: 68vh;  margin-bottom: 5px;">
       <div *ngIf="room" id="right-center">
         <div *ngFor="let message of messages">
           <div *ngIf="message.userId?.id === myId && !message.image" class="cha">
@@ -130,7 +130,7 @@
 
       </div>
     </div>
-    <div *ngIf="message===''" class="right-bottom">
+    <div *ngIf="isLoading" class="right-bottom">
       <div style="display: flex; justify-content: flex-end">
         <button class="button-function"><i class="uil uil-paperclip"></i>
         </button>

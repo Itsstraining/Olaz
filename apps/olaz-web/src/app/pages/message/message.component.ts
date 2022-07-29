@@ -66,6 +66,7 @@ export class MessageComponent implements OnInit {
 
   user!: any
   // eslint-disable-next-line @typescript-eslint/no-empty-function
+  isLoading = false;
   ngOnInit(): void {
 
     this.UserService.user$.subscribe((user) => {
@@ -111,11 +112,10 @@ export class MessageComponent implements OnInit {
           return;
         } else {
           this.route.params.subscribe(params => {
-            // console.log(params['roomId'])
             if (!params['roomId']) return
-            this.messages = [];
             this.getRoomId(params['roomId'], user.token)
             this.roomId = params['roomId']
+            this.isLoading = false;
           })
         }
       }
@@ -167,6 +167,7 @@ export class MessageComponent implements OnInit {
         return a.createdTime - b.createdTime
       })
       this.messages = messages;
+      this.isLoading = true;
       console.log(messages);
     });
   }
