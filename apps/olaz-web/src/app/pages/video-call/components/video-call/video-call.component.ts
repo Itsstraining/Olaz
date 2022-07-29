@@ -117,13 +117,12 @@ export class VideoCallComponent implements OnInit {
     }
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
       if (data['offer'] != null) {
-        this.isLoaded = true
+        this.isLoaded = true;
       }
-      let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
-      let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
+      let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data();
+      let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data();
       this.callInf = data;
       if (this.userSrv.user.id === this.callInf.owner.id) {
-
         this.opponentInfo.name = opponent!['displayName'];
         this.opponentInfo.photoURL = opponent!['photoURL'];
         this.ownerInfo.name = owner!['displayName'];
@@ -133,9 +132,7 @@ export class VideoCallComponent implements OnInit {
         this.opponentStatus.micOn = data['opponent']['id'];
         this.ownerStatus.camOn = data['owner']['id'];
         this.ownerStatus.micOn = data['owner']['id'];
-
       } else {
-
         this.opponentInfo.name = owner!['displayName'];
         this.opponentInfo.photoURL = owner!['photoURL'];
         this.ownerInfo.name = opponent!['displayName'];
@@ -146,9 +143,6 @@ export class VideoCallComponent implements OnInit {
         this.ownerStatus.camOn = data['opponent']['id'];
         this.ownerStatus.micOn = data['opponent']['id'];
       }
-
-
-
     });
     this.startCall();
 
@@ -167,7 +161,6 @@ export class VideoCallComponent implements OnInit {
       console.log(data);
     });
   }
-
   async startCall() {
     this.callRef = collection(this.fs, 'calls');
     let userCallDoc = doc(this.fs, `calls/${this.docId}`);
@@ -176,10 +169,10 @@ export class VideoCallComponent implements OnInit {
       this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
       const ansdocRef = collection(userCallDoc, 'answerCandidates');
       const offerDescription = await this.pc.createOffer();
-      console.log(offerDescription.sdp)
+      console.log(offerDescription.sdp);
 
       this.pc.onicecandidate = (event) => {
-        console.log(event.candidate)
+        console.log(event.candidate);
         event.candidate && addDoc(this.offerDocRef, event.candidate.toJSON());
       }
       await this.pc.setLocalDescription(offerDescription);
@@ -194,7 +187,6 @@ export class VideoCallComponent implements OnInit {
           this.pc.setRemoteDescription(answerDescription);
         }
       });
-
       collectionChanges(ansdocRef).subscribe((data) => {
         data.forEach((doc) => {
           if (doc.type === 'added') {
@@ -246,9 +238,6 @@ export class VideoCallComponent implements OnInit {
         }
       })
     })
-
-
-
   }
 
   turnWebCam() {
@@ -272,6 +261,7 @@ export class VideoCallComponent implements OnInit {
       this.micInProgress = false;
     })
     this.localStream.getAudioTracks().forEach((track) => {
+      // ngắt stream audio 
       track.enabled = !track.enabled;
     })
   }
