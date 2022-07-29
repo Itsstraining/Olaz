@@ -128,10 +128,10 @@ export class VideoCallComponent implements OnInit {
         this.ownerInfo.name = owner!['displayName'];
         this.ownerInfo.photoURL = owner!['photoURL'];
 
-        this.opponentStatus.camOn = data['opponent']['id'];
-        this.opponentStatus.micOn = data['opponent']['id'];
-        this.ownerStatus.camOn = data['owner']['id'];
-        this.ownerStatus.micOn = data['owner']['id'];
+        this.opponentStatus.camOn = data['opponent']['camOn'];
+        this.opponentStatus.micOn = data['opponent']['micOn'];
+        this.ownerStatus.camOn = data['owner']['camOn'];
+        this.ownerStatus.micOn = data['owner']['micOn'];
 
       } else {
         this.opponentInfo.name = owner!['displayName'];
@@ -139,10 +139,10 @@ export class VideoCallComponent implements OnInit {
         this.ownerInfo.name = opponent!['displayName'];
         this.ownerInfo.photoURL = opponent!['photoURL'];
 
-        this.opponentStatus.camOn = data['owner']['id'];
-        this.opponentStatus.micOn = data['owner']['id'];
-        this.ownerStatus.camOn = data['opponent']['id'];
-        this.ownerStatus.micOn = data['opponent']['id'];
+        this.opponentStatus.camOn = data['owner']['camOn'];
+        this.opponentStatus.micOn = data['owner']['micOn'];
+        this.ownerStatus.camOn = data['opponent']['camOn'];
+        this.ownerStatus.micOn = data['opponent']['micOn'];
       }
 
 

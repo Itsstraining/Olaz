@@ -13,12 +13,15 @@
   <div id="uservideocontainer2">
     <video id="user1video" autoplay [muted]="true"></video>
     <div id="userimagecontainer">
-      <img
-        src="{{ this.ownerInfo.photoURL }}"
+      <div  *ngIf="!this.opponentStatus.camOn">
+        <img
+        src="{{this.opponentInfo.photoURL}}"
         alt=""
         id="img2"
-        *ngIf="!this.opponentStatus.camOn"
+       
       />
+      </div>
+  
       <video autoplay id="user2video" height="100%" width="100%" ></video>
     </div>
     
