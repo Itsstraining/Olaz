@@ -5,15 +5,8 @@ export class TaskService {
     firestore = admin.firestore();
     
     // API FOR CRUD TASK LIST
-    async createTaskList(roomsId){
-        const tempUserList = await (await this.firestore.collection('rooms').doc(roomsId).get()).data().users;
-        const result = await this.firestore.collection('taskList').doc('TL'+roomsId).create({
-            id: 'TL' + roomsId,
-            taskList: [],
-            participants: tempUserList,
-            createdDate: Date.now(),
-            updatedDate: Date.now()
-        }); 
+    async create(roomId, newTask){
+        const result = await this.firestore.collection('rooms').doc(roomId).collection('taskList').doc(newTask.id).create(newTask); 
         return result;
     }
 
@@ -22,25 +15,8 @@ export class TaskService {
         return result;
     }
 
-    async deleteTaskList(roomsId){
-        const result = await this.firestore.collection('taskList').doc('TL'+roomsId).delete(); 
-        return result;
-    }
-
-    // API FOR CRUD A TASK
-    async getTaskDetail(taskId): Promise <any>{
-        const result = (await this.firestore.collection('tasks').doc(taskId).get()).data();
-        return result;
-    }
-    async create(newTask: any, roomsId){
-        const result = await this.firestore.collection('tasks').doc(newTask.id).create(newTask);
-        await this.firestore.collection('taskList').doc('TL'+roomsId).update({
-            taskList: admin.firestore.FieldValue.arrayUnion(newTask.id)
-        })
-        return result;
-    }
-    async update(updateTask, taskId){
-        const result = await this.firestore.collection('tasks').doc(taskId).update({
+    async update(roomId, updateTask){
+        const result = await this.firestore.collection('rooms').doc(roomId).collection('taskList').doc(updateTask.id).update({
             title: updateTask.title, 
             description: updateTask.description,
             status: updateTask.status,
@@ -52,12 +28,12 @@ export class TaskService {
         });
         return result;
     }
-    async delete(roomsId, taskId){
-        const tempTaskList = await this.firestore.collection('taskList').doc('TL'+roomsId).update({
-            taskList: admin.firestore.FieldValue.arrayRemove(taskId)
-        }); 
-        const result = await this.firestore.collection('tasks').doc(taskId).delete();
-        return result ;
+
+    async delete(roomId, taskId){
+        console.log(taskId)
+        const result = await this.firestore.collection('rooms').doc(roomId).collection('taskList').doc(taskId).delete(); 
+        return result;
     }
+
 }
 

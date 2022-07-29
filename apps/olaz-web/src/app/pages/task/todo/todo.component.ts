@@ -7,18 +7,14 @@ import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTodoDialogComponent } from './components/edit-todo-dialog/edit-todo-dialog.component';
 import { TodoService } from '../../../services/task/todo/todo.service';
-import { Todo } from '../../../models/todo.model';
 import { DeleteDialogComponent } from '../../../components/delete-dialog/delete-dialog.component';
 import { UserService } from '../../../services/user.service';
 import {
   docSnapshots,
   Firestore,
   doc,
-  FieldValue,
-  updateDoc,
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { update } from '@angular/fire/database';
 
 @Component({
   selector: 'olaz-todo',

@@ -50,9 +50,10 @@
           <!-- <div class="detail-row-data"> -->
           <button (click)="openDialog()" class="detail-row-data">
             <div style="display:flex; flex-direction: row; align-items: center;">
-              <img class="user-img"
-                src="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/284781432_2881526582155047_7043290483571551769_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HhFZrAQ4OuMAX-9lm-X&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVJbKm_pJmGES4wahfXm2M-wDgQntVDa5xxpPTAW4HAyhQ&oe=62E9DFE3">
-              <p>{{newAssignee !== undefined ? newAssignee.displayName : 'No assignee'}}</p>
+              <!-- <img class="user-img"
+                src="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/284781432_2881526582155047_7043290483571551769_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HhFZrAQ4OuMAX-9lm-X&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVJbKm_pJmGES4wahfXm2M-wDgQntVDa5xxpPTAW4HAyhQ&oe=62E9DFE3"> -->
+              <img class="user-img" src="https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"/>
+                <p>{{newAssignee !== undefined ? newAssignee.displayName : 'Unknown'}}</p>
             </div>
             <i class="uil uil-sync" style="font-size: 18px;"></i>
           </button>
@@ -63,9 +64,11 @@
           <!-- <div class="detail-row-data"> -->
           <button (click)="openDialog()" class="detail-row-data">
             <div style="display:flex; flex-direction: row; align-items: center;">
-              <img class="user-img"
+              <!-- <img class="user-img"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWbxT6GMI5BJJd9ixuP2ijrKzKxaQREiDl1g&usqp=CAU">
-              <p>Trung</p>
+              <p>Trung</p> -->
+              <img class="user-img" src="https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"/>
+                <p>{{newReporter !== undefined ? newReporter.displayName : 'Unknown'}}</p>
             </div>
             <i class="uil uil-sync" style="font-size: 18px;"></i>
           </button>
