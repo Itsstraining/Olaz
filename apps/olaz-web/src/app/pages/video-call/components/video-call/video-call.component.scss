@@ -30,7 +30,7 @@
 #user2video {
   position: absolute;
   z-index: 1;
-  margin : 0 auto;
+  margin: 0 auto;
   width: 100%;
   height: 91.5%;
 }
@@ -45,19 +45,19 @@
 }
 
 #user1video {
-  z-index: 3;
+  z-index: 100;
   position: absolute;
   width: 20%;
   height: fit-content;
   top: 9%;
   padding: 0.5%;
-  background-color: rgba(187, 187, 187,0.4);
   border-radius: 10px;
   left: 1.3%;
+  border-style: none;
 }
 
 #btn-call-end {
-  background-color: #E74848;
+  background-color: #e74848;
   color: white;
 }
 
@@ -69,12 +69,24 @@
   justify-content: center;
   align-items: flex-end;
   position: absolute;
-  padding: 1%
+  padding: 1%;
 }
 
 #back_ground {
+  // position: absolute;
+  // z-index: 10;
+  // background-color: #b0bec5;
+  // width: 20%;
+  // height: 30%;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // flex-direction: column;
+  // margin: 2% 2% 1% 2%;
+  // border-radius: 10px;
+
   position: absolute;
-  z-index: 10;
+  z-index: 900;
   background-color: #b0bec5;
   width: 20%;
   height: 30%;
@@ -82,58 +94,65 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 2% 2% 1% 2%;
+  margin-top: 1%;
   border-radius: 10px;
+  left: 1.3%;
+  padding: 0.5%;
 }
 
 #img {
   position: absolute;
-  width: 50%;
-  height: 50%;
+  // width: 50%;
+  // height: 50%;
+  z-index: 1000;
   border-radius: 50%;
   background-color: red;
+  width: 20%;
+  height: fit-content;
+  top: 9%;
+  padding: 0.5%;
+  background-color: rgba(187, 187, 187, 0.4);
+  border-radius: 10px;
+  left: 0%;
 }
 
-
-@media only screen and (max-width: 420px){
-
-  #uservideocontainer2{
+@media only screen and (max-width: 420px) {
+  #uservideocontainer2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  #video1{
+  #video1 {
     display: flex;
-    flex-direction:column ;
+    flex-direction: column;
     height: 50%;
     justify-content: center;
   }
 
   #user1video {
-      z-index: 3;
-      position:unset;
-      width: 100%;
-      height:100%;
-      top: 0%;
-      padding: 0%;
-      border-radius: 0px;
-      left: 0%;
-      background-color:unset;
-    }
-
-  #video2{
-    display: flex;
-    flex-direction:column ;
-    height: 50%;
-    justify-content: center;
-    padding:0;
+    z-index: 3;
+    position: unset;
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    padding: 0%;
+    border-radius: 0px;
+    left: 0%;
+    background-color: unset;
   }
 
-  #user2video{
+  #video2 {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    justify-content: center;
+    padding: 0;
+  }
+
+  #user2video {
     position: unset;
     height: 100%;
     width: 100%;
-
   }
 }

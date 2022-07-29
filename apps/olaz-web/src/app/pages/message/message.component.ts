@@ -278,7 +278,6 @@ export class MessageComponent implements OnInit {
           })
         })
       }
-
     } else {
       alert("User is in a call")
     }

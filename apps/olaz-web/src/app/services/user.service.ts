@@ -40,7 +40,6 @@ import { endPointMessenger } from '../../configs/baseURL';
 })
 export class UserService {
   loggedIn = false;
-
   user!: any;
   userTodo: any;
   callRef: any;
@@ -54,7 +53,7 @@ export class UserService {
     private route: Router,
     private fs: Firestore,
     private auth: Auth,
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     authState(this.auth).subscribe(async (user: any) => {
       if (!user) return;
