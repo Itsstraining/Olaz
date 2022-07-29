@@ -7,7 +7,13 @@ import { transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TaskModel } from '../../../models/task.model';
 import { TaskService } from '../../../services/task/tasks/task.service';
 import { UserService } from '../../../services/user.service';
-import { collectionGroup, doc, Firestore, getDoc, getDocs } from '@angular/fire/firestore';
+import {
+  collectionGroup,
+  doc,
+  Firestore,
+  getDoc,
+  getDocs,
+} from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
@@ -46,8 +52,8 @@ export class TaskComponent implements OnInit {
       if (!data) return;
       this.appear = data;
     });
-    this.tempTasks.length = 0;
     this.currentRoomId = localStorage.getItem('roomId');
+    console.log(this.currentRoomId);
     this.getTaskListData();
   }
 
@@ -70,8 +76,6 @@ export class TaskComponent implements OnInit {
         event.currentIndex
       );
     }
-    console.log(event.currentIndex);
-    console.log(event.previousIndex);
     if (event.container.id == 'cdk-drop-list-0') {
       this.updateTaskFunc(event.container.data[event.currentIndex], 0);
     } else if (event.container.id == 'cdk-drop-list-1') {
@@ -91,41 +95,42 @@ export class TaskComponent implements OnInit {
 
   async getTaskListData() {
     // this.taskListData = undefined;
-    this.taskListData = await (await getDoc(doc(this.firestore, `rooms`, this.currentRoomId))).data()
-    const q = query(collection(this.firestore, `rooms`, `${this.currentRoomId}/taskList`));
+    this.taskListData = (
+      await getDoc(doc(this.firestore, `rooms`, this.currentRoomId))
+    ).data();
+    const q = query(
+      collection(this.firestore, `rooms`, `${this.currentRoomId}/taskList`)
+    );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       // snapshot.docs.map(data => this.taskListFull.push(data.data()))
       snapshot.docChanges().forEach((change) => {
         if (change.type === 'added') {
           this.taskListFull.unshift(change.doc.data());
-          console.log(change.doc.data())
         }
         if (change.type === 'modified') {
-          console.log(change.type )
-          for(let i = 0; i < this.taskListFull.length; i++){
-            if(this.taskListFull[i] == change.doc.data()['id']){
+          for (let i = 0; i < this.taskListFull.length; i++) {
+            if (this.taskListFull[i].id == change.doc.data()['id']) {
               this.taskListFull[i] = change.doc.data();
             }
           }
         }
         if (change.type === 'removed') {
-          const index = this.taskListFull.findIndex((value: any) => value['id'] == change.doc.data()['id']);
-          this.taskListFull.slice(0, index).concat(this.taskListFull.slice(index+1));
+          const index = this.taskListFull.findIndex(
+            (value: any) => value['id'] == change.doc.data()['id']
+          );
+          this.taskListFull.splice(index, 1);
         }
       });
-      this.filterListTask()
+      this.tempTasks = this.taskListFull;
+      this.filterListTask();
     });
   }
 
   filterListTask() {
-    console.log(this.taskListFull.length);
-    if (this.taskListFull.length != 0) {
-      this.taskListFull.filter((value) => {
-        if (value.status == 0) return this.todo.push(value);
-        if (value.status == 1) return this.doing.push(value);
-        if (value.status == 2) return this.done.push(value);
-        return;
-      });
+    if (this.tempTasks.length != 0) {
+      this.todo =  this.tempTasks.filter((value) => value.status == 0)
+      this.doing =  this.tempTasks.filter((value) => value.status == 1)
+      this.done =  this.tempTasks.filter((value) => value.status == 2)
     }
   }
 
@@ -154,7 +159,6 @@ export class TaskComponent implements OnInit {
       );
       this.newTaskTitle = '';
     }
-    this.taskListFull.length = 0;
   }
 
   updateTaskFunc(task: any, status: any) {
@@ -164,18 +168,16 @@ export class TaskComponent implements OnInit {
       assignee: '',
       updatedDate: Date.now(),
     };
-    this.TaskService.updateTask(data, data.id).subscribe((message) =>
-      console.log(message)
+    this.TaskService.updateTask(data, this.currentRoomId).subscribe(
+      (message) => message
     );
   }
 
   async deleteeEmit(event: any) {
     await this.TaskService.deleteTask(
-      this.taskData,
+      this.taskData.id,
       this.currentRoomId
     ).subscribe((message) => this.openSnackBar(message));
-    this.taskListFull.length = 0;
-    this.getTaskListData();
   }
 
   getShowDetailsClass(): string {

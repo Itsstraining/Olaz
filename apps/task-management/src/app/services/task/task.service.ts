@@ -16,16 +16,7 @@ export class TaskService {
     }
 
     async update(roomId, updateTask){
-        const result = await this.firestore.collection('rooms').doc(roomId).collection('taskList').doc(updateTask.id).update({
-            title: updateTask.title, 
-            description: updateTask.description,
-            status: updateTask.status,
-            deadline: updateTask.deadline,
-            assignee: updateTask.assignee,
-            reporter: updateTask.reporter,
-            updatedDate: Date.now(),
-            priority: updateTask.priority
-        });
+        const result = await this.firestore.collection('rooms').doc(roomId).collection('taskList').doc(updateTask.id).update(updateTask);
         return result;
     }
 

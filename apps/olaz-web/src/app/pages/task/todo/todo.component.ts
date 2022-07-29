@@ -88,7 +88,8 @@ export class TodoComponent implements OnInit {
         }
       });
       this.todoShow= this.todos;
-      this.checkAllComplete()
+      this.checkAllComplete();
+      this.toggleList(this.currentList)
     });
   }
 
@@ -156,15 +157,17 @@ export class TodoComponent implements OnInit {
 
   checkAllComplete() {
     let count = 0;
-    for (let i = 0; i < this.todos.length; i++) {
-      if (this.todos[i].status == true) {
-        count++;
+    if(this.todos.length != 0){
+      for (let i = 0; i < this.todos.length; i++) {
+        if (this.todos[i].status == true) {
+          count++;
+        }
       }
-    }
-    if (count == this.todos.length) {
-      this.checkedAll = true;
-    } else {
-      this.checkedAll = false;
+      if (count == this.todos.length) {
+        this.checkedAll = true;
+      } else {
+        this.checkedAll = false;
+      }
     }
   }
 
@@ -173,7 +176,7 @@ export class TodoComponent implements OnInit {
       if (this.todos[i].status == true) {
     console.log('hi')
 
-        this.todoService.deleteTodo(this.todos[i]).subscribe((message) => this.openSnackBar(message));;
+        this.todoService.deleteTodo(this.todos[i]).subscribe((message) => this.openSnackBar(message));
       }
     }
   }
