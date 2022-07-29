@@ -28,6 +28,7 @@ import { RejectAddComponent } from './components/reject-add/reject-add.component
 import { ActivatedRoute } from '@angular/router';
 import { idToken } from '@angular/fire/auth';
 import { MessageLogService } from '../../components/message-log';
+import { VideoService } from '../../services/video-call/video.service';
 
 @Component({
   selector: 'olaz-message',
@@ -44,7 +45,8 @@ export class MessageComponent implements OnInit {
     private RoomService: RoomService,
     private route: ActivatedRoute,
     private Router: Router,
-    private _message: MessageLogService
+    private _message: MessageLogService,
+    private VideoService: VideoService
   ) { }
   public myId!: string;
   public room: any;
@@ -94,13 +96,14 @@ export class MessageComponent implements OnInit {
                 // console.log(user)
                 listOfRoomId.name = user.displayName;
                 listOfRoomId.image = user.photoURL
+                listOfRoomId.incall = user.incall;
                 return
               }
             }
           }
         })
         this.rooms = value
-        // console.log(this.rooms)
+        console.log(this.rooms)
       })
     });
     this.UserService.user$.subscribe(
@@ -250,10 +253,10 @@ export class MessageComponent implements OnInit {
     e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
   }
 
-  onClickTask(roomId:any){
+  onClickTask(roomId: any) {
     // this.taskService.roomId = roomId;
-    localStorage.setItem('roomId',roomId)
-    this.Router.navigate(['/ownspace/task'])
+    localStorage.setItem('roomId', roomId)
+    this.Router.navigate([`/ownspace/m/${roomId}/task`])
   }
 
   changeMessage(idMessage: string) {
@@ -275,24 +278,38 @@ export class MessageComponent implements OnInit {
       console.log(res);
     });
   }
-  async clickCall() {
+  async clickCall(incall: boolean) {
+    if (!incall) {
+      if (this.UserService.userInfoFb$.value.incall) {
+        alert("You already in a call with someone else")
+      } else {
+        let userID;
+        this.room.users.forEach((user: any) => {
+          if (user != this.myId) {
+            userID = user
+          }
+        })
+        this.callRequestRef = collection(this.fireStore, 'calls');
+        await addDoc(this.callRequestRef,
+          {
+            owner: { id: this.UserService.user.id, camOn: true, micOn: true },
+            opponent: { id: userID, camOn: true, micOn: true }
+          }
+        ).then((data) => {
+          this.VideoService.updateUserStatus(this.UserService.userInfoFb$.value.id).subscribe(() => {
+            const url = this.Router.serializeUrl(
+              this.Router.createUrlTree([`ownspace/call/call/${data.id}`])
+            );
+            window.open(url, '_blank');
+          })
+        })
+      }
 
-    let userID;
-    this.room.users.forEach((user: any) => {
-      if (user != this.myId) {
-        userID = user
-      }
-    })
-    this.callRequestRef = collection(this.fireStore, 'calls');
-    await addDoc(this.callRequestRef,
-      {
-        owner: { id: this.UserService.user.id, camOn: true, micOn: true },
-        opponent: { id: userID, camOn: true, micOn: true }
-      }
-    ).then((data) => {
-      this.Router.navigate([`ownspace/call/call/${data.id}`])
-    })
+    } else {
+      alert("User is in a call")
+    }
   }
+
 
 }
 function token(content: string, image: string, type: string, myId: string, roomId: string, token: any) {

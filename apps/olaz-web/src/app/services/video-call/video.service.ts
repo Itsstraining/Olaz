@@ -4,11 +4,15 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class VideoService {
-  serverURL = "http://localhost:3332/api"
+  serverURL = "https://video-server-oolzqmo74q-uc.a.run.app/api"
   constructor(private http: HttpClient) {
   }
   getData() {
     return this.http.get(this.serverURL)
+  }
+  updateUserStatus(id: any) {
+
+    return this.http.put(`${this.serverURL}/update-user-call-status`, { id: id });
   }
 
   delData(id: any) {

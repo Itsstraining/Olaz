@@ -1,6 +1,7 @@
 import { Component, OnInit, } from '@angular/core';
 import { doc, Firestore, collection, addDoc, setDoc, docData, getDoc, collectionChanges, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable prefer-const */
@@ -22,6 +23,12 @@ export class VideoCallComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['id'];
       this.startCall();
+    });
+    window.addEventListener('unload', () => {
+      navigator.sendBeacon(`${this.videoSrv.serverURL}/delete-Item?id=${this.docId}`);
+      // Check if any of the input fields are filled
+      // Cancel the event and show alert that
+      // the unsaved changes would be lost
     });
   }
 
@@ -59,8 +66,10 @@ export class VideoCallComponent implements OnInit {
   inputAnswer!: string;
   docId: any;
   callInf: any;
+  stopload = false;
   camInProgress = false;
   micInProgress = false;
+  public isLoaded: any
   ownerInfo = {
     name: '',
     photoURL: '',
@@ -113,9 +122,12 @@ export class VideoCallComponent implements OnInit {
     }
 
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
+      if (data['offer'] != null) {
+        this.isLoaded = true
+      }
       console.log(this.ownerInfo)
-      let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
-      let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
+      let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data();
+      let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data();
       this.callInf = data;
       if (this.userSrv.user.id === this.callInf.owner.id) {
 
@@ -139,16 +151,13 @@ export class VideoCallComponent implements OnInit {
         this.ownerStatus.camOn = data['opponent']['id'];
         this.ownerStatus.micOn = data['opponent']['id'];
       }
-
-
-
     });
 
     collectionChanges(collection(this.fs, 'calls')).subscribe((data) => {
-      data.forEach((doc) => {
+      data.forEach(async (doc) => {
         if (doc.type === 'removed' && doc.doc.id === this.docId) {
-          alert("Cuộc gọi đã kết thúc");
-          this.router.navigate(["ownspace/call"]);
+          await alert("Cuộc gọi đã kết thúc");
+          window.close();
         }
       })
     })
@@ -195,11 +204,14 @@ export class VideoCallComponent implements OnInit {
         })
       })
     } else {
-      this.answerCall();
+      if (this.isLoaded == true) {
+        this.answerCall();
+      }
     }
   }
 
   async answerCall() {
+
     this.callRef = collection(this.fs, 'calls');
     this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
     this.ansDocRef = collection(doc(this.callRef, this.docId), 'answerCandidates');
@@ -234,6 +246,9 @@ export class VideoCallComponent implements OnInit {
         }
       })
     })
+
+
+
   }
 
   turnWebCam() {

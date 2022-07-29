@@ -7,7 +7,7 @@ import { User } from '../../../../../libs/models/user.model';
 
 @Injectable()
 export class UserService {
-  constructor() {}
+  constructor() { }
 
   users = [];
   async getUserByEmail() {
@@ -49,8 +49,8 @@ export class UserService {
       return new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
-  async suggestUsers(){
-    try{
+  async suggestUsers() {
+    try {
       if (this.users.length == 0) {
 
         const users = await (
@@ -60,7 +60,7 @@ export class UserService {
           .map((user) => {
             return user.doc.data();
           });
-          this.users = users;
+        this.users = users;
       }
       return this.users;
     } catch (error) {
@@ -79,54 +79,6 @@ export class UserService {
   }
 
   async toggleRequest(check: boolean, frID: string, myID: string) {
-    //     const fs = firebase.firestore();
-    //     try {
-    //         if (check) {
-    //             const roomId = Date.now().toString();
-    //             const myUpdate = fs.collection('users').doc(myID).update({
-    //                 friends: firebase.firestore.FieldValue.arrayUnion(frID),
-    //                 requests: firebase.firestore.FieldValue.arrayRemove(frID),
-    //                 rooms: firebase.firestore.FieldValue.arrayUnion(roomId)
-    //             });
-
-    //             const frUpdate = fs.collection('users').doc(frID).update({
-    //                 friends: firebase.firestore.FieldValue.arrayUnion(myID),
-    //                 requests: firebase.firestore.FieldValue.arrayRemove(myID),
-    //                 rooms: firebase.firestore.FieldValue.arrayUnion(roomId)
-    //             });
-
-    //             const createRoom = fs.collection('rooms').doc(roomId).create({
-    //                 id: roomId,
-    //                 messages: [],
-    //                 users: [frID, myID],
-    //                 name: ""
-    //             })
-
-    //             await Promise.all([
-    //                 myUpdate,
-    //                 frUpdate,
-    //                 createRoom
-    //             ])
-
-    //             return {
-    //                 message: "Chấp nhận kết bạn thành công !"
-    //             }
-    //         }
-    //         else {
-    //             await fs.collection('users').doc(myID).update({
-    //                 requests: firebase.firestore.FieldValue.arrayRemove(frID),
-    //             });
-    //             await fs.collection('users').doc(frID).update({
-    //                 requests: firebase.firestore.FieldValue.arrayRemove(myID),
-    //             });
-    //             return {
-    //                 message: "Từ chối thành công !"
-    //             }
-    //         }
-    //     } catch (error) {
-    //         return new HttpException(error.message, HttpStatus.BAD_REQUEST)
-    //     }
-
     const fs = firebase.firestore();
     try {
       if (check) {
@@ -161,7 +113,14 @@ export class UserService {
           });
 
         await Promise.all([myUpdate, frUpdate, createRoom]);
-
+        const tempUserList = await (await firebase.firestore().collection('rooms').doc(roomId).get()).data().users;
+        const result = await firebase.firestore().collection('taskList').doc('TL'+roomId).create({
+            id: 'TL' + roomId,
+            taskList: [],
+            participants: tempUserList,
+            createdDate: Date.now(),
+            updatedDate: Date.now()
+        }); 
         return {
           message: 'Request accepted!',
         };
@@ -196,9 +155,9 @@ export class UserService {
         .update({
           requests: firebase.firestore.FieldValue.arrayUnion(myID),
         });
-        return {
-          message: 'Request sent!',
-        }
+      return {
+        message: 'Request sent!',
+      }
     } catch (error) {
       return new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }

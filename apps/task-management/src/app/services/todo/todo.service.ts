@@ -9,9 +9,12 @@ export class TodoService {
         return result;
     }
     async create(newTask: any){
-        const uniqueId = Date.now().toString()
-        const result = await this.firestore.collection('todos').doc(uniqueId).set({
-            id: uniqueId, 
+        console.log(newTask)
+        const tempUser = await this.firestore.collection('users').doc(newTask.createdBy).update({
+            todos: admin.firestore.FieldValue.arrayUnion(newTask.id)
+        }); 
+        const result = await this.firestore.collection('todos').doc(newTask.id).set({
+            id: newTask.id, 
             title: newTask.title,
             status: newTask.status,
             createdDate: newTask.createdDate,
@@ -23,8 +26,11 @@ export class TodoService {
         const result = await this.firestore.collection('todos').doc(updateTask.id).update(updateTask);
         return result;
     }
-    async delete(todoId,){
-        const result = await this.firestore.collection('todos').doc(todoId).delete();
+    async delete(todo){
+        const tempUser = await this.firestore.collection('users').doc(todo.createdBy).update({
+            todos: admin.firestore.FieldValue.arrayRemove(todo.id)
+        }); 
+        const result = await this.firestore.collection('todos').doc(todo.id).delete();
         return result;
     }
 

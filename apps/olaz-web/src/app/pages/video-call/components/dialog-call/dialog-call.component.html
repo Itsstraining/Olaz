@@ -1,10 +1,14 @@
-<h1 mat-dialog-title style="text-align: center;">{{data.userData.displayName}}</h1>
-<h2 mat-dialog-title style="text-align: center;">Calling ...</h2>
-<img style="justify-content: center;">
-<div mat-dialog-content id="">
+<!-- <h1 mat-dialog-title style="text-align: center;">{{data.userData.displayName}}</h1> -->
+<h1 mat-dialog-title style="text-align: center;">Triển</h1>
+<div style="justify-content:center">
+  <img id="usrImg" src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png
+  " alt="" style="height: 50px; width: 50px; border-radius: 50%;" ></div>
+<h2 mat-dialog-title style="text-align: center;">Calling<br>...</h2>
+<div mat-dialog-content id="text" style="margin-top: 5%;">
   Would you like to accept this call?
 </div>
-<img src="{{data.userData.photoURL}}" alt="">
+<audio  id="audio" style="display:none" ></audio>
+<!-- <img src="{{data.userData.photoURL}}" alt="" > -->
 <div mat-dialog-actions style="justify-content: center;">
   <button mat-button mat-dialog-close cdkFocusInitial style="color: rgb(77, 243, 77); " (click)="answerCall()">Yes</button>
   <button mat-button mat-dialog-close cdkFocusInitial style="color: rgb(232, 57, 57);" (click)="deleteCall()">No</button>

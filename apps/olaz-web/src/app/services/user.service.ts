@@ -32,6 +32,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MessageService } from './message/message.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -40,20 +41,18 @@ export class UserService {
   loggedIn = false;
   user!: any;
   userTodo: any;
-
   callRef: any;
   offerDocRef: any;
   ansDocRef: any;
   opponentId!: any;
   ownerId!: any;
   statemanager = false;
-
+  public userInfoFb$ = new BehaviorSubject<any>(null);
   constructor(
     private route: Router,
     private fs: Firestore,
     private auth: Auth,
     private http: HttpClient,
-   
   ) {
     authState(this.auth).subscribe(async (user: any) => {
       if (!user) return;
@@ -89,7 +88,13 @@ export class UserService {
           console.log(err);
         }
       }
-
+      ////
+      let userRef = doc(this.fs, 'users', user.uid);
+      docData(userRef).subscribe((data) => {
+        console.log(data)
+        this.userInfoFb$.next(data);
+      })
+      ///
       this.user = await (await this.getUserByID(user.uid)).data();
 
       let _user = {
@@ -114,9 +119,8 @@ export class UserService {
         console.log('user exists');
       }
     });
+
   }
-
-
   public user$ = new BehaviorSubject<any>(null);
 
   private readonly refUser = collection(this.fs, 'users');
@@ -124,12 +128,13 @@ export class UserService {
   //
   public getUsers(): Observable<Array<any>> {
     return collectionData(this.refUser);
+
   }
 
   //new fuction with server
   public getUserByEmail(email: string) {
     return this.http.get(
-      `http://localhost:3331/api/user/get-email?email=${email}`
+      `${environment.endPointMessenger}user/get-email?email=${email}`
     );
   }
 
@@ -141,7 +146,7 @@ export class UserService {
   }
 
   public toggleRequest(check: boolean, frID: string, myID: string) {
-    return this.http.post('http://localhost:3331/api/user/add-friend', {
+    return this.http.post(environment.endPointMessenger + 'user/add-friend', {
       check,
       myID,
       frID,
@@ -172,25 +177,27 @@ export class UserService {
     try {
       await signOut(this.auth);
       this.route.navigate(['/'])
+
       alert('Logout Success');
+      this.loggedIn = false;
     } catch (e) {
       alert('Logout Failed !');
     }
   }
 
   async getUserByID(id: string) {
-    return await await getDoc(doc(this.fs, 'users', id));
+    return await await (await getDoc(doc(this.fs, 'users', id)));
   }
 
   public sendRequest(myID: string, frID: string) {
-    return this.http.post('http://localhost:3331/api/user/send-request', {
+    return this.http.post(environment.endPointMessenger + 'user/send-request', {
       myID: myID,
       frID: frID,
     });
   }
 
   public suggestUsers() {
-    return this.http.get('http://localhost:3331/api/user/suggest-user');
+    return this.http.get(environment.endPointMessenger + 'user/suggest-user');
   }
 
   getListOfRoomId(userId: string) {

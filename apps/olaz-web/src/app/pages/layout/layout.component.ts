@@ -24,23 +24,40 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.user?.subscribe((user: any) => {
-      console.log(user)
-      if (user != null) {
-        this.callRef = collection(this.fs, 'calls');
-        collectionChanges(this.callRef).subscribe((data) => {
-          data.forEach(async (docVal) => {
-            if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === user.id) {
-              let userInCall = (await getDoc(doc(this.fs, `users/${user.id}`))).data()!['incall'];
-              if (!userInCall) {
-                let owner = (await getDoc(doc(this.fs, `users/${docVal.doc.data()['owner']['id']}`))).data()!;
-                this.openIncomingCallDialog(owner,docVal.doc.id);
-              }
+    this.callRef = collection(this.fs, 'calls');
+    collectionChanges(this.callRef).subscribe((data) => {
+      if(this.userService.userInfoFb$.value!=null){
+        data.forEach(async (docVal) => {
+          console.log("test",docVal)
+          if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === this.userService.userInfoFb$.value.id) {
+            let userInCall = this.userService.userInfoFb$.value.incall;
+            if (!userInCall) {
+              let owner = (await getDoc(doc(this.fs, `users/${docVal.doc.data()['owner']['id']}`))).data()!;
+              this.openIncomingCallDialog(owner, docVal.doc.id);
             }
-          });
+          }
         });
       }
-    })
+
+    });
+    // this.userService.userInfoFb$.subscribe((user) => {
+    //   if (user != null) {
+    //     let temp=user
+    //     this.callRef = collection(this.fs, 'calls');
+    //     collectionChanges(this.callRef).subscribe((data) => {
+
+    //       data.forEach(async (docVal) => {
+    //         if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === user.id) {
+    //           let userInCall = user.incall;
+    //           if (!userInCall) {
+    //             let owner = (await getDoc(doc(this.fs, `users/${docVal.doc.data()['owner']['id']}`))).data()!;
+    //             this.openIncomingCallDialog(owner,docVal.doc.id);
+    //           }
+    //         }
+    //       });
+    //     });
+    //   }
+    // })
 
   }
 
@@ -59,10 +76,10 @@ export class LayoutComponent implements OnInit {
     }
     return styleClass;
   }
-  openIncomingCallDialog(owner:any,idRoom:any) {
+  openIncomingCallDialog(owner: any, idRoom: any) {
     const dialogRef = this.dialog.open(DialogCallComponent, {
       width: 'fit-content', height: 'fit-content',
-      data: {userData:owner,idRoom:idRoom},
+      data: { userData: owner, idRoom: idRoom },
 
     });
   }

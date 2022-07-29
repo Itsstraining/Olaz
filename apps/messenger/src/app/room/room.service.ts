@@ -4,23 +4,20 @@ import * as firebase from 'firebase-admin';
 import { UserService } from '../user/user.service';
 @Injectable()
 export class RoomService {
-    
-    constructor(private UserService:UserService){}
-    async checkToken(token:string){
-      try {
-        // console.log(token)
-        const _isToken = token.split(" ")[1]
-        // console.log(_isToken)
-        const result = await firebase.auth().verifyIdToken(_isToken )
-        // console.log(result)
-        
-        if(!result) return false;
 
-        const user = await this.UserService.getUserById(result.uid);
+  constructor(private UserService: UserService) { }
+  async checkToken(token: string) {
+    try {
+      const _isToken = token.split(" ")[1]
+      const result = await firebase.auth().verifyIdToken(_isToken)
 
-        return user;
-      } catch (error) {
-        console.log(error.message)
-      }
+      if (!result) return false;
+
+      const user = await this.UserService.getUserById(result.uid);
+
+      return user;
+    } catch (error) {
+      return error
     }
+  }
 }

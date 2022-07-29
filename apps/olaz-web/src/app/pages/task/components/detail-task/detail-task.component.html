@@ -13,7 +13,7 @@
   <div class="title-detail">
     <h3 class="label">Title</h3>
     <div class="wrap-title-Description">
-      <input type="text" [value]="taskData['title']" [(ngModel)]="newTitle" (keydown.enter)="updateTaskBtn()"
+      <input type="text" [value]="newTitle" [(ngModel)]="newTitle" (keydown.enter)="updateTaskBtn()"
         (blur)="updateTaskBtn()">
     </div>
   </div>
@@ -32,7 +32,7 @@
 
   <div class="description-detail">
     <h3 class="label">Description</h3>
-    <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="taskData['description']" [(ngModel)]="newDes"
+    <textarea rows="4" style="width: 100%; padding: 5px 10px;" [value]="newDes" [(ngModel)]="newDes"
       (keydown.enter)="updateTaskBtn()" (blur)="updateTaskBtn()"></textarea>
   </div>
 
@@ -52,7 +52,7 @@
             <div style="display:flex; flex-direction: row; align-items: center;">
               <img class="user-img"
                 src="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/284781432_2881526582155047_7043290483571551769_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HhFZrAQ4OuMAX-9lm-X&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVJbKm_pJmGES4wahfXm2M-wDgQntVDa5xxpPTAW4HAyhQ&oe=62E9DFE3">
-              <p>Trong</p>
+              <p>{{newAssignee !== undefined ? newAssignee.displayName : 'No assignee'}}</p>
             </div>
             <i class="uil uil-sync" style="font-size: 18px;"></i>
           </button>

@@ -4,17 +4,17 @@
 
 export const environment = {
   firebase: {
-    projectId: 'olaz-90e43',
-    appId: '1:859382530359:web:c3469d145e975f44969ab2',
-    databaseURL: 'https://olaz-90e43-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'olaz-90e43.appspot.com',
-    locationId: 'us-central',
-    apiKey: 'AIzaSyBgMSIckJzH7XP4mkQIrC0KDXqgsHE4Ais',
-    authDomain: 'olaz-90e43.firebaseapp.com',
-    messagingSenderId: '859382530359',
+    apiKey: "AIzaSyBiG7yvSYrGqcRjI_T9xU4M2OXI-ig7Fw0",
+    authDomain: "olaz-backup.firebaseapp.com",
+    projectId: "olaz-backup",
+    storageBucket: "olaz-backup.appspot.com",
+    messagingSenderId: "1004786821210",
+    appId: "1:1004786821210:web:7041062be2c57bcac45063"
   },
   production: false,
-  endpoint: "http://localhost:3333/api/",
+  endpoint: "https://task-server-oolzqmo74q-uc.a.run.app/api/",
+  endPointMessenger: "https://messenger-server-oolzqmo74q-uc.a.run.app/api/",
+  endPointVideo: "https://video-server-oolzqmo74q-uc.a.run.app/api/"
 };
 
 /*

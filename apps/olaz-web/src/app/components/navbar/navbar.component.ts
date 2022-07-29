@@ -41,6 +41,12 @@ export class NavbarComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  handleError(e: any) {
+    console.log(e)
+    e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
+  }
+
   openDialogAddRj() {
     const dialogRef = this.dialog.open(RejectAddComponent, {
       width: '50%', height: '350px',

@@ -26,8 +26,17 @@ export class AppService {
         })
       })
       await batch.commit();
+
+      let userList = await (await admin.firestore().collection('calls').doc(id).get()).data();
       await admin.firestore().collection("calls").doc(id).delete().then(() => {
-      });
+      })
+      await admin.firestore().collection('users').doc(userList.owner.id).update({
+        incall: false
+      })
+      await admin.firestore().collection('users').doc(userList.opponent.id).update({
+        incall: false
+      })
+
 
       return true;
     } catch (error) {
@@ -36,12 +45,12 @@ export class AppService {
   }
 
   async updateUserStatus(id: any) {
-    console.log(id);
-    let status= await admin.firestore().collection('users').doc(id).get().then((data) => {
+
+    let status = await admin.firestore().collection('users').doc(id).get().then((data) => {
       {
         return data.data().incall
       }
-   
+
     });
     admin.firestore().collection('users').doc(id).update({
       incall: !status
@@ -50,7 +59,7 @@ export class AppService {
   }
 
   async updateDoc(id: string, userId: string, status: any) {
-    console.log(status)
+
     try {
       await admin.firestore().collection('calls').doc(id).get().then(async (data) => {
         let callData = data.data();
