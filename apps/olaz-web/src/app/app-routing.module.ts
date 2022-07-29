@@ -8,7 +8,7 @@ const routes: Routes = [
     // { path: '', component: AppComponent },
 
     { path: '', component: LoginComponent },
-    { path: 'ownspace', loadChildren: () => import('./pages/layout/layout.module').then(m => m.LayoutModule), canActivate: [AuthguardService] },
+    { path: 'ownspace', loadChildren: () => import('./pages/layout/layout.module').then(m => m.LayoutModule) },
 
     // {
     //     path:'',

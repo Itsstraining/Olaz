@@ -35,7 +35,6 @@ export class TodoService {
 
   updateTodo(todo: any) {
     const data = { updateTask: todo};
-    console.log(data.updateTask)
     return this.httpClient.put(environment.endpoint+"todo",data);
   }
 

@@ -90,15 +90,16 @@ export class TodoComponent implements OnInit {
                     (value: any) => value['id'] == tempTodo['id']
                   );
                   if (!index) {
-                    this.todos.unshift(tempTodo);
+                    this.todos.push(tempTodo);
                   }
                   {
                     this.todos[i] = tempTodo;
                   }
                 }
+                this.checkAllComplete();
+                this.toggleList(this.currentList);
               });
             }
-            this.checkAllComplete();
             this.todoShow = this.todos;
           }
         }
@@ -108,27 +109,13 @@ export class TodoComponent implements OnInit {
 
   toggleList(title: any) {
     this.currentList = title;
-    console.log(this.currentList)
-
-    this.todoShow.length = 0;
-    if (this.currentList.id == 1) {
-    
-
-      this.todos.filter((todo) => {
-        if (todo.status == false) {console.log(1);return this.todoShow.push(todo)};
-        return;
-      });
-    } else if (this.currentList.id == 2) {
-    console.log(12)
-
-      this.todos.filter((todo) => {
-        if (todo.status == true) return this.todoShow.push(todo);
-        return;
-      });
+    if(title.id ==1){
+      this.todoShow = this.todos.filter((todo) => todo.status == false);
+    }else if(title.id == 2){
+      this.todoShow = this.todos.filter((todo) => todo.status == true);
     }else{
       this.todoShow = this.todos;
-    };
-    console.log(this.todoShow)
+    }
   }
 
   openSnackBar(message: any) {
@@ -162,6 +149,7 @@ export class TodoComponent implements OnInit {
       ...todo,
       status: !todo.status,
     };
+    this.checkAllComplete();
     this.todoService.updateTodo(temp).subscribe((message) => message);
   }
 
@@ -178,6 +166,7 @@ export class TodoComponent implements OnInit {
       }
     }
     this.checkedAll = !this.checkedAll;
+    this.toggleList(this.currentList);
   }
 
   checkAllComplete() {
@@ -189,6 +178,8 @@ export class TodoComponent implements OnInit {
     }
     if (count == this.todos.length) {
       this.checkedAll = true;
+    } else {
+      this.checkedAll = false;
     }
   }
 
