@@ -110,7 +110,6 @@ export class VideoCallComponent implements OnInit {
       if (this.pc.iceConnectionState == 'disconnected') {
         this.deleteRoom();
       }
-
     }
 
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
