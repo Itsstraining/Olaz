@@ -10,6 +10,7 @@ import {
 import { UserService } from '../user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { endPointMessenger } from '../../../configs/baseURL';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,6 @@ export class RoomService {
       headers: new HttpHeaders()
         .set('Authorization', `Bearer ${token}`)
     }
-    return this.HttpClient.get(`${environment.endPointMessenger}room/check-room/${roomId}`, header)
+    return this.HttpClient.get(`${endPointMessenger}room/check-room/${roomId}`, header)
   }
 }

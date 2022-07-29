@@ -11,10 +11,7 @@ export const environment = {
     messagingSenderId: "1004786821210",
     appId: "1:1004786821210:web:7041062be2c57bcac45063"
   },
-  production: false,
-  endpoint: "https://task-server-oolzqmo74q-uc.a.run.app/api/",
-  endPointMessenger: "https://messenger-server-oolzqmo74q-uc.a.run.app/api/",
-  endPointVideo: "https://video-server-oolzqmo74q-uc.a.run.app/api/"
+  production: false
 };
 
 /*
