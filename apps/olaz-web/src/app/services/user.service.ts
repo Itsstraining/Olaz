@@ -178,7 +178,9 @@ export class UserService {
     try {
       await signOut(this.auth);
       this.route.navigate(['/'])
+
       alert('Logout Success');
+      this.loggedIn = false;
     } catch (e) {
       alert('Logout Failed !');
     }
