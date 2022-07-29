@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class VideoService {
-  serverURL = "https://video-server-oolzqmo74q-uc.a.run.app/api/"
+  serverURL = "https://video-server-oolzqmo74q-uc.a.run.app/api"
   constructor(private http: HttpClient) {
   }
   getData() {
