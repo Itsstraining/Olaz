@@ -46,7 +46,7 @@ export class MessageComponent implements OnInit {
     private route: ActivatedRoute,
     private Router: Router,
     private _message: MessageLogService,
-    private VideoService:VideoService
+    private VideoService: VideoService
   ) { }
   public myId!: string;
   public room: any;
@@ -136,7 +136,8 @@ export class MessageComponent implements OnInit {
     }
 
     this.RoomService.getRoomById(id).subscribe((room: any) => {
-      // console.log(room.messages)
+      console.log(room.messages.length);
+
       if (!room) {
         console.log(`Room tim ko dc`)
         this.message = "Phòng không tồn tại!"
@@ -144,9 +145,6 @@ export class MessageComponent implements OnInit {
       }
 
       room.messages.map(async (message: string, i: number) => {
-        // room['messages'].map(async (value: any, j: number)=>{
-        //   room.message[i].messages[j] = await this.MessageService.getMessageById(room.message[i].messages[j])
-        // })
 
         const mess: any = await this.MessageService.getMessageById(message);
 
@@ -154,10 +152,8 @@ export class MessageComponent implements OnInit {
 
         const userId = mess.userId;
 
-        // console.log(userId)
-
         let user = await (await this.UserService.getUserByID(userId)).data();
-        // console.log(user)
+
         room.messages[i].userId = user;
       });
 
