@@ -22,14 +22,9 @@ export class VideoCallComponent implements OnInit {
     this.init();
     this.route.params.subscribe(params => {
       this.docId = params['id'];
-      this.startCall();
+
     });
-    window.addEventListener('unload', () => {
-      navigator.sendBeacon(`${this.videoSrv.serverURL}/delete-Item?id=${this.docId}`);
-      // Check if any of the input fields are filled
-      // Cancel the event and show alert that
-      // the unsaved changes would be lost
-    });
+
   }
 
   myFunction() {
@@ -50,6 +45,8 @@ export class VideoCallComponent implements OnInit {
   checkMic = true;
   localStream!: MediaStream;
   remoteStream!: MediaStream;
+
+
   servers = {
     iceServers: [
       {
@@ -95,7 +92,6 @@ export class VideoCallComponent implements OnInit {
   micOff() {
     this.checkMic = !this.checkMic;
   }
-
   async init() {
     let localvideo = <HTMLVideoElement>document.getElementById('user1video');
     let remoteVideo = <HTMLVideoElement>document.getElementById('user2video');
@@ -114,19 +110,15 @@ export class VideoCallComponent implements OnInit {
 
     localvideo.srcObject = this.localStream;
     remoteVideo.srcObject = this.remoteStream;
-
     this.pc.oniceconnectionstatechange = () => {
       if (this.pc.iceConnectionState == 'disconnected') {
         this.deleteRoom();
       }
-
     }
-
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
       if (data['offer'] != null) {
         this.isLoaded = true
       }
-      console.log(this.ownerInfo)
       let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
       let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
       this.callInf = data;
@@ -158,6 +150,7 @@ export class VideoCallComponent implements OnInit {
 
 
     });
+    this.startCall();
 
     collectionChanges(collection(this.fs, 'calls')).subscribe((data) => {
       data.forEach(async (doc) => {
@@ -179,13 +172,14 @@ export class VideoCallComponent implements OnInit {
     this.callRef = collection(this.fs, 'calls');
     let userCallDoc = doc(this.fs, `calls/${this.docId}`);
     let ownerID = (await getDoc(userCallDoc)).data()!['owner']['id'];
-    console.log(ownerID);
-
-    if (this.userSrv.user.id === ownerID) {
+    if (this.userSrv.user$.value.id === ownerID) {
       this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
       const ansdocRef = collection(userCallDoc, 'answerCandidates');
       const offerDescription = await this.pc.createOffer();
+      console.log(offerDescription.sdp)
+
       this.pc.onicecandidate = (event) => {
+        console.log(event.candidate)
         event.candidate && addDoc(this.offerDocRef, event.candidate.toJSON());
       }
       await this.pc.setLocalDescription(offerDescription);
@@ -210,9 +204,9 @@ export class VideoCallComponent implements OnInit {
         })
       })
     } else {
-      if (this.isLoaded == true) {
+      // if (this.isLoaded == true) {
         this.answerCall();
-      }
+      // }
     }
   }
 
