@@ -28,12 +28,15 @@ export class LayoutComponent implements OnInit {
     collectionChanges(this.callRef).subscribe((data) => {
       if(this.userService.userInfoFb$.value!=null){
         data.forEach(async (docVal) => {
-          console.log("test",docVal)
+
           if (docVal.type === 'added' && docVal.doc.data()['opponent']['id'] === this.userService.userInfoFb$.value.id) {
             let userInCall = this.userService.userInfoFb$.value.incall;
             if (!userInCall) {
-              let owner = (await getDoc(doc(this.fs, `users/${docVal.doc.data()['owner']['id']}`))).data()!;
-              this.openIncomingCallDialog(owner, docVal.doc.id);
+              getDoc(doc(this.fs, `users/${docVal.doc.data()['owner']['id']}`)).then((data)=>{
+                let owner=data.data();
+                this.openIncomingCallDialog(owner,docVal.doc.id);
+              });
+
             }
           }
         });

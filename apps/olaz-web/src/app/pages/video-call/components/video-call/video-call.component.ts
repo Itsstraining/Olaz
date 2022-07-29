@@ -264,7 +264,7 @@ export class VideoCallComponent implements OnInit {
       this.micInProgress = false;
     })
     this.localStream.getAudioTracks().forEach((track) => {
-      // ngắt stream audio 
+      // ngắt stream audio
       track.enabled = !track.enabled;
     })
   }

@@ -12,7 +12,7 @@ export class AuthguardService implements CanActivate {
   constructor(private userSrv: UserService, private route: Router) { }
   canActivate(): boolean {
 
-    if (this.userSrv.loggedIn) {
+    if (this.userSrv.getCurrentUser()) {
       return true;
     } else {
       alert("You are not logged in to access this page")
