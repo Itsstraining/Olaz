@@ -255,7 +255,7 @@ export class MessageComponent implements OnInit {
   onClickTask(roomId: any) {
     // this.taskService.roomId = roomId;
     localStorage.setItem('roomId', roomId)
-    this.Router.navigate([`/ownspace/task`])
+    this.Router.navigate([`/ownspace/m/${roomId}/task`])
   }
 
   changeMessage(idMessage: string) {

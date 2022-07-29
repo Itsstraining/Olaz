@@ -1,7 +1,7 @@
 <div class="wrapper-container" *ngIf="taskListData !== undefined && this.appear !== undefined">
   <div class="content-wrapper">
     <div class="content-title">
-      <button class="backBtn" matTooltip="Back to conversation" matTooltipPosition="below">
+      <button class="backBtn" matTooltip="Back to conversation" matTooltipPosition="below" (click)="goback()">
         <i class="uil uil-angle-left-b"></i>
       </button>
       <h1>Group's task list</h1>

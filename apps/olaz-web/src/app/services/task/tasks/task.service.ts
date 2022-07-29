@@ -41,7 +41,7 @@ export class TaskService {
 
   updateTask(updateTask: any, taskId: any) {
     const data = { updateTask: updateTask, taskId: taskId };
-    return this.httpClient.put("http://localhost:3333/api/task-list/task",data);
+    return this.httpClient.put(environment.endpoint+"task-list/task",data);
   }
 
   deleteTask(taskId: any, roomId: any) {

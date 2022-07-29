@@ -30,23 +30,27 @@ export class TodoComponent implements OnInit {
     {
       value: 'All',
       status: true,
+      id: 0,
     },
     {
       value: 'To do',
       status: false,
+      id: 1,
     },
     {
       value: 'Done',
       status: false,
+      id: 2,
     },
   ];
 
   todos: any[] = [];
-  currentList = 'All';
+  currentList = this.arr[0];
   showValidationErrors!: boolean;
   checkedAll: boolean = false;
   appear: any;
   tempTodos: any;
+  todoShow: any[] = [];
   constructor(
     private todoService: TodoService,
     private dialog: MatDialog,
@@ -94,6 +98,8 @@ export class TodoComponent implements OnInit {
                 }
               });
             }
+            this.checkAllComplete();
+            this.todoShow = this.todos;
           }
         }
       }
@@ -101,36 +107,29 @@ export class TodoComponent implements OnInit {
   }
 
   toggleList(title: any) {
-    this.currentList = title.value;
-    console.log(this.currentList);
-  }
+    this.currentList = title;
+    console.log(this.currentList)
 
-  // addNew() {
-  //   if (this.newTaskTitle == '') {
-  //     alert('You have to fill the task title!!');
-  //     return;
-  //   } else {
-  //     const temp = {
-  //       id: Date.now().toString(),
-  //       title: this.newTaskTitle,
-  //       description: '',
-  //       deadline: Date.now(),
-  //       status: 0,
-  //       assignee: '',
-  //       reporter: '',
-  //       priority: 0,
-  //       createdBy: this.userService.user.id,
-  //       createdDate: Date.now(),
-  //       updatedDate: Date.now(),
-  //     };
-  //     this.todo.push(temp);
-  //     this.TaskService.createTask(temp, this.currentRoomId).subscribe(
-  //       (data) => this.openSnackBar(data)
-  //     );
-  //     this.newTaskTitle = '';
-  //   }
-  //   this.taskListFull.length = 0;
-  // }
+    this.todoShow.length = 0;
+    if (this.currentList.id == 1) {
+    
+
+      this.todos.filter((todo) => {
+        if (todo.status == false) {console.log(1);return this.todoShow.push(todo)};
+        return;
+      });
+    } else if (this.currentList.id == 2) {
+    console.log(12)
+
+      this.todos.filter((todo) => {
+        if (todo.status == true) return this.todoShow.push(todo);
+        return;
+      });
+    }else{
+      this.todoShow = this.todos;
+    };
+    console.log(this.todoShow)
+  }
 
   openSnackBar(message: any) {
     this._snackBar.open(message.message, '', {
@@ -154,13 +153,16 @@ export class TodoComponent implements OnInit {
       .subscribe((message) => this.openSnackBar(message));
     this.showValidationErrors = false;
     form.reset();
-    this.todos.push(temp);
     return;
   }
 
   toggleCompleted(todo: any) {
     //set todo to completed
-    todo.status = !todo.status;
+    const temp = {
+      ...todo,
+      status: !todo.status,
+    };
+    this.todoService.updateTodo(temp).subscribe((message) => message);
   }
 
   toggleCompleteAll() {
@@ -176,6 +178,18 @@ export class TodoComponent implements OnInit {
       }
     }
     this.checkedAll = !this.checkedAll;
+  }
+
+  checkAllComplete() {
+    let count = 0;
+    for (let i = 0; i < this.todos.length; i++) {
+      if (this.todos[i].status == true) {
+        count++;
+      }
+    }
+    if (count == this.todos.length) {
+      this.checkedAll = true;
+    }
   }
 
   deleteMultiTask() {
@@ -197,7 +211,9 @@ export class TodoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.todoService.updateTodo(result);
+        this.todoService
+          .updateTodo(result)
+          .subscribe((message) => this.openSnackBar(message));
       }
     });
     // this.dataService.updateTodo()

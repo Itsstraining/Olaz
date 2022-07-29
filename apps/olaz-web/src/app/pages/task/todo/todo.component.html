@@ -1,4 +1,4 @@
-<div *ngIf="this.appear !== undefined"
+<div *ngIf="this.appear !== undefined && tempTodos !== undefined"
   style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; overflow: hidden; position: relative;">
   <div class="heading-section">
     <h1 class="title1">Todos</h1>
@@ -33,7 +33,7 @@
     <div class="todo-list-content">
       <div class="groupBtn">
         <div>
-          <button [class.active]="currentList === item.value" class="btn-filter" *ngFor="let item of arr"
+          <button [class.active]="currentList.value === item.value" class="btn-filter" *ngFor="let item of arr"
             (click)="toggleList(item)">{{item.value}}</button>
         </div>
         <div>
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="todos-list" *ngIf="tempTodos.todos.length !== 0 && tempTodos !== undefined">
-        <olaz-todo-item *ngFor="let todo of todos" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
+        <olaz-todo-item *ngFor="let todo of todoShow" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
           (editClicked)="editTodo(todo)" (deleteClicked)="deleteTodo(todo)"></olaz-todo-item>
       </div>
       <div class="todos-list" style="justify-content: center;" *ngIf="tempTodos.todos.length === 0">

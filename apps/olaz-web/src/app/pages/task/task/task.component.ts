@@ -9,7 +9,7 @@ import { TaskService } from '../../../services/task/tasks/task.service';
 import { UserService } from '../../../services/user.service';
 import { doc, docSnapshots, Firestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackBarComponent } from '../../../components/snack-bar/snack-bar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'olaz-task',
@@ -36,7 +36,8 @@ export class TaskComponent implements OnInit {
     private TaskService: TaskService,
     public userService: UserService,
     private firestore: Firestore,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private Router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +47,10 @@ export class TaskComponent implements OnInit {
     });
     this.currentRoomId = localStorage.getItem('roomId')
     this.getTaskListData();
+  }
+
+  goback(){
+    this.Router.navigate([`/ownspace/m/${this.currentRoomId}`])
   }
 
   drop(event: any) {
@@ -128,7 +133,7 @@ export class TaskComponent implements OnInit {
   addNew() {
     if (this.newTaskTitle == '') {
       // alert('You have to fill the task title!!');
-      this.openSnackBar('You have to fill the task title!!')
+      this.openSnackBar({message: 'You have to fill the task title!!'})
       return;
     } else {
       const temp = {

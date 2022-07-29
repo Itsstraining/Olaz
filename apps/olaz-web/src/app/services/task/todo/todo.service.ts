@@ -34,8 +34,9 @@ export class TodoService {
   }
 
   updateTodo(todo: any) {
-    const data = { todo: todo};
-    return this.httpClient.put("http://localhost:3333/api/todo",data);
+    const data = { updateTask: todo};
+    console.log(data.updateTask)
+    return this.httpClient.put(environment.endpoint+"todo",data);
   }
 
   deleteTodo(todo: any) {
