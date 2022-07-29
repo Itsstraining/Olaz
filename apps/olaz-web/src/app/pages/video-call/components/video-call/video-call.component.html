@@ -1,20 +1,35 @@
 <div style="height: fit-content">
   <div>
     <div *ngIf="!this.checkScreen" id="back_ground">
-      <img
-        id="img"
-        src="{{this.ownerInfo.photoURL}}"
-      />
-      <video style="display: none;" id="user1video" autoplay [muted]="true"></video>
+      <img id="img" src="{{ this.ownerInfo.photoURL }}" />
+      <video
+        style="display: none"
+        id="user1video"
+        autoplay
+        [muted]="true"
+      ></video>
     </div>
   </div>
   <div id="uservideocontainer2">
     <video id="user1video" autoplay [muted]="true"></video>
-
-    <video autoplay id="user2video" height="100%" width="100%" ></video>
-
+    <div id="userimagecontainer">
+      <img
+        src="{{ this.ownerInfo.photoURL }}"
+        alt=""
+        id="img2"
+        *ngIf="!this.opponentStatus.camOn"
+      />
+      <video autoplay id="user2video" height="100%" width="100%" ></video>
+    </div>
+    
     <div class="btn-container">
-      <button class="btn-call" [disabled]="this.camInProgress" mat-fab (click)="turnWebCam()">
+      <button
+        class="btn-call"
+        [disabled]="this.camInProgress"
+        mat-fab
+        [ngStyle]="{'background-color':checkScreen?'green':'red'}"
+        (click)="turnWebCam()"
+      >
         <i
           *ngIf="checkScreen"
           class="uil uil-video-slash"
@@ -29,7 +44,13 @@
       <button class="btn-call" id="btn-call-end" (click)="endCall()" mat-fab>
         <i class="uil uil-phone-slash" style="font-size: 150%"></i>
       </button>
-      <button class="btn-call" [disabled]="this.micInProgress" mat-fab (click)="turnMic()">
+      <button
+        class="btn-call"
+        [disabled]="this.micInProgress"
+        mat-fab
+        (click)="turnMic()"
+        [ngStyle]="{'background-color':checkMic?'green':'red'}"
+      >
         <i
           *ngIf="checkMic"
           class="uil uil-microphone-slash"
@@ -38,10 +59,10 @@
         <i
           *ngIf="!checkMic"
           class="uil uil-microphone"
-          style="font-size: 150%"
+          style="font-size: 150%;"
+
         ></i>
       </button>
     </div>
   </div>
 </div>
-

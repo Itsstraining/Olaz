@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, } from '@angular/core';
 import { doc, Firestore, collection, addDoc, setDoc, docData, getDoc, collectionChanges, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -16,7 +16,7 @@ import { VideoService } from '../../../../services/video-call/video.service';
   styleUrls: ['./video-call.component.scss'],
 })
 export class VideoCallComponent implements OnInit {
-  constructor(public fs: Firestore, private route: ActivatedRoute, public userSrv: UserService, public videoSrv: VideoService, public router: Router) { }
+  constructor(public fs: Firestore, private route: ActivatedRoute, public userSrv: UserService, public videoSrv: VideoService, public router: Router, private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.init();
@@ -132,6 +132,7 @@ export class VideoCallComponent implements OnInit {
         this.opponentStatus.micOn = data['opponent']['id'];
         this.ownerStatus.camOn = data['owner']['id'];
         this.ownerStatus.micOn = data['owner']['id'];
+
       } else {
         this.opponentInfo.name = owner!['displayName'];
         this.opponentInfo.photoURL = owner!['photoURL'];
@@ -143,6 +144,8 @@ export class VideoCallComponent implements OnInit {
         this.ownerStatus.camOn = data['opponent']['id'];
         this.ownerStatus.micOn = data['opponent']['id'];
       }
+
+
     });
     this.startCall();
 
@@ -196,9 +199,9 @@ export class VideoCallComponent implements OnInit {
         })
       })
     } else {
-      // if (this.isLoaded == true) {
+      if (this.isLoaded == true) {
         this.answerCall();
-      // }
+      }
     }
   }
 
