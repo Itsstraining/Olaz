@@ -29,7 +29,6 @@ import { ActivatedRoute } from '@angular/router';
 import { idToken } from '@angular/fire/auth';
 import { MessageLogService } from '../../components/message-log';
 import { VideoService } from '../../services/video-call/video.service';
-
 @Component({
   selector: 'olaz-message',
   templateUrl: './message.component.html',
@@ -71,7 +70,6 @@ export class MessageComponent implements OnInit {
 
     this.UserService.user$.subscribe((user) => {
       if (!user) return
-      console.log(user)
 
       this.user = user
       this.myId = user.id;
@@ -103,13 +101,11 @@ export class MessageComponent implements OnInit {
           }
         })
         this.rooms = value
-        console.log(this.rooms)
       })
     });
     this.UserService.user$.subscribe(
       user => {
         if (!user) return;
-        console.log(user);
         if (user.rooms.length === 0) {
           this.message = "Vui lòng kết bạn!"
           return;
@@ -117,6 +113,7 @@ export class MessageComponent implements OnInit {
           this.route.params.subscribe(params => {
             // console.log(params['roomId'])
             if (!params['roomId']) return
+            this.messages = [];
             this.getRoomId(params['roomId'], user.token)
             this.roomId = params['roomId']
           })
@@ -126,37 +123,25 @@ export class MessageComponent implements OnInit {
   }
 
   public message: string = "Loading...";
+
+  public messages: any = [];
+
   async getRoomId(id: string, token: string) {
 
     const isCheck = await this.RoomService.checkRoom(id, token)?.toPromise();
 
     if (!isCheck) {
-      console.log("Bạn không có quyền truy cập vào phòng này!")
-      this.message = "Bạn không có quyền truy cập vào phòng này!"
+      this._message.openSnackBar("You are not in this chat!");
+      this.message = "You do not have access to this chat!";
       return;
     }
 
     this.RoomService.getRoomById(id).subscribe((room: any) => {
-      console.log(room.messages.length);
-
       if (!room) {
-        console.log(`Room tim ko dc`)
-        this.message = "Phòng không tồn tại!"
+        this._message.openSnackBar("This room is not exist!");
+        this.message = "This chat is not exits!"
         return;
       }
-
-      room.messages.map(async (message: string, i: number) => {
-
-        const mess: any = await this.MessageService.getMessageById(message);
-
-        room.messages[i] = mess;
-
-        const userId = mess.userId;
-
-        let user = await (await this.UserService.getUserByID(userId)).data();
-
-        room.messages[i].userId = user;
-      });
 
       if (room.name == "" && room.image == "") {
         room.users.map(async (user: any) => {
@@ -171,6 +156,18 @@ export class MessageComponent implements OnInit {
 
       this.room = room;
       this.message = ""
+    });
+
+    this.RoomService.getMessagesInRoom(id).subscribe((messages: any) => {
+      if (!messages) {
+        return;
+      }
+      messages.map(async (message: any) => message.userId = await this.UserService.getUserByID(message.userId))
+      messages.sort((a: any, b: any) => {
+        return a.createdTime - b.createdTime
+      })
+      this.messages = messages;
+      console.log(messages);
     });
   }
 
@@ -194,26 +191,7 @@ export class MessageComponent implements OnInit {
     });
   }
 
-  // roomId = '1657280749904';
   async sendMessage(content: string, image: string, type: string) {
-    // const messId = Date.now().toString()
-    //  setDoc(
-    //     doc(this.fireStore, 'messages', messId),
-    //     {
-    //       userId: this.myID,
-    //       id: messId,
-    //       content: content,
-    //       image: image,
-    //       type: type,
-    //       createdTime: messId
-    //     });
-    //     updateDoc(doc(this.fireStore, 'rooms', this.roomId), {
-    //       messages: arrayUnion(messId)
-    //     })
-    //     await Promise.all([
-    //       setDoc,
-    //       updateDoc
-    //     ])
     if (!this.myId || content == '') return;
     this.MessageService.sendMessage(
       content,
@@ -228,6 +206,7 @@ export class MessageComponent implements OnInit {
 
   content = '';
   image = '';
+
   onKeydown(event: any) {
     if (event.key == 'Enter') {
       let type: string = '';
@@ -245,7 +224,6 @@ export class MessageComponent implements OnInit {
   }
 
   handleError(e: any) {
-    console.log(e)
     e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
   }
 

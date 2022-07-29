@@ -91,11 +91,11 @@
       </div>
     </div>
     <div id="right-center" *ngIf="message!==''">
-      <p style="padding: 20%; text-align: center;">{{message}}</p>
+      <olaz-snack-bar></olaz-snack-bar>
     </div>
-    <div style="overflow-y: auto; height: 68vh;  margin-bottom: 5px;">
+    <div *ngIf="message===''" style="overflow-y: auto; height: 68vh;  margin-bottom: 5px;">
       <div *ngIf="room" id="right-center">
-        <div *ngFor="let message of room.messages">
+        <div *ngFor="let message of messages">
           <div *ngIf="message.userId?.id === myId && !message.image" class="cha">
             <div class="my-message">
               <span style="flex: 1 1 auto;"></span>
@@ -130,7 +130,7 @@
 
       </div>
     </div>
-    <div class="right-bottom">
+    <div *ngIf="message===''" class="right-bottom">
       <div style="display: flex; justify-content: flex-end">
         <button class="button-function"><i class="uil uil-paperclip"></i>
         </button>

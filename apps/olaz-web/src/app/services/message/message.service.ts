@@ -22,7 +22,6 @@ export class MessageService {
     private UserService: UserService
   ) {
     this.UserService.user$.subscribe(user => {
-      console.log(user)
       if (!user) return;
       this._token = user.token;
     })
@@ -43,15 +42,6 @@ export class MessageService {
         .set('Authorization', `Bearer ${this._token}`)
     }
     const messageID = Date.now().toString();
-    console.log({
-      userId: myID,
-      id: messageID,
-      content: content,
-      image: image,
-      type: type,
-      createdTime: messageID,
-      roomID: roomID
-    })
     return this.HttpClient.post(endPointMessenger + 'message/send-message', {
       userId: myID,
       id: messageID,

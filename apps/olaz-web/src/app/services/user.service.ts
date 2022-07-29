@@ -93,7 +93,6 @@ export class UserService {
       ////
       let userRef = doc(this.fs, 'users', user.uid);
       docData(userRef).subscribe((data) => {
-        console.log(data)
         this.userInfoFb$.next(data);
       })
       ///
@@ -105,11 +104,6 @@ export class UserService {
       }
 
       this.user$.next(_user);
-
-
-
-
-      console.log(await this.userFirstLogin())
 
       if ((await this.userFirstLogin()) == false) {
         // await setDoc(doc(this.fs, 'users', ...user.uid), this.user);

@@ -6,6 +6,7 @@ import {
   collection,
   getDoc,
   docData,
+  collectionData,
 } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -27,6 +28,10 @@ export class RoomService {
 
   getRoomById(roomId: string) {
     return docData(doc(this.fs, 'rooms', roomId));
+  }
+
+  getMessagesInRoom(roomId: string) {
+    return collectionData(collection(this.fs, `rooms/${roomId}/messages`));
   }
 
   async getRoomByIdPromise(roomId: string) {
