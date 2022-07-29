@@ -101,6 +101,7 @@ export class TaskComponent implements OnInit {
           console.log(change.doc.data())
         }
         if (change.type === 'modified') {
+          console.log(change.type )
           for(let i = 0; i < this.taskListFull.length; i++){
             if(this.taskListFull[i] == change.doc.data()['id']){
               this.taskListFull[i] = change.doc.data();

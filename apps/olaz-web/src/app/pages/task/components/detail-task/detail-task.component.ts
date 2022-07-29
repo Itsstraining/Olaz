@@ -241,8 +241,8 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     };
     console.log(data)
     this.taskService
-      .updateTask(data, data.id)
-      .subscribe((message) => this.openSnackBar(message));
+      .updateTask(data, this.taskListData.id)
+      .subscribe((message) => {this.openSnackBar(message); console.log(message)});
   }
 
   deleteTask(taskId: any) {

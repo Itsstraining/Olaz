@@ -22,6 +22,7 @@ export class TaskController {
     @Put()
     async update(@Body() data: any){
         try{
+            console.log(data.roomId)
             await this.TaskService.update(data.roomId, data.updateTask);
             return {message: "Update successful!"}
         }catch(err){

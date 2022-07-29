@@ -30,7 +30,6 @@ export class TodoService {
     const data = {
       newTodo: todo
     }
-    console.log(todo)
     return this.httpClient.post(endpoint + "todo", data);
     // this.todos.push(todo)
   }
