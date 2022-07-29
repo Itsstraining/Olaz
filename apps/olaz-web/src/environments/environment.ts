@@ -14,7 +14,7 @@ export const environment = {
     messagingSenderId: '859382530359',
   },
   production: false,
-  endpoint: "http://localhost:3333/api/",
+  endpoint: "https://task-server-oolzqmo74q-uc.a.run.app/api/",
   endPointMessenger: "https://messenger-server-oolzqmo74q-uc.a.run.app/api/",
   endPointVideo: "https://video-server-oolzqmo74q-uc.a.run.app/api/"
 };
