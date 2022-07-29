@@ -14,7 +14,7 @@ export const environment = {
   production: false,
   endpoint: "https://task-server-oolzqmo74q-uc.a.run.app/api/",
   endPointMessenger: "https://messenger-server-oolzqmo74q-uc.a.run.app/api/",
-  endPointVideo: "https://video-server-oolzqmo74q-uc.a.run.app/api/"
+  endPointVideo: "https://video-server-oolzqmo74q-uc.a.run.app/api"
 };
 
 /*
