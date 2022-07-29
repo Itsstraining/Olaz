@@ -113,7 +113,14 @@ export class UserService {
           });
 
         await Promise.all([myUpdate, frUpdate, createRoom]);
-
+        const tempUserList = await (await firebase.firestore().collection('rooms').doc(roomId).get()).data().users;
+        const result = await firebase.firestore().collection('taskList').doc('TL'+roomId).create({
+            id: 'TL' + roomId,
+            taskList: [],
+            participants: tempUserList,
+            createdDate: Date.now(),
+            updatedDate: Date.now()
+        }); 
         return {
           message: 'Request accepted!',
         };
