@@ -58,7 +58,7 @@ export class UserService {
     authState(this.auth).subscribe(async (user: any) => {
       if (!user) return;
       let userDoc = doc(collection(this.fs, 'users'), user!.uid);
-
+      sessionStorage.setItem("user", JSON.stringify(user));
       this.callRef = collection(this.fs, 'calls');
       this.userTodo = collection(this.fs, 'todo');
       this.loggedIn = true;
@@ -79,7 +79,7 @@ export class UserService {
             incall: false,
             requests: [],
             rooms: [],
-            todos: []
+
           }
           await setDoc(doc(this.fs, 'users', _userRegister.id), _userRegister);
         } catch (err) {
@@ -158,7 +158,9 @@ export class UserService {
     let provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(this.auth, provider);
+      sessionStorage.setItem("user", JSON.stringify(this.user));
       this.route.navigate(['/ownspace/todo'])
+
       alert('Loggin Success');
     } catch (e) {
       alert('Loggin Failed !');
@@ -168,12 +170,20 @@ export class UserService {
   async logout() {
     try {
       await signOut(this.auth);
+      sessionStorage.clear();
       this.route.navigate(['/'])
 
       alert('Logout Success');
       this.loggedIn = false;
     } catch (e) {
       alert('Logout Failed !');
+    }
+  }
+  getCurrentUser() {
+    if (sessionStorage.getItem("user") != null) {
+      return true;
+    } else {
+      return false
     }
   }
 
