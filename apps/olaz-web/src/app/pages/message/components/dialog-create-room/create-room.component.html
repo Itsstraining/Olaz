@@ -1,23 +1,17 @@
- <mat-dialog-content class="mat-typography">
+<mat-dialog-content class="mat-typography">
     <div class="forward-pop-up">
         <div class="Top-bar">
-            <h1>Tạo Nhóm Chat</h1>
+            <h1>Create Group Chat</h1>
         </div>
     </div>
     <div class="Body-bar">
         <form class="example-form">
 
             <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Tên Nhóm</mat-label>
+                <mat-label>Name Group</mat-label>
                 <input class="input-search" matInput placeholder="Enter an Name Group here..." name="first">
             </mat-form-field>
 
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Thành Viên Nhóm</mat-label>
-                <input type="check-box" class="input-search" matInput placeholder="Enter an User Group here...">
-            </mat-form-field>
-            <input type="file">
-            
         </form>
         <mat-list>
             <mat-selection-list>
@@ -25,15 +19,15 @@
             </mat-selection-list>
         </mat-list>
     </div>
-    
-     
 
 
 
 
- 
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-        <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>OK</button>
-      </mat-dialog-actions> 
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>OK</button>
+</mat-dialog-actions>
