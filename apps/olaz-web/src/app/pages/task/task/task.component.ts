@@ -7,11 +7,10 @@ import { transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TaskModel } from '../../../models/task.model';
 import { TaskService } from '../../../services/task/tasks/task.service';
 import { UserService } from '../../../services/user.service';
-import { doc, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { collectionGroup, doc, Firestore, getDoc, getDocs } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { on } from 'events';
-
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 @Component({
   selector: 'olaz-task',
   templateUrl: './task.component.html',
@@ -91,45 +90,33 @@ export class TaskComponent implements OnInit {
   }
 
   async getTaskListData() {
-    this.taskListData = undefined;
-    this.taskListFull.length = 0; 
-    // docSnapshots(doc(this.firestore, 'taskList', `TL${this.currentRoomId}`)).subscribe(
-    //   async (result) => {
-    //     if (!result.metadata.fromCache) {
-    //       this.taskListFull.length = 0;
-    //       this.taskListData = result.data();
-    //       if(this.taskListData.taskList.length != 0){
-    //         for (let i = 0; i < this.taskListData.taskList.length; i++) {
-    //           docSnapshots(
-    //             doc(this.firestore, 'tasks', this.taskListData.taskList[i])
-    //           ).subscribe((data) => {
-    //             const temp = data.data();
-    //             // if (!data.metadata.fromCache) {
-    //             const index = this.taskListFull.findIndex(
-    //               (value) => value['id'] == temp
-    //             );
-    //             if (!index) {
-    //               this.taskListFull.push(temp);
-    //             }
-    //             {
-    //               this.taskListFull[i] = temp;
-    //             }
-    //             // }
-    //             this.filterListTask();
-    //           });
-    //         }
-    //       }
-    //       this.tempTasks = this.taskListData.taskList;
-    //     }
-    //   }
-    // );
-    // DocumentChange()
+    // this.taskListData = undefined;
+    this.taskListData = await (await getDoc(doc(this.firestore, `rooms`, this.currentRoomId))).data()
+    const q = query(collection(this.firestore, `rooms`, `${this.currentRoomId}/taskList`));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      // snapshot.docs.map(data => this.taskListFull.push(data.data()))
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          this.taskListFull.unshift(change.doc.data());
+          console.log(change.doc.data())
+        }
+        if (change.type === 'modified') {
+          for(let i = 0; i < this.taskListFull.length; i++){
+            if(this.taskListFull[i] == change.doc.data()['id']){
+              this.taskListFull[i] = change.doc.data();
+            }
+          }
+        }
+        if (change.type === 'removed') {
+          const index = this.taskListFull.findIndex((value: any) => value['id'] == change.doc.data()['id']);
+          this.taskListFull.slice(0, index).concat(this.taskListFull.slice(index+1));
+        }
+      });
+      this.filterListTask()
+    });
   }
 
   filterListTask() {
-    this.todo = [];
-    this.doing = [];
-    this.done = [];
     console.log(this.taskListFull.length);
     if (this.taskListFull.length != 0) {
       this.taskListFull.filter((value) => {

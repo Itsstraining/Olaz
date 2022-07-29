@@ -12,7 +12,9 @@ export const environment = {
     appId: "1:1004786821210:web:7041062be2c57bcac45063"
   },
   production: false,
-  endpoint: "https://task-server-oolzqmo74q-uc.a.run.app/api/",
+  // endpoint: "https://task-server-oolzqmo74q-uc.a.run.app/api/",
+  // endpoint: "https://task-server-oolzqmo74q-uc.a.run.app/api/",
+  endpoint: "http://localhost:3333/api/",
   endPointMessenger: "https://messenger-server-oolzqmo74q-uc.a.run.app/api/",
   endPointVideo: "https://video-server-oolzqmo74q-uc.a.run.app/api/"
 };

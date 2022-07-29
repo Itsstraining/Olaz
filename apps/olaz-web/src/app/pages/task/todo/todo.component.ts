@@ -13,6 +13,9 @@ import {
   docSnapshots,
   Firestore,
   doc,
+  collection,
+  query,
+  onSnapshot,
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -65,41 +68,27 @@ export class TodoComponent implements OnInit {
   }
 
   getTodoList() {
-    this.todos.length = 0;
-    docSnapshots(
-      doc(this.firestore, 'users', this.userService.user.id)
-    ).subscribe(async (result) => {
-      if (!result.metadata.fromCache) {
-        this.todos.length = 0;
-
-        this.tempTodos = result.data();
-
-        if (this.tempTodos != undefined) {
-          if (this.tempTodos['todos'].length != 0) {
-            for (let i = 0; i < this.tempTodos['todos'].length; i++) {
-              docSnapshots(
-                doc(this.firestore, 'todos', this.tempTodos['todos'][i])
-              ).subscribe((data) => {
-                const tempTodo = data.data();
-                if (tempTodo) {
-                  const index = this.tempTodos['todos'].findIndex(
-                    (value: any) => value['id'] == tempTodo['id']
-                  );
-                  if (!index) {
-                    this.todos.push(tempTodo);
-                  }
-                  {
-                    this.todos[i] = tempTodo;
-                  }
-                }
-                this.checkAllComplete();
-                this.toggleList(this.currentList);
-              });
+    const q = query(collection(this.firestore, `users`, `${this.appear.id}/todos`));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      // snapshot.docs.map(data => this.taskListFull.push(data.data()))
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          this.todos.unshift(change.doc.data());
+        }
+        if (change.type === 'modified') {
+          for(let i = 0; i < this.todos.length; i++){
+            if(this.todos[i].id == change.doc.data()['id']){
+              this.todos[i] = change.doc.data();
             }
-            this.todoShow = this.todos;
           }
         }
-      }
+        if (change.type === 'removed') {
+          const index = this.todos.findIndex((value: any) => value['id'] == change.doc.data()['id']);
+          this.todos.splice(index, 1);
+        }
+      });
+      this.todoShow= this.todos;
+      this.checkAllComplete()
     });
   }
 
@@ -141,6 +130,7 @@ export class TodoComponent implements OnInit {
 
   toggleCompleted(todo: any) {
     //set todo to completed
+    console.log(todo.status)
     const temp = {
       ...todo,
       status: !todo.status,
@@ -180,12 +170,12 @@ export class TodoComponent implements OnInit {
   }
 
   deleteMultiTask() {
+    console.log('hi')
     for (let i = 0; i < this.todos.length; i++) {
       if (this.todos[i].status == true) {
-        this.todoService.deleteTodo(i);
+        this.todoService.deleteTodo(this.todos[i]);
       }
     }
-    this.todos.length = 0;
   }
 
   editTodo(todo: any) {

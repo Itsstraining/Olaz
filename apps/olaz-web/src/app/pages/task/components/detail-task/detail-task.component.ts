@@ -127,8 +127,8 @@ export class DetailTaskComponent implements OnInit, OnChanges {
 
   async getParticipantList(){
     this.participantList.length = 0;
-    for(let i = 0; i < this.taskListData.participants.length; i++){
-      const temp =(await this.userService.getUserByID(this.taskListData.participants[i])).data();
+    for(let i = 0; i < this.taskListData.users.length; i++){
+      const temp =(await this.userService.getUserByID(this.taskListData.users[i])).data();
       this.participantList.push(temp);
       this.getAssignee_Reporter(temp);
     }
