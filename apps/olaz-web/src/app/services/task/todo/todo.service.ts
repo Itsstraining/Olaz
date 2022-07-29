@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { endpoint } from '../../../../configs/baseURL';
 import { environment } from '../../../../environments/environment';
 import { Todo } from '../../../models/todo.model';
 
@@ -29,19 +30,22 @@ export class TodoService {
     const data = {
       newTodo: todo
     }
-    return this.httpClient.post(environment.endpoint+"todo", data);
+    console.log(todo)
+    return this.httpClient.post(endpoint + "todo", data);
     // this.todos.push(todo)
   }
 
   updateTodo(todo: any) {
     const data = { updateTodo: todo};
-    return this.httpClient.put(environment.endpoint+"todo",data);
+    console.log(todo.status)
+
+    return this.httpClient.put(endpoint+"todo",data);
   }
 
   deleteTodo(todo: any) {
     const data = {
       todo: todo
     }
-    return this.httpClient.delete(environment.endpoint+"todo", {body: data});
+    return this.httpClient.delete(endpoint + "todo", { body: data });
   }
 }

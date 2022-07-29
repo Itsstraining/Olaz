@@ -7,8 +7,8 @@ import { AuthguardService } from './services/authguard.service';
 const routes: Routes = [
     // { path: '', component: AppComponent },
 
-    { path: '', component: LoginComponent},
-    { path: 'ownspace', loadChildren: () => import('./pages/layout/layout.module').then(m => m.LayoutModule)  },
+    { path: '', component: LoginComponent },
+    { path: 'ownspace', loadChildren: () => import('./pages/layout/layout.module').then(m => m.LayoutModule) },
 
     // {
     //     path:'',

@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '', component: MessageComponent,
     children:[
-      // { path: 'task', loadChildren: () => import('../task/task/task.module').then(m => m.TaskModule) },
+      { path: 'task', loadChildren: () => import('../task/task/task.module').then(m => m.TaskModule) },
     ]
   }
 ];

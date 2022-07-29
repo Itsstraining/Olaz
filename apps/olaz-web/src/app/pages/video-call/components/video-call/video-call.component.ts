@@ -22,14 +22,9 @@ export class VideoCallComponent implements OnInit {
     this.init();
     this.route.params.subscribe(params => {
       this.docId = params['id'];
-      this.startCall();
+
     });
-    window.addEventListener('unload', () => {
-      navigator.sendBeacon(`${this.videoSrv.serverURL}/delete-Item?id=${this.docId}`);
-      // Check if any of the input fields are filled
-      // Cancel the event and show alert that
-      // the unsaved changes would be lost
-    });
+
   }
 
   myFunction() {
@@ -50,6 +45,8 @@ export class VideoCallComponent implements OnInit {
   checkMic = true;
   localStream!: MediaStream;
   remoteStream!: MediaStream;
+
+
   servers = {
     iceServers: [
       {
@@ -95,7 +92,6 @@ export class VideoCallComponent implements OnInit {
   micOff() {
     this.checkMic = !this.checkMic;
   }
-
   async init() {
     let localvideo = <HTMLVideoElement>document.getElementById('user1video');
     let remoteVideo = <HTMLVideoElement>document.getElementById('user2video');
@@ -114,24 +110,19 @@ export class VideoCallComponent implements OnInit {
 
     localvideo.srcObject = this.localStream;
     remoteVideo.srcObject = this.remoteStream;
-
     this.pc.oniceconnectionstatechange = () => {
       if (this.pc.iceConnectionState == 'disconnected') {
         this.deleteRoom();
       }
-
     }
-
     docData(doc(this.fs, `calls/${this.docId}`)).subscribe(async (data) => {
       if (data['offer'] != null) {
-        this.isLoaded = true
+        this.isLoaded = true;
       }
-      console.log(this.ownerInfo)
-      let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data()
-      let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data()
+      let opponent = (await getDoc(doc(this.fs, `users/${data['opponent']['id']}`))).data();
+      let owner = (await getDoc(doc(this.fs, `users/${data['owner']['id']}`))).data();
       this.callInf = data;
       if (this.userSrv.user.id === this.callInf.owner.id) {
-
         this.opponentInfo.name = opponent!['displayName'];
         this.opponentInfo.photoURL = opponent!['photoURL'];
         this.ownerInfo.name = owner!['displayName'];
@@ -141,9 +132,7 @@ export class VideoCallComponent implements OnInit {
         this.opponentStatus.micOn = data['opponent']['id'];
         this.ownerStatus.camOn = data['owner']['id'];
         this.ownerStatus.micOn = data['owner']['id'];
-
       } else {
-
         this.opponentInfo.name = owner!['displayName'];
         this.opponentInfo.photoURL = owner!['photoURL'];
         this.ownerInfo.name = opponent!['displayName'];
@@ -154,10 +143,8 @@ export class VideoCallComponent implements OnInit {
         this.ownerStatus.camOn = data['opponent']['id'];
         this.ownerStatus.micOn = data['opponent']['id'];
       }
-
-
-
     });
+    this.startCall();
 
     collectionChanges(collection(this.fs, 'calls')).subscribe((data) => {
       data.forEach(async (doc) => {
@@ -174,18 +161,18 @@ export class VideoCallComponent implements OnInit {
       console.log(data);
     });
   }
-
   async startCall() {
     this.callRef = collection(this.fs, 'calls');
     let userCallDoc = doc(this.fs, `calls/${this.docId}`);
     let ownerID = (await getDoc(userCallDoc)).data()!['owner']['id'];
-    console.log(ownerID);
-
-    if (this.userSrv.user.id === ownerID) {
+    if (this.userSrv.user$.value.id === ownerID) {
       this.offerDocRef = collection(doc(this.callRef, this.docId), 'offerCandidates');
       const ansdocRef = collection(userCallDoc, 'answerCandidates');
       const offerDescription = await this.pc.createOffer();
+      console.log(offerDescription.sdp);
+
       this.pc.onicecandidate = (event) => {
+        console.log(event.candidate);
         event.candidate && addDoc(this.offerDocRef, event.candidate.toJSON());
       }
       await this.pc.setLocalDescription(offerDescription);
@@ -200,7 +187,6 @@ export class VideoCallComponent implements OnInit {
           this.pc.setRemoteDescription(answerDescription);
         }
       });
-
       collectionChanges(ansdocRef).subscribe((data) => {
         data.forEach((doc) => {
           if (doc.type === 'added') {
@@ -210,9 +196,9 @@ export class VideoCallComponent implements OnInit {
         })
       })
     } else {
-      if (this.isLoaded == true) {
+      // if (this.isLoaded == true) {
         this.answerCall();
-      }
+      // }
     }
   }
 
@@ -252,9 +238,6 @@ export class VideoCallComponent implements OnInit {
         }
       })
     })
-
-
-
   }
 
   turnWebCam() {
@@ -278,6 +261,7 @@ export class VideoCallComponent implements OnInit {
       this.micInProgress = false;
     })
     this.localStream.getAudioTracks().forEach((track) => {
+      // ngắt stream audio 
       track.enabled = !track.enabled;
     })
   }

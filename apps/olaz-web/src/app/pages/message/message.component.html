@@ -38,7 +38,7 @@
 
       <!-- conversation List -->
       <div style="overflow-y: auto;">
-        <div *ngIf="rooms">
+        <div *ngIf="rooms.length !== 0 && !dontHaveFr">
           <span *ngFor="let room of rooms ">
             <div style=" background-color: rgb(182, 182, 182);
             border-radius: 15px;" *ngIf="room.id === roomId" (click)="changeMessage(room.id)" class="cha-1">
@@ -66,7 +66,7 @@
   </div>
 
   <div id="Layout-right">
-    <div *ngIf="message===''" class="right-top" style="padding: 10px; display:flex; flex-direction: row;">
+    <div *ngIf="isLoading && !dontHaveFr" class="right-top" style="padding: 10px; display:flex; flex-direction: row;">
       <div class="Circle-top-one">
         <div style="display: flex; flex-direction: row;">
           <img class="image-message" [src]="room.image" alt="" (error)="handleError($event)">
@@ -90,12 +90,18 @@
         <i matTooltip="Settings" class="uil uil-ellipsis-v"></i>
       </div>
     </div>
-    <div id="right-center" *ngIf="message!==''">
-      <p style="padding: 20%; text-align: center;">{{message}}</p>
+    <div id="right-center" *ngIf="!isLoading && !dontHaveFr ">
+      <olaz-snack-bar></olaz-snack-bar>
     </div>
-    <div style="overflow-y: auto; height: 68vh;  margin-bottom: 5px;">
+
+    <div id="right-center" *ngIf="isLoading && dontHaveFr">
+      <!-- <olaz-snack-bar></olaz-snack-bar> -->
+      <p style="text-align: center; padding: 20%">Please add someone to chat!</p>
+    </div>
+
+    <div *ngIf="isLoading && !dontHaveFr" style="overflow-y: auto; height: 68vh;  margin-bottom: 5px;">
       <div *ngIf="room" id="right-center">
-        <div *ngFor="let message of room.messages">
+        <div *ngFor="let message of messages">
           <div *ngIf="message.userId?.id === myId && !message.image" class="cha">
             <div class="my-message">
               <span style="flex: 1 1 auto;"></span>
@@ -130,7 +136,7 @@
 
       </div>
     </div>
-    <div class="right-bottom">
+    <div *ngIf="isLoading && !dontHaveFr " class="right-bottom">
       <div style="display: flex; justify-content: flex-end">
         <button class="button-function"><i class="uil uil-paperclip"></i>
         </button>

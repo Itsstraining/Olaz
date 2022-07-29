@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/olaz-web",
         "index": "apps/olaz-web/src/index.html",
@@ -13,7 +15,10 @@
         "polyfills": "apps/olaz-web/src/polyfills.ts",
         "tsConfig": "apps/olaz-web/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/olaz-web/src/favicon.ico", "apps/olaz-web/src/assets"],
+        "assets": [
+          "apps/olaz-web/src/favicon.ico",
+          "apps/olaz-web/src/assets"
+        ],
         "styles": [
           "apps/olaz-web/src/styles.scss",
           "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
@@ -25,13 +30,13 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumWarning": "5mb",
+              "maximumError": "5mb"
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
+              "maximumWarning": "100kb",
+              "maximumError": "100kb"
             }
           ],
           "fileReplacements": [
@@ -74,12 +79,17 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/olaz-web/**/*.ts", "apps/olaz-web/**/*.html"]
+        "lintFilePatterns": [
+          "apps/olaz-web/**/*.ts",
+          "apps/olaz-web/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/olaz-web"],
+      "outputs": [
+        "coverage/apps/olaz-web"
+      ],
       "options": {
         "jestConfig": "apps/olaz-web/jest.config.ts",
         "passWithNoTests": true

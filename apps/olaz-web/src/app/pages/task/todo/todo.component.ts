@@ -130,7 +130,6 @@ export class TodoComponent implements OnInit {
 
   toggleCompleted(todo: any) {
     //set todo to completed
-    console.log(todo.status)
     const temp = {
       ...todo,
       status: !todo.status,

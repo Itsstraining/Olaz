@@ -26,21 +26,21 @@ export class MessageService {
           message: "Token invalid"
         }
       }
-      const createMessage = fs.collection('messages').doc(messID).create({
+      const createMessage = {
         userId: myID,
         id: messID,
         content: content,
         image: image,
         type: type,
         createdTime: createdTime,
-      });
+      };
 
       const updateRoom = fs
         .collection('rooms')
         .doc(roomId)
-        .update({
-          messages: firebase.firestore.FieldValue.arrayUnion(messID),
-        });
+        .collection('messages')
+        .doc(messID)
+        .create(createMessage);
       await Promise.all([createMessage, updateRoom]);
       return {
         message: "Gửi tin nhắn thành công"

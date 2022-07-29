@@ -14,13 +14,16 @@ import { MessageComponent } from './message.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 import { CreateRoomComponent } from './components/dialog-create-room/create-room.component';
+import { SnackBarComponent } from '../../components/snack-bar/snack-bar.component'
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     MessageComponent,
     DialogFowardComponent,
     DialogFriendComponent,
     RejectAddComponent,
-    CreateRoomComponent
+    CreateRoomComponent,
+    SnackBarComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +35,7 @@ import { CreateRoomComponent } from './components/dialog-create-room/create-room
     MatInputModule,
     MatListModule,
     FormsModule,
+    MatCheckboxModule
   ],
 })
-export class MessageModule {}
+export class MessageModule { }

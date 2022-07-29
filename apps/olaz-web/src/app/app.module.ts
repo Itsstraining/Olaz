@@ -12,7 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AppRoutingModule } from './app-routing.module';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -26,19 +26,18 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/video-call/components/login/login.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 
 import { DialogCallComponent } from './pages/video-call/components/dialog-call/dialog-call.component';
 
-import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { PickUserDialogComponent } from './pages/task/components/pick-user-dialog/pick-user-dialog.component';
 
 @NgModule({
@@ -47,9 +46,8 @@ import { PickUserDialogComponent } from './pages/task/components/pick-user-dialo
     NxWelcomeComponent,
     LoginComponent,
     DialogCallComponent,
-    SnackBarComponent,
     PickUserDialogComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -88,7 +86,7 @@ import { PickUserDialogComponent } from './pages/task/components/pick-user-dialo
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
-    provideStorage(()=> getStorage()),
+    provideStorage(() => getStorage()),
     MatGridListModule,
     MatCardModule,
     MatMenuModule,

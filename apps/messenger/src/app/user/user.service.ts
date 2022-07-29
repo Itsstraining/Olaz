@@ -106,7 +106,6 @@ export class UserService {
           .doc(roomId)
           .create({
             id: roomId,
-            messages: [],
             users: [frID, myID],
             name: '',
             image: '',

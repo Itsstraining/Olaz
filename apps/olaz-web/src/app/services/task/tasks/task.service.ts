@@ -4,6 +4,7 @@ import { HttpClient, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { docData, Firestore, getDoc } from '@angular/fire/firestore';
 import { doc } from '@firebase/firestore';
+import { endpoint } from '../../../../configs/baseURL';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -36,16 +37,16 @@ export class TaskService {
 
   createTask(newTask: any, roomId: any) {
     const data = { newTask: newTask, roomId: roomId };
-    return this.httpClient.post(environment.endpoint+"task", data);
+    return this.httpClient.post(endpoint+"task", data);
   }
 
   updateTask(updateTask: any, roomId: any) {
     const data = { updateTask: updateTask, roomId: roomId };
-    return this.httpClient.put(environment.endpoint+"task",data);
+    return this.httpClient.put(endpoint+"task",data);
   }
 
   deleteTask(taskId: any, roomId: any) {
     const data = { taskId: taskId, roomId: roomId };
-    return this.httpClient.delete(environment.endpoint+"task", {body: data});
+    return this.httpClient.delete(endpoint+"task", {body: data});
   }
 }

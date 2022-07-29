@@ -6,10 +6,12 @@ import {
   collection,
   getDoc,
   docData,
+  collectionData,
 } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { endPointMessenger } from '../../../configs/baseURL';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +30,10 @@ export class RoomService {
     return docData(doc(this.fs, 'rooms', roomId));
   }
 
+  getMessagesInRoom(roomId: string) {
+    return collectionData(collection(this.fs, `rooms/${roomId}/messages`));
+  }
+
   async getRoomByIdPromise(roomId: string) {
     return await (await getDoc(doc(this.fs, 'rooms', roomId))).data()
   }
@@ -38,6 +44,6 @@ export class RoomService {
       headers: new HttpHeaders()
         .set('Authorization', `Bearer ${token}`)
     }
-    return this.HttpClient.get(`${environment.endPointMessenger}room/check-room/${roomId}`, header)
+    return this.HttpClient.get(`${endPointMessenger}room/check-room/${roomId}`, header)
   }
 }
