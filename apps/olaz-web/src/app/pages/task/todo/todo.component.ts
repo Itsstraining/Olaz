@@ -10,8 +10,15 @@ import { TodoService } from '../../../services/task/todo/todo.service';
 import { Todo } from '../../../models/todo.model';
 import { DeleteDialogComponent } from '../../../components/delete-dialog/delete-dialog.component';
 import { UserService } from '../../../services/user.service';
-import { docSnapshots, Firestore, doc } from '@angular/fire/firestore';
+import {
+  docSnapshots,
+  Firestore,
+  doc,
+  FieldValue,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { update } from '@angular/fire/database';
 
 @Component({
   selector: 'olaz-todo',
@@ -23,29 +30,33 @@ export class TodoComponent implements OnInit {
     {
       value: 'All',
       status: true,
+      id: 0,
     },
     {
       value: 'To do',
       status: false,
+      id: 1,
     },
     {
       value: 'Done',
       status: false,
+      id: 2,
     },
   ];
 
   todos: any[] = [];
-  currentList = 'All';
+  currentList = this.arr[0];
   showValidationErrors!: boolean;
   checkedAll: boolean = false;
   appear: any;
-
+  tempTodos: any;
+  todoShow: any[] = [];
   constructor(
     private todoService: TodoService,
     private dialog: MatDialog,
     public userService: UserService,
     private _snackBar: MatSnackBar,
-    private firestore: Firestore,
+    private firestore: Firestore
   ) {}
 
   ngOnInit(): void {
@@ -53,26 +64,30 @@ export class TodoComponent implements OnInit {
     this.userService.user$.subscribe((data) => {
       if (!data) return;
       this.appear = data;
+      this.getTodoList();
     });
-    this.getTodoList();
   }
 
   getTodoList() {
+    this.todos.length = 0;
     docSnapshots(
       doc(this.firestore, 'users', this.userService.user.id)
     ).subscribe(async (result) => {
       if (!result.metadata.fromCache) {
         this.todos.length = 0;
-        const temp = result.data();
-        if(temp != undefined){
-          if (temp['todos'].length != 0) {
-            for (let i = 0; i < temp['todos'].length; i++) {
+
+        this.tempTodos = result.data();
+
+        if (this.tempTodos != undefined) {
+          if (this.tempTodos['todos'].length != 0) {
+            for (let i = 0; i < this.tempTodos['todos'].length; i++) {
               docSnapshots(
-                doc(this.firestore, 'todos', temp['todos'][i])
+                doc(this.firestore, 'todos', this.tempTodos['todos'][i])
               ).subscribe((data) => {
-                  const tempTodo = data.data();
-                  const index = temp['todos'].findIndex(
-                    (value:any) => value['id'] == tempTodo
+                const tempTodo = data.data();
+                if (tempTodo) {
+                  const index = this.tempTodos['todos'].findIndex(
+                    (value: any) => value['id'] == tempTodo['id']
                   );
                   if (!index) {
                     this.todos.unshift(tempTodo);
@@ -80,8 +95,11 @@ export class TodoComponent implements OnInit {
                   {
                     this.todos[i] = tempTodo;
                   }
-              })
+                }
+              });
             }
+            this.checkAllComplete();
+            this.todoShow = this.todos;
           }
         }
       }
@@ -89,94 +107,101 @@ export class TodoComponent implements OnInit {
   }
 
   toggleList(title: any) {
-    this.currentList = title.value;
-    console.log(this.currentList);
+    this.currentList = title;
+    console.log(this.currentList)
+
+    this.todoShow.length = 0;
+    if (this.currentList.id == 1) {
+    
+
+      this.todos.filter((todo) => {
+        if (todo.status == false) {console.log(1);return this.todoShow.push(todo)};
+        return;
+      });
+    } else if (this.currentList.id == 2) {
+    console.log(12)
+
+      this.todos.filter((todo) => {
+        if (todo.status == true) return this.todoShow.push(todo);
+        return;
+      });
+    }else{
+      this.todoShow = this.todos;
+    };
+    console.log(this.todoShow)
   }
 
-  
-  // addNew() {
-  //   if (this.newTaskTitle == '') {
-  //     alert('You have to fill the task title!!');
-  //     return;
-  //   } else {
-  //     const temp = {
-  //       id: Date.now().toString(),
-  //       title: this.newTaskTitle,
-  //       description: '',
-  //       deadline: Date.now(),
-  //       status: 0,
-  //       assignee: '',
-  //       reporter: '',
-  //       priority: 0,
-  //       createdBy: this.userService.user.id,
-  //       createdDate: Date.now(),
-  //       updatedDate: Date.now(),
-  //     };
-  //     this.todo.push(temp);
-  //     this.TaskService.createTask(temp, this.currentRoomId).subscribe(
-  //       (data) => this.openSnackBar(data)
-  //     );
-  //     this.newTaskTitle = '';
-  //   }
-  //   this.taskListFull.length = 0;
-  // }
-
   openSnackBar(message: any) {
-    this._snackBar.open(message.message, '',{
+    this._snackBar.open(message.message, '', {
       duration: 2000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      
     });
   }
 
   onFormSubmit(form: NgForm) {
-
-    // if (form.invalid) return (this.showValidationErrors = true);
-    // this.todoService.addTodo(new Todo(form.value.text));
-    if (form.invalid) return (this.showValidationErrors = true);
-    this.todoService.addTodo({
+    const temp = {
+      id: Date.now().toString(),
       title: form.value.text,
       status: false,
       createdDate: Date.now(),
-      createdBy: this.appear.id
-    }).subscribe((message) => this.openSnackBar(message));
-
+      createdBy: this.appear.id,
+    };
+    if (form.invalid) return (this.showValidationErrors = true);
+    this.todoService
+      .addTodo(temp)
+      .subscribe((message) => this.openSnackBar(message));
     this.showValidationErrors = false;
     form.reset();
     return;
   }
 
-  toggleCompleted(todo: Todo) {
+  toggleCompleted(todo: any) {
     //set todo to completed
-    todo.isCompleted = !todo.isCompleted;
+    const temp = {
+      ...todo,
+      status: !todo.status,
+    };
+    this.todoService.updateTodo(temp).subscribe((message) => message);
   }
 
   toggleCompleteAll() {
     if (!this.checkedAll) {
       for (let i = 0; i < this.todos.length; i++) {
-        if (this.todos[i].isCompleted == false) {
-          this.todos[i].isCompleted = true;
+        if (this.todos[i].status == false) {
+          this.todos[i].status = true;
         }
       }
     } else {
       for (let i = 0; i < this.todos.length; i++) {
-        this.todos[i].isCompleted = false;
+        this.todos[i].status = false;
       }
     }
     this.checkedAll = !this.checkedAll;
   }
 
-  deleteMultiTask() {
+  checkAllComplete() {
+    let count = 0;
     for (let i = 0; i < this.todos.length; i++) {
-      if (this.todos[i].isCompleted == true) {
-        console.log(this.todos[i]);
-        this.todoService.deleteTodo(i);
+      if (this.todos[i].status == true) {
+        count++;
       }
+    }
+    if (count == this.todos.length) {
+      this.checkedAll = true;
     }
   }
 
-  editTodo(todo: Todo) {
+  deleteMultiTask() {
+    for (let i = 0; i < this.todos.length; i++) {
+      if (this.todos[i].status == true) {
+        this.todoService.deleteTodo(i);
+      }
+    }
+    this.todos.length = 0;
+  }
+
+  editTodo(todo: any) {
     const index = this.todos.indexOf(todo);
 
     const dialogRef = this.dialog.open(EditTodoDialogComponent, {
@@ -186,13 +211,15 @@ export class TodoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.todoService.updateTodo(index, result);
+        this.todoService
+          .updateTodo(result)
+          .subscribe((message) => this.openSnackBar(message));
       }
     });
     // this.dataService.updateTodo()
   }
 
-  deleteTodo(todo: Todo) {
+  deleteTodo(todo: any) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '500px',
       data: todo,
@@ -200,8 +227,9 @@ export class TodoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const index = this.todos.indexOf(todo);
-        this.todoService.deleteTodo(index);
+        this.todoService
+          .deleteTodo(result)
+          .subscribe((message) => this.openSnackBar(message));
       }
     });
   }

@@ -24,6 +24,12 @@ export class VideoCallComponent implements OnInit {
       this.docId = params['id'];
       this.startCall();
     });
+    window.addEventListener('unload', () => {
+      navigator.sendBeacon(`${this.videoSrv.serverURL}/delete-Item?id=${this.docId}`);
+      // Check if any of the input fields are filled
+      // Cancel the event and show alert that
+      // the unsaved changes would be lost
+    });
   }
 
   myFunction() {

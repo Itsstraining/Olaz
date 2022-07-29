@@ -33,13 +33,16 @@ export class TodoService {
     // this.todos.push(todo)
   }
 
-  updateTodo(index: number, updateTodo: Todo) {
-    this.todos[index] = updateTodo 
+  updateTodo(todo: any) {
+    const data = { updateTask: todo};
+    console.log(data.updateTask)
+    return this.httpClient.put(environment.endpoint+"todo",data);
   }
 
-  deleteTodo(index: number) {
-    this.todos?.splice(index, 1)
-    // this.todos = this.todos?.slice(0, index).concat(this.todos?.slice(index+1));
-    // console.log(this.todos)
+  deleteTodo(todo: any) {
+    const data = {
+      todo: todo
+    }
+    return this.httpClient.delete(environment.endpoint+"todo", {body: data});
   }
 }

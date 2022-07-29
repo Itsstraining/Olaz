@@ -4,7 +4,7 @@
     <form #form="ngForm" (ngSubmit)="onFormSubmit(form)">
       <div class="field">
         <div class="control">
-          <input type="text" class="input" [ngModel]="todo.text" #todoTextField="ngModel" name="text" required
+          <input type="text" class="input" [ngModel]="todo.title" #todoTextField="ngModel" name="text" required
             minlength="2" placeholder="Type todo text here..." />
         </div>
 
