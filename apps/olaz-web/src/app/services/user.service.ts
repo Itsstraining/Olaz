@@ -58,9 +58,6 @@ export class UserService {
       if (!user) return;
       let userDoc = doc(collection(this.fs, 'users'), user!.uid);
 
-      let todoCollection = collection(userDoc, 'Todo');
-      let todoID;
-
       this.callRef = collection(this.fs, 'calls');
       this.userTodo = collection(this.fs, 'todo');
       this.loggedIn = true;
