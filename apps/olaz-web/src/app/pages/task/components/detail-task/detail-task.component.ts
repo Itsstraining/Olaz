@@ -127,8 +127,8 @@ export class DetailTaskComponent implements OnInit, OnChanges {
 
   async getParticipantList(){
     this.participantList.length = 0;
-    for(let i = 0; i < this.taskListData.participants.length; i++){
-      const temp =(await this.userService.getUserByID(this.taskListData.participants[i])).data();
+    for(let i = 0; i < this.taskListData.users.length; i++){
+      const temp =(await this.userService.getUserByID(this.taskListData.users[i])).data();
       this.participantList.push(temp);
       this.getAssignee_Reporter(temp);
     }
@@ -137,14 +137,14 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   getAssignee_Reporter(temp: any){
     
     if(this.taskData.assignee == ''){
-      this.newAssignee = {displayName: 'No assignee', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
+      this.newAssignee = {displayName: 'Unknown', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
     }else{
       if(temp['id'] == this.newAssignee){
         this.newAssignee = temp;
       }
     }
     if(this.taskData.reporter == ''){
-      this.newReporter = {displayName: 'No assignee', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
+      this.newReporter = {displayName: 'Unknown', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
     }else{
       if(temp['id'] == this.newAssignee){
         this.newReporter = temp;
@@ -239,6 +239,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       assignee: this.newAssignee,
       reporter: '',
     };
+    console.log(data)
     this.taskService
       .updateTask(data, data.id)
       .subscribe((message) => this.openSnackBar(message));
@@ -252,9 +253,9 @@ export class DetailTaskComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        await this.taskService
-          .deleteTask(taskId, this.currentRoomId)
-          .subscribe((message) => this.openSnackBar(message));
+        // await this.taskService
+        //   .deleteTask(taskId, this.currentRoomId)
+        //   .subscribe((message) => this.openSnackBar(message));
         this.isShowDetail = false;
         this.isShowDetailToggle.emit(this.isShowDetail);
         this.deleteTaskEmit.emit('delete');

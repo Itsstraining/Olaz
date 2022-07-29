@@ -28,15 +28,18 @@ export class TodoService {
 
   addTodo(todo: any) {
     const data = {
-      newTask: todo
+      newTodo: todo
     }
+    console.log(todo)
     return this.httpClient.post(endpoint + "todo", data);
     // this.todos.push(todo)
   }
 
   updateTodo(todo: any) {
-    const data = { updateTask: todo };
-    return this.httpClient.put(endpoint + "todo", data);
+    const data = { updateTodo: todo};
+    console.log(todo.status)
+
+    return this.httpClient.put(endpoint+"todo",data);
   }
 
   deleteTodo(todo: any) {

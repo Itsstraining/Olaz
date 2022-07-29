@@ -7,10 +7,10 @@ import { transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TaskModel } from '../../../models/task.model';
 import { TaskService } from '../../../services/task/tasks/task.service';
 import { UserService } from '../../../services/user.service';
-import { doc, docSnapshots, Firestore } from '@angular/fire/firestore';
+import { collectionGroup, doc, Firestore, getDoc, getDocs } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 @Component({
   selector: 'olaz-task',
   templateUrl: './task.component.html',
@@ -22,6 +22,7 @@ export class TaskComponent implements OnInit {
   todo: any[] = [];
   doing: any[] = [];
   done: any[] = [];
+  tempTasks: any[] = [];
   panelOpenState = true;
   isShowDetail = false;
   isActiveDropdown = false;
@@ -31,26 +32,27 @@ export class TaskComponent implements OnInit {
   newTaskTitle: any = '';
   message: any;
   currentRoomId: any;
-  appear:any;
+  appear: any;
   constructor(
     private TaskService: TaskService,
     public userService: UserService,
     private firestore: Firestore,
     private _snackBar: MatSnackBar,
-    private Router: Router,
+    private Router: Router
   ) {}
 
   ngOnInit(): void {
-    this.userService.user$.subscribe(data => {
+    this.userService.user$.subscribe((data) => {
       if (!data) return;
       this.appear = data;
     });
-    this.currentRoomId = localStorage.getItem('roomId')
+    this.tempTasks.length = 0;
+    this.currentRoomId = localStorage.getItem('roomId');
     this.getTaskListData();
   }
 
-  goback(){
-    this.Router.navigate([`/ownspace/m/${this.currentRoomId}`])
+  goback() {
+    this.Router.navigate([`/ownspace/m/${this.currentRoomId}`]);
   }
 
   drop(event: any) {
@@ -68,59 +70,55 @@ export class TaskComponent implements OnInit {
         event.currentIndex
       );
     }
-    
+    console.log(event.currentIndex);
+    console.log(event.previousIndex);
+    if (event.container.id == 'cdk-drop-list-0') {
+      this.updateTaskFunc(event.container.data[event.currentIndex], 0);
+    } else if (event.container.id == 'cdk-drop-list-1') {
+      this.updateTaskFunc(event.container.data[event.currentIndex], 1);
+    } else {
+      this.updateTaskFunc(event.container.data[event.currentIndex], 2);
+    }
   }
 
   openSnackBar(message: any) {
-    this._snackBar.open(message.message, '',{
+    this._snackBar.open(message.message, '', {
       duration: 2000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      
     });
   }
 
   async getTaskListData() {
-    this.taskListData = undefined;
-    this.taskListFull.length = 0;
-
-    docSnapshots(doc(this.firestore, 'taskList', `TL${this.currentRoomId}`)).subscribe(
-      async (result) => {
-        if (!result.metadata.fromCache) {
-          this.taskListFull.length = 0;
-          this.taskListData = result.data();
-          if(this.taskListData.taskList.length != 0){
-            for (let i = 0; i < this.taskListData.taskList.length; i++) {
-              docSnapshots(
-                doc(this.firestore, 'tasks', this.taskListData.taskList[i])
-              ).subscribe((data) => {
-                const temp = data.data();
-                // if (!data.metadata.fromCache) {
-                const index = this.taskListFull.findIndex(
-                  (value) => value['id'] == temp
-                );
-                if (!index) {
-                  this.taskListFull.push(temp);
-                }
-                {
-                  this.taskListFull[i] = temp;
-                }
-                // }
-                this.filterListTask();
-              });
+    // this.taskListData = undefined;
+    this.taskListData = await (await getDoc(doc(this.firestore, `rooms`, this.currentRoomId))).data()
+    const q = query(collection(this.firestore, `rooms`, `${this.currentRoomId}/taskList`));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      // snapshot.docs.map(data => this.taskListFull.push(data.data()))
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          this.taskListFull.unshift(change.doc.data());
+          console.log(change.doc.data())
+        }
+        if (change.type === 'modified') {
+          for(let i = 0; i < this.taskListFull.length; i++){
+            if(this.taskListFull[i] == change.doc.data()['id']){
+              this.taskListFull[i] = change.doc.data();
             }
           }
         }
-      }
-    );
+        if (change.type === 'removed') {
+          const index = this.taskListFull.findIndex((value: any) => value['id'] == change.doc.data()['id']);
+          this.taskListFull.slice(0, index).concat(this.taskListFull.slice(index+1));
+        }
+      });
+      this.filterListTask()
+    });
   }
 
   filterListTask() {
-    this.todo = [];
-    this.doing = [];
-    this.done = [];
-    console.log(this.taskListFull.length)
-    if(this.taskListFull.length != 0){
+    console.log(this.taskListFull.length);
+    if (this.taskListFull.length != 0) {
       this.taskListFull.filter((value) => {
         if (value.status == 0) return this.todo.push(value);
         if (value.status == 1) return this.doing.push(value);
@@ -133,7 +131,7 @@ export class TaskComponent implements OnInit {
   addNew() {
     if (this.newTaskTitle == '') {
       // alert('You have to fill the task title!!');
-      this.openSnackBar({message: 'You have to fill the task title!!'})
+      this.openSnackBar({ message: 'You have to fill the task title!!' });
       return;
     } else {
       const temp = {
@@ -149,36 +147,33 @@ export class TaskComponent implements OnInit {
         createdDate: Date.now(),
         updatedDate: Date.now(),
       };
-      this.todo.push(temp);
-      this.TaskService.createTask(temp, this.currentRoomId).subscribe(
-        (data) => this.openSnackBar(data)
+      // this.todo.push(temp);
+      this.TaskService.createTask(temp, this.currentRoomId).subscribe((data) =>
+        this.openSnackBar(data)
       );
       this.newTaskTitle = '';
     }
     this.taskListFull.length = 0;
   }
 
-
-  updateTaskFunc(task: any, status: any){
-    const data = { 
-      id: this.taskData.id,
-      title: task.title,
-      description: task.description,
+  updateTaskFunc(task: any, status: any) {
+    const data = {
+      ...task,
       status: status,
-      priority: task.priority,
-      createdDate: this.taskData.createdDate,
-      deadline: task.deadline,
-      updatedDate: Date.now(),
-      createdBy: this.taskData.createdBy,
       assignee: '',
-      reporter: '',
-    }
-    this.TaskService.updateTask(data, data.id).subscribe(
-      (message) => console.log(message)
+      updatedDate: Date.now(),
+    };
+    this.TaskService.updateTask(data, data.id).subscribe((message) =>
+      console.log(message)
     );
   }
 
-  deleteeEmit(event :any){
+  async deleteeEmit(event: any) {
+    await this.TaskService.deleteTask(
+      this.taskData,
+      this.currentRoomId
+    ).subscribe((message) => this.openSnackBar(message));
+    this.taskListFull.length = 0;
     this.getTaskListData();
   }
 
