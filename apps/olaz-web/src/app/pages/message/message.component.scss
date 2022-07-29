@@ -19,7 +19,6 @@
 }
 
 .Font-user {
-    // font-family: 'Times New Roman', Times, serif;
     font-size: 18px;
     font-weight: bold;
 }
@@ -33,8 +32,6 @@
     width: 55px;
     height: 55px;
     border-radius: 50px;
-    // margin-left: 25px;
-    // margin-top: 10px;
 }
 
 .Circle-green {
@@ -69,29 +66,12 @@
 .add-room {
     background-color: transparent;
     border: none;
-    // margin-top: 20px;
-    // margin-left: 100px;
 }
-
-// .add-room-ava{
-//     width: 20px;
-//     margin-right: 20px;
-// }
-
-/*------------------------------------------------------------------- */
 
 #Layout-right {
     width: 100%;
     height: 100%;
 }
-
-.Icon-user {
-    width: 15px;
-    margin-left: 330px;
-    display: flex;
-}
-
-/*-------------------------------------------------------------------*/
 
 .right-top {
     width: 100%;
@@ -120,25 +100,12 @@
 }
 
 .font-user-one {
-    // font-family: time 'Times New Roman', Times, serif;
     font-size: 16pt;
 }
 
 .online-right {
     margin-left: 5px;
 }
-
-// .icon-nav {
-//     margin-left: 10px;
-// }
-
-.icon-nav:hover {
-    cursor: pointer;
-}
-
-// .Circle-top-one {
-//     width: 20%;
-// }
 
 .image-message {
     width: 50px;
@@ -157,68 +124,14 @@
     /* display: flex; */
 }
 
-/*----------------------------------------------------------------------*/
-
 #right-center {
     padding-bottom: 15px;
-}
-
-.messager-user-one {
-    width: 450px;
-    height: 60px;
-    background-color: #dcdcdc;
-    // border: 1px solid #dcdcdc;
-    border-radius: 15px;
-    margin-top: 15px;
-    margin-left: 100px;
 }
 
 .content {
     margin-left: 20px;
     margin-top: 10px;
     font-size: 14pt;
-}
-
-.content-one {
-    margin-left: 20px;
-    margin-top: 10px;
-    font-size: 14pt;
-}
-
-.content-two {
-    width: 220px;
-    height: 5px;
-    margin-left: 150px;
-    margin-top: 14px;
-    font-size: 8pt;
-}
-
-.content-three {
-    width: 220px;
-    height: 5px;
-    margin-left: 400px;
-    margin-top: 14px;
-    font-size: 8pt;
-}
-
-.kich-co-one {
-    width: 10px;
-    height: 10px;
-    margin-left: 20px;
-    margin-top: 15px;
-}
-
-.kich-co-two {
-    width: 10px;
-    height: 10px;
-    margin-left: 475px;
-    margin-top: -35px;
-}
-
-.kick-co-three {
-    width: 10px;
-    height: 10px;
-    margin-left: 400px;
 }
 
 .cha {
@@ -380,20 +293,9 @@
 .right-bottom {
     width: 100%;
     height: 15vh;
-    // position: absolute;
     bottom: 0;
     padding: 10px;
     background: #dcdcdc;
-    // flex: 1;
-
-    // overflow: auto;
-
-    // .icon-bottom {
-    //     width: 20%;
-    //     display: flex;
-    //     padding: 10px;
-    //     float: right;
-    // }
 }
 
 .icon {
@@ -437,16 +339,6 @@
     background-color: #5A3E9E;
     color: white;
 }
-
-// .tatca {
-//     font-size: 14pt;
-//     width:50%
-// }
-
-// .dadoc {
-//     font-size: 14pt;
-//     width:50%
-// }
 
 .ngang {
     width: 340px;
@@ -533,6 +425,5 @@
 .btn-send {
     background-color: #5A3E9E;
     display: block;
-    // margin: 0 auto;
     margin-top: 5px;
 }

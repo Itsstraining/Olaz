@@ -52,6 +52,8 @@ export class MessageComponent implements OnInit {
   public roomId: string = ''
   public rooms: any = []
 
+  dontHaveFr = false;
+
   callRequestRef: any;
 
   servers = {
@@ -79,7 +81,6 @@ export class MessageComponent implements OnInit {
         // console.log(user.requests.length);
       });
       this.UserService.getListOfRoomId(user.id).subscribe((value) => {
-        // console.log(value)
         value.map(async (roomId: any, i: number) => {
           const listOfRoomId: any = await this.RoomService.getRoomByIdPromise(roomId);
           value[i] = listOfRoomId;
@@ -108,11 +109,19 @@ export class MessageComponent implements OnInit {
       user => {
         if (!user) return;
         if (user.rooms.length === 0) {
-          this.message = "Vui lòng kết bạn!"
+          this._message.openSnackBar("Please add someone to chat!");
+          this.dontHaveFr = true;
+          this.isLoading = true;
           return;
         } else {
           this.route.params.subscribe(params => {
             if (!params['roomId']) return
+            if (params['roomId'] === '123456789') {
+              this._message.openSnackBar("Please add someone to chat!");
+              this.dontHaveFr = true;
+              this.isLoading = true;
+              return;
+            }
             this.getRoomId(params['roomId'], user.token)
             this.roomId = params['roomId']
             this.isLoading = false;
@@ -168,6 +177,7 @@ export class MessageComponent implements OnInit {
       })
       this.messages = messages;
       this.isLoading = true;
+      this.dontHaveFr = false;
       console.log(messages);
     });
   }
