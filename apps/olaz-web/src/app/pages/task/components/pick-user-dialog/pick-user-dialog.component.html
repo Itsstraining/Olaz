@@ -1,15 +1,8 @@
 <h1 mat-dialog-title>Assign to</h1>
 <div mat-dialog-content>
-  <!-- <form class="example-form">
-    <mat-form-field appearance="fill" style="width: 100%">
-      <input class="ipt" #message maxlength="256" placeholder="...@gmail.com">
-      <mat-hint align="start"><strong>Please input an email</strong> </mat-hint>
-      <mat-hint align="end">{{message.value.length}} / 100</mat-hint>
-    </mat-form-field>
-  </form> -->
   <input type="text" placeholder="Enter an email..." class="ipt">
-  <div *ngFor="let participant of data">
-    <div class="participant-container">
+  <div *ngFor="let participant of data.participants">
+    <div class="participant-container" [class.active]="data.choseUser.id === participant.id">
       <div>
         <img src={{participant.photoURL}} alt="User Ava" (error)="handleError($event)">
         <div class="user-info">
@@ -17,9 +10,8 @@
           <p>{{participant.email}}</p>
         </div>
       </div>
-      <button class="chooseBtn" [mat-dialog-close]="participant" >Choose</button>
+      <button class="chooseBtn" [mat-dialog-close]="{data: participant, type: data.type}" >Choose</button>
     </div>
-    <!-- <olaz-participant (pickEmit)="this.choseParticipant = $event" [participant]="participant"></olaz-participant> -->
   </div>
 </div>
 <div mat-dialog-actions>

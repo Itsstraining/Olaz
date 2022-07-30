@@ -14,8 +14,9 @@ import { MessageComponent } from './message.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RejectAddComponent } from './components/reject-add/reject-add.component';
 import { CreateRoomComponent } from './components/dialog-create-room/create-room.component';
-import { SnackBarComponent } from '../../components/snack-bar/snack-bar.component'
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ShareModule } from '../../modules/share.module';
 @NgModule({
   declarations: [
     MessageComponent,
@@ -23,7 +24,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     DialogFriendComponent,
     RejectAddComponent,
     CreateRoomComponent,
-    SnackBarComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +35,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatInputModule,
     MatListModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ShareModule
   ],
 })
 export class MessageModule { }

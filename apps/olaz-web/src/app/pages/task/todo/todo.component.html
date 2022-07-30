@@ -1,7 +1,7 @@
-<div *ngIf="this.appear !== undefined && tempTodos !== undefined"
+<div *ngIf="this.appear !== undefined"
   style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; overflow: hidden; position: relative;">
   <div class="heading-section">
-    <h1 class="title1">Todos</h1>
+    <h1 class="title1">Todo List</h1>
   </div>
   <div class="add-todo-box-container">
     <div class="add-todo-box">
@@ -41,11 +41,11 @@
           <button class="btn" (click)="deleteMultiTask()">Delete tasks</button>
         </div>
       </div>
-      <div class="todos-list" *ngIf="tempTodos.todos.length !== 0 && tempTodos !== undefined">
+      <div class="todos-list" *ngIf="todos.length !== 0">
         <olaz-todo-item *ngFor="let todo of todoShow" [todo]="todo" (todoClicked)="toggleCompleted(todo)"
           (editClicked)="editTodo(todo)" (deleteClicked)="deleteTodo(todo)"></olaz-todo-item>
       </div>
-      <div class="todos-list" style="justify-content: center;" *ngIf="tempTodos.todos.length === 0">
+      <div class="todos-list" style="justify-content: center;" *ngIf="todos.length === 0">
         <h3 style="text-align: center; margin-top: 50px; letter-spacing: 1px; font-weight: bold;">You have <span style="color: #9756e2;">0</span> to do task right now!</h3>
       </div>
     </div>

@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { UserService } from 'apps/olaz-web/src/app/services/user.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'olaz-profile',

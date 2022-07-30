@@ -43,10 +43,11 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   currentRoomId: any;
   participantList: any[] = [];
   newAssignee: any;
+  newAssigneeId: any
   newReporter: any;
+  newReporterId:any;
   newTitle!: string;
   newDes!: string;
-  // newDeadline: any
   newDeadline = new FormControl();
 
   newPriority: any;
@@ -88,15 +89,26 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     private _snackBar: MatSnackBar,
     private userService: UserService
   ) {}
-  openDialog() {
+  openDialog(choseUser: any, type:any) {
     const dialogRef = this.dialog.open(PickUserDialogComponent, {
       width: '500px',
-      data: this.participantList
+      data: {
+        participants: this.participantList,
+        choseUser: choseUser,
+        type: type
+      }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.newAssignee = result;
+        if(result.type == 'reporter'){
+          this.newReporter = result.data;
+          this.newReporter.displayName = result.data.displayName.split(" ", 1)
+        }else{
+          this.newAssignee = result.data;
+          this.newAssignee.displayName = result.data.displayName.split(" ", 1)
+        }
+        this.updateTaskBtn()
       }
     });
   }
@@ -108,9 +120,11 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newPriority = this.taskData.priority;
       this.newStatus = this.taskData.status;
       this.newDeadline.setValue(new Date(this.taskData['deadline']));
-
-      // this.newAssignee = this.userService.getUserByID(this.taskData.assignee);
+      this.newAssigneeId = this.taskData.assignee;
+      this.newReporterId = this.taskData.reporter;
     }
+    this.getParticipantList();
+
   }
 
   ngOnInit(): void {
@@ -121,14 +135,20 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newPriority = this.taskData.priority;
       this.newStatus = this.taskData.status;
       this.newDeadline.setValue(new Date(this.taskData['deadline']));
+      this.newAssigneeId = this.taskData.assignee;
+      this.newReporterId = this.taskData.reporter;
     };
     this.getParticipantList();
   }
 
+  handleError(e: any) {
+    e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
+  }
+
   async getParticipantList(){
     this.participantList.length = 0;
-    for(let i = 0; i < this.taskListData.participants.length; i++){
-      const temp =(await this.userService.getUserByID(this.taskListData.participants[i])).data();
+    for(let i = 0; i < this.taskListData.users.length; i++){
+      const temp =(await this.userService.getUserByID(this.taskListData.users[i])).data();
       this.participantList.push(temp);
       this.getAssignee_Reporter(temp);
     }
@@ -137,17 +157,19 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   getAssignee_Reporter(temp: any){
     
     if(this.taskData.assignee == ''){
-      this.newAssignee = {displayName: 'No assignee', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
+      this.newAssignee = {displayName: 'Unknown', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg", id: ""}
     }else{
-      if(temp['id'] == this.newAssignee){
+      if(temp['id'] == this.newAssigneeId){
         this.newAssignee = temp;
+        this.newAssignee.displayName = temp.displayName.split(" ", 1)
       }
     }
     if(this.taskData.reporter == ''){
-      this.newReporter = {displayName: 'No assignee', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"}
+      this.newReporter = {displayName: 'Unknown', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg", id: ""}
     }else{
-      if(temp['id'] == this.newAssignee){
+      if(temp['id'] == this.newReporterId){
         this.newReporter = temp;
+        this.newReporter.displayName = temp.displayName.split(" ", 1)
       }
     }
   }
@@ -236,12 +258,12 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       deadline: temp,
       updatedDate: Date.now(),
       createdBy: this.taskData.createdBy,
-      assignee: this.newAssignee,
-      reporter: '',
+      assignee: this.newAssignee.id,
+      reporter: this.newReporter.id,
     };
     this.taskService
-      .updateTask(data, data.id)
-      .subscribe((message) => this.openSnackBar(message));
+      .updateTask(data, this.taskListData.id)
+      .subscribe((message) => {this.openSnackBar(message)});
   }
 
   deleteTask(taskId: any) {
@@ -252,9 +274,9 @@ export class DetailTaskComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        await this.taskService
-          .deleteTask(taskId, this.currentRoomId)
-          .subscribe((message) => this.openSnackBar(message));
+        // await this.taskService
+        //   .deleteTask(taskId, this.currentRoomId)
+        //   .subscribe((message) => this.openSnackBar(message));
         this.isShowDetail = false;
         this.isShowDetailToggle.emit(this.isShowDetail);
         this.deleteTaskEmit.emit('delete');

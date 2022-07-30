@@ -12,8 +12,8 @@ export class TodoController {
     @Post()
     async createTodo(@Body() data: any ){
         try{
-            await this.todoService.create(data.newTask );
-            return {message :"Create Successful"} 
+            await this.todoService.create(data.newTodo);
+            return {message :"Create Successful!"} 
         }catch(err){
             return {
                 message: "Create Failed!",
@@ -25,30 +25,29 @@ export class TodoController {
     @Put()
     async update(@Body() body:any){
         try{
-            const result = await this.todoService.update(body.updateTask);
+            const result = await this.todoService.update(body.updateTodo);
             return {
-                message: "Successful",
+                message: "Update successful!",
                 retu: result
             }
         }catch(err){
             return{
-                message: "Faile",
+                message: "Update Failed!",
                 retu: err.toString()
             }
     }
     }
     @Delete()
     async delete(@Body() data: any){
-        // console.log(data.id)
         try {
             const result = this.todoService.delete(data.todo);
         return {
-            message: "Delete Successful",
+            message: "Delete Successful!",
             retu: result
         }
         }catch(err){
             return{
-                message: "Delete Faile",
+                message: "Delete Failed!",
                 retu: err.toString()
             }
         }

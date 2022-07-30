@@ -8,29 +8,16 @@ export class TodoService {
         const result = (await this.firestore.collection('todos').doc(todoId).get())
         return result;
     }
-    async create(newTask: any){
-        console.log(newTask)
-        const tempUser = await this.firestore.collection('users').doc(newTask.createdBy).update({
-            todos: admin.firestore.FieldValue.arrayUnion(newTask.id)
-        }); 
-        const result = await this.firestore.collection('todos').doc(newTask.id).set({
-            id: newTask.id, 
-            title: newTask.title,
-            status: newTask.status,
-            createdDate: newTask.createdDate,
-            createdBy: newTask.createdBy
-        });
+    async create(newTodo: any){
+        const result = await this.firestore.collection('users').doc(newTodo.createdBy).collection('todos').doc(newTodo.id).create(newTodo);
         return result;
     }
-    async update(updateTask: any){
-        const result = await this.firestore.collection('todos').doc(updateTask.id).update(updateTask);
+    async update(updateTodo: any){
+        const result = await this.firestore.collection('users').doc(updateTodo.createdBy).collection('todos').doc(updateTodo.id).update(updateTodo);
         return result;
     }
     async delete(todo){
-        const tempUser = await this.firestore.collection('users').doc(todo.createdBy).update({
-            todos: admin.firestore.FieldValue.arrayRemove(todo.id)
-        }); 
-        const result = await this.firestore.collection('todos').doc(todo.id).delete();
+        const result = await this.firestore.collection('users').doc(todo.createdBy).collection('todos').doc(todo.id).delete();
         return result;
     }
 
