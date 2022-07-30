@@ -1,3 +1,6 @@
+<div class="loader-container" *ngIf="isLoadingData">
+  <mat-spinner></mat-spinner>
+</div>
 <div *ngIf="this.appear !== undefined"
   style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; overflow: hidden; position: relative;">
   <div class="heading-section">

@@ -9,7 +9,7 @@ interface SideNavToggle {
 }
 export const navbarData = [
   {
-    routeLink: 'm/:id',
+    routeLink: '',
     icon: 'uil uil-comments',
     Label: 'Message',
   },

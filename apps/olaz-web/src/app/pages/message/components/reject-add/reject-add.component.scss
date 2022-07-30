@@ -1,15 +1,15 @@
-.Top-bar{
-    display: flex;  
-    border-bottom-width: 3px black;
-    border-bottom-style: solid;
-    
+.Top-bar {
+  display: flex;
+  border-bottom-width: 3px black;
+  border-bottom-style: solid;
+
 }
 
-.user-email{
+.user-email {
   margin-left: 20px;
 }
 
-.mat-list-text{
+.mat-list-text {
   padding-left: 40px;
 }
 
@@ -81,21 +81,35 @@
 
 
 .example-form {
-    // min-width: 150px;
-    // max-width: 500px;
-    width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
-.btn{
-    margin: 5px;
-    width: 40px;
-    font-size: 20px;
-   
+  // min-width: 150px;
+  // max-width: 500px;
+  width: 100%;
 }
-p{
-    font-size: 30px;
-    text-align: center;
+
+.example-full-width {
+  width: 100%;
+}
+
+.btn {
+  background-color: #5a3e9e;
+  padding: 5px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #f0f0f0;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+.btn.reject{
+  background-color: #E74848;
+}
+
+p {
+  font-size: 30px;
+  text-align: center;
 }

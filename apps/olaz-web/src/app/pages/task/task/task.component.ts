@@ -31,6 +31,7 @@ export class TaskComponent implements OnInit {
   done: any[] = [];
   tempTasks: any[] = [];
   isLoading: boolean = true;
+  isLoadingData: boolean = false;
   panelOpenState = true;
   isShowDetail = false;
   isActiveDropdown = false;
@@ -119,8 +120,10 @@ export class TaskComponent implements OnInit {
           this.taskListFull.splice(index, 1);
         }
       });
-      this.tempTasks = this.taskListFull.sort((a,b)=> {return b.priority-a.priority});
-      if(this.tempTasks != undefined){
+      this.tempTasks = this.taskListFull.sort((a, b) => {
+        return b.priority - a.priority;
+      });
+      if (this.tempTasks != undefined) {
         this.isLoading = false;
       }
       this.filterListTask();
@@ -129,9 +132,9 @@ export class TaskComponent implements OnInit {
 
   filterListTask() {
     if (this.tempTasks.length != 0) {
-      this.todo =  this.tempTasks.filter((value) => value.status == 0)
-      this.doing =  this.tempTasks.filter((value) => value.status == 1)
-      this.done =  this.tempTasks.filter((value) => value.status == 2)
+      this.todo = this.tempTasks.filter((value) => value.status == 0);
+      this.doing = this.tempTasks.filter((value) => value.status == 1);
+      this.done = this.tempTasks.filter((value) => value.status == 2);
     }
   }
 
@@ -141,6 +144,8 @@ export class TaskComponent implements OnInit {
       this.openSnackBar({ message: 'You have to fill the task title!!' });
       return;
     } else {
+      this.isLoadingData = true;
+
       const temp = {
         id: Date.now().toString(),
         title: this.newTaskTitle,
@@ -155,8 +160,13 @@ export class TaskComponent implements OnInit {
         updatedDate: Date.now(),
       };
       // this.todo.push(temp);
-      this.TaskService.createTask(temp, this.currentRoomId).subscribe((data) =>
-        this.openSnackBar(data)
+      this.TaskService.createTask(temp, this.currentRoomId).subscribe(
+        (data) => {
+          if (data != undefined) {
+            this.openSnackBar(data);
+            this.isLoadingData = false;
+          }
+        }
       );
       this.newTaskTitle = '';
     }
@@ -175,10 +185,16 @@ export class TaskComponent implements OnInit {
   }
 
   async deleteeEmit(event: any) {
+    this.isLoadingData = true;
     await this.TaskService.deleteTask(
       this.taskData.id,
       this.currentRoomId
-    ).subscribe((message) => this.openSnackBar(message));
+    ).subscribe((message) => {
+      if (message != undefined) {
+        this.openSnackBar(message);
+        this.isLoadingData = false;
+      }
+    });
   }
 
   getShowDetailsClass(): string {

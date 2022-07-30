@@ -2,6 +2,29 @@
   display: flex;
 }
 
+.btn{
+  background-color: #5a3e9e;
+  padding: 5px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #f0f0f0;
+
+    &:hover{
+      cursor: pointer;
+    }
+}
+
+.friends{
+  background-color: #f0f0f0;
+  color: #4d4d4d;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid #f0f0f0;
+  padding: 5px;
+}
+
 h1 {
   margin-bottom: 0%;
 }
@@ -18,8 +41,4 @@ h1 {
 
 .example-full-width {
   width: 100%;
-}
-
-.btn {
-  font-size: 25px;
 }

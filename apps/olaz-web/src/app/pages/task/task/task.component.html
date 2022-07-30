@@ -1,3 +1,6 @@
+<div class="loader-container" *ngIf="isLoadingData">
+  <mat-spinner></mat-spinner>
+</div>
 <div class="wrapper-container" *ngIf="this.appear !== undefined">
   <div class="content-wrapper">
     <div class="content-title">
@@ -60,6 +63,7 @@
   </div>
 
   <!-- SHOW DETAILS IN THE RIGHT SIDE -->
-  <olaz-detail-task *ngIf="isShowDetail" [taskData]="taskData" [taskListData]="taskListData" [isShowDetail]="isShowDetail"
-    (deleteTaskEmit)="deleteeEmit($event)" (isShowDetailToggle)="isShowDetail = $event"></olaz-detail-task>
+  <olaz-detail-task *ngIf="isShowDetail" [taskData]="taskData" [taskListData]="taskListData"
+    [isShowDetail]="isShowDetail" (deleteTaskEmit)="deleteeEmit($event)" (isShowDetailToggle)="isShowDetail = $event">
+  </olaz-detail-task>
 </div>

@@ -8,6 +8,7 @@ import { UserService } from '../../../../services/user.service';
 import { collection, collectionData, addDoc, Firestore, getDoc, doc, setDoc, arrayUnion } from '@angular/fire/firestore'
 import { updateDoc } from '@firebase/firestore';
 import { MessageLogService } from '../../../../components/message-log';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'olaz-dialog-friend',
@@ -16,11 +17,16 @@ import { MessageLogService } from '../../../../components/message-log';
   providers: [MessageLogService],
 })
 export class DialogFriendComponent implements OnInit {
-  constructor(private userService: UserService, public fireStore: Firestore, private _MessageLogService: MessageLogService) { }
+  constructor(
+    private userService: UserService,
+    public dialog: MatDialog,
+     public fireStore: Firestore, private _MessageLogService: MessageLogService) { }
 
+  isFriend:any =[]
   ngOnInit(): void {
     this.userService.user$.subscribe(user => {
       this._user = user;
+      this.isFriend = user.friends;
     })
   }
 
@@ -46,17 +52,18 @@ export class DialogFriendComponent implements OnInit {
   }
 
   async findUser() {
-    this.listOfEmail = await this.userService.getUserByEmail(this.email).toPromise()
-    console.log(this.listOfEmail)
+    this.listOfEmail = []
+    const listOfEmail:any = await this.userService.getUserByEmail(this.email).toPromise()
     const myListFriend: any = await (await this.userService.getUserByID(this._user.id)).data()
-    console.log(myListFriend)
     for (let i = 0; i < myListFriend.friends.length; i++) {
-      for (let j = 0; j < this.listOfEmail.length; j++) {
-        if (myListFriend.friends[i] == this.listOfEmail[j].id) {
-          console.log(true)
+      for (let j = 0; j < listOfEmail.length; j++) {
+        if (myListFriend.friends[i] == listOfEmail[j].id) {
+          this.listOfEmail.push(Object.assign(listOfEmail[j], { isF: true}))
         }
       }
+      this.listOfEmail.push(Object.assign(listOfEmail[i], { isF: false}))
     }
+    console.log(this.listOfEmail)
   }
 
   onKeydown(event: any) {
@@ -71,6 +78,7 @@ export class DialogFriendComponent implements OnInit {
       this.userService.sendRequest(this._user.id, frID).subscribe((response) => {
         this._MessageLogService.openSnackBar("Sent successfully");
         this.isSent = true;
+        this.dialog.closeAll()
       })
     } else {
       console.log("user::: null")

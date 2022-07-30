@@ -10,7 +10,7 @@
         <mat-selection-list>
 
           <mat-list-item *ngFor="let user of request">
-            <img matListAvatar [src]="user.photoURL" />
+            <img (error)="handleError($event)" matListAvatar [src]="user.photoURL" />
 
             <div matLine class="user-email">
               <span> {{user.email}} </span>
@@ -20,9 +20,13 @@
             <button disabled *ngIf="requestStatus === 'Đang kết bạn'" class="btn"><i
                 class="uil uil-user-plus"></i></button>
             <button *ngIf="requestStatus === 'Kết bạn thành công'" class="btn"><i class="uil-check"></i></button>
-            <button matTooltip="Từ chối kết bạn" (click)="toggleRequest(false , user.id )" class="btn"><i
+            <button matTooltip="Từ chối kết bạn" (click)="toggleRequest(false , user.id )" class="btn reject"><i
                 class="uil uil-user-times"></i></button>
           </mat-list-item>
+          <div>
+            <hr>
+            <p style="text-align: left; font-size: 10pt;" >Suggest add friends</p>
+          </div>          
           <mat-list-item *ngFor="let user of listOfFriend">
             <img (error)="handleError($event)" matListAvatar [src]="user.photoURL" />
             <div matLine class="user-email">

@@ -7,7 +7,7 @@ import { TodoItemComponent } from '../pages/task/todo/components/todo-item/todo-
 import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SnackBarComponent } from '../components/snack-bar/snack-bar.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     DeleteDialogComponent,
@@ -15,12 +15,13 @@ import { SnackBarComponent } from '../components/snack-bar/snack-bar.component';
     TodoItemComponent,
     SnackBarComponent
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatDialogModule ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatDialogModule , MatProgressSpinnerModule],
   exports: [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     DeleteDialogComponent,
     EditTodoDialogComponent,
     TodoItemComponent,

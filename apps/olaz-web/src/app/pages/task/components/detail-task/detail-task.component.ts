@@ -114,6 +114,7 @@ export class DetailTaskComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
+    this.participantList.length = 0;
     if (this.taskData !== undefined) {
       this.newTitle = this.taskData.title;
       this.newDes = this.taskData.description;
@@ -123,11 +124,11 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newAssigneeId = this.taskData.assignee;
       this.newReporterId = this.taskData.reporter;
     }
-    this.getParticipantList();
-
   }
 
   ngOnInit(): void {
+    this.participantList.length = 0;
+
     this.currentRoomId = localStorage.getItem('roomId');
     if (this.taskData !== undefined) {
       this.newTitle = this.taskData.title;
@@ -139,6 +140,8 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newReporterId = this.taskData.reporter;
     };
     this.getParticipantList();
+    this.getAssignee_Reporter();
+
   }
 
   handleError(e: any) {
@@ -150,27 +153,23 @@ export class DetailTaskComponent implements OnInit, OnChanges {
     for(let i = 0; i < this.taskListData.users.length; i++){
       const temp =(await this.userService.getUserByID(this.taskListData.users[i])).data();
       this.participantList.push(temp);
-      this.getAssignee_Reporter(temp);
+
     }
   }
 
-  getAssignee_Reporter(temp: any){
+  async getAssignee_Reporter(){
     
     if(this.taskData.assignee == ''){
       this.newAssignee = {displayName: 'Unknown', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg", id: ""}
     }else{
-      if(temp['id'] == this.newAssigneeId){
-        this.newAssignee = temp;
-        this.newAssignee.displayName = temp.displayName.split(" ", 1)
-      }
+      this.newAssignee = (await this.userService.getUserByID(this.newAssigneeId)).data()
+      this.newAssignee.displayName = this.newAssignee.displayName.split(" ", 1)
     }
     if(this.taskData.reporter == ''){
       this.newReporter = {displayName: 'Unknown', photoURL: "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg", id: ""}
     }else{
-      if(temp['id'] == this.newReporterId){
-        this.newReporter = temp;
-        this.newReporter.displayName = temp.displayName.split(" ", 1)
-      }
+      this.newReporter = (await this.userService.getUserByID(this.newReporterId)).data();
+      this.newReporter.displayName =  this.newReporter.displayName.split(" ", 1)
     }
   }
 

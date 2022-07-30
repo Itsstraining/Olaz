@@ -47,6 +47,7 @@ export class TodoComponent implements OnInit {
   currentList = this.arr[0];
   showValidationErrors!: boolean;
   checkedAll: boolean = false;
+  isLoadingData: boolean = false;
   appear: any;
   tempTodos: any;
   todoShow: any[] = [];
@@ -68,7 +69,9 @@ export class TodoComponent implements OnInit {
   }
 
   getTodoList() {
-    const q = query(collection(this.firestore, `users`, `${this.appear.id}/todos`));
+    const q = query(
+      collection(this.firestore, `users`, `${this.appear.id}/todos`)
+    );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       // snapshot.docs.map(data => this.taskListFull.push(data.data()))
       snapshot.docChanges().forEach((change) => {
@@ -76,30 +79,32 @@ export class TodoComponent implements OnInit {
           this.todos.unshift(change.doc.data());
         }
         if (change.type === 'modified') {
-          for(let i = 0; i < this.todos.length; i++){
-            if(this.todos[i].id == change.doc.data()['id']){
+          for (let i = 0; i < this.todos.length; i++) {
+            if (this.todos[i].id == change.doc.data()['id']) {
               this.todos[i] = change.doc.data();
             }
           }
         }
         if (change.type === 'removed') {
-          const index = this.todos.findIndex((value: any) => value['id'] == change.doc.data()['id']);
+          const index = this.todos.findIndex(
+            (value: any) => value['id'] == change.doc.data()['id']
+          );
           this.todos.splice(index, 1);
         }
       });
-      this.todoShow= this.todos;
+      this.todoShow = this.todos;
       this.checkAllComplete();
-      this.toggleList(this.currentList)
+      this.toggleList(this.currentList);
     });
   }
 
   toggleList(title: any) {
     this.currentList = title;
-    if(title.id ==1){
+    if (title.id == 1) {
       this.todoShow = this.todos.filter((todo) => todo.status == false);
-    }else if(title.id == 2){
+    } else if (title.id == 2) {
       this.todoShow = this.todos.filter((todo) => todo.status == true);
-    }else{
+    } else {
       this.todoShow = this.todos;
     }
   }
@@ -113,6 +118,8 @@ export class TodoComponent implements OnInit {
   }
 
   onFormSubmit(form: NgForm) {
+    if(form.value.text == '') return this.openSnackBar({message: 'You need to fill in what to do'})
+    this.isLoadingData = true;
     const temp = {
       id: Date.now().toString(),
       title: form.value.text,
@@ -121,9 +128,10 @@ export class TodoComponent implements OnInit {
       createdBy: this.appear.id,
     };
     if (form.invalid) return (this.showValidationErrors = true);
-    this.todoService
-      .addTodo(temp)
-      .subscribe((message) => this.openSnackBar(message));
+    this.todoService.addTodo(temp).subscribe((message) => {
+      this.isLoadingData = false;
+      this.openSnackBar(message);
+    });
     this.showValidationErrors = false;
     form.reset();
     return;
@@ -143,11 +151,21 @@ export class TodoComponent implements OnInit {
     if (!this.checkedAll) {
       for (let i = 0; i < this.todos.length; i++) {
         if (this.todos[i].status == false) {
+          const temp = {
+            ...this.todos[i],
+            status: true,
+          };
+          this.todoService.updateTodo(temp).subscribe((message) => message);
           this.todos[i].status = true;
         }
       }
     } else {
       for (let i = 0; i < this.todos.length; i++) {
+        const temp = {
+          ...this.todos[i],
+          status: false,
+        };
+        this.todoService.updateTodo(temp).subscribe((message) => message);
         this.todos[i].status = false;
       }
     }
@@ -157,7 +175,7 @@ export class TodoComponent implements OnInit {
 
   checkAllComplete() {
     let count = 0;
-    if(this.todos.length != 0){
+    if (this.todos.length != 0) {
       for (let i = 0; i < this.todos.length; i++) {
         if (this.todos[i].status == true) {
           count++;
@@ -172,14 +190,28 @@ export class TodoComponent implements OnInit {
   }
 
   deleteMultiTask() {
-    for (let i = 0; i < this.todos.length; i++) {
-      if (this.todos[i].status == true) {
-        this.todoService.deleteTodo(this.todos[i]).subscribe((message) => this.openSnackBar(message));
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '500px',
+      data: '',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log(result);
+        for (let i = 0; i < this.todos.length; i++) {
+          if (this.todos[i].status == true) {
+            this.todoService.deleteTodo(this.todos[i]).subscribe((message) => {
+              this.isLoadingData = false;
+              this.openSnackBar(message);
+            });
+          }
+        }
       }
-    }
+    });
   }
 
   editTodo(todo: any) {
+    this.isLoadingData = true;
     const dialogRef = this.dialog.open(EditTodoDialogComponent, {
       width: '700px',
       data: todo,
@@ -187,15 +219,17 @@ export class TodoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.todoService
-          .updateTodo(result)
-          .subscribe((message) => this.openSnackBar(message));
+        this.todoService.updateTodo(result).subscribe((message) => {
+          this.isLoadingData = false;
+          this.openSnackBar(message);
+        });
       }
     });
     // this.dataService.updateTodo()
   }
 
   deleteTodo(todo: any) {
+    this.isLoadingData = true;
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '500px',
       data: todo,
@@ -203,9 +237,10 @@ export class TodoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.todoService
-          .deleteTodo(result)
-          .subscribe((message) => this.openSnackBar(message));
+        this.todoService.deleteTodo(result).subscribe((message) => {
+          this.isLoadingData = false;
+          this.openSnackBar(message);
+        });
       }
     });
   }
