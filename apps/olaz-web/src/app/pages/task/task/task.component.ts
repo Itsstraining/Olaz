@@ -53,7 +53,6 @@ export class TaskComponent implements OnInit {
       this.appear = data;
     });
     this.currentRoomId = localStorage.getItem('roomId');
-    console.log(this.currentRoomId);
     this.getTaskListData();
   }
 

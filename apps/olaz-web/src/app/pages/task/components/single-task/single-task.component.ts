@@ -28,6 +28,10 @@ export class SingleTaskComponent implements OnInit, OnChanges {
     this.getAssigneePhotoURL();
   }
 
+  handleError(e: any) {
+    e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
+  }
+
   async getAssigneePhotoURL(){
     if(this.task.assignee !== ''){
       this.assignee = await (await this.userService.getUserByID(this.task.assignee)).data()

@@ -42,7 +42,6 @@ export class TaskService {
 
   updateTask(updateTask: any, roomId: any) {
     const data = { updateTask: updateTask, roomId: roomId };
-    console.log(data)
     return this.httpClient.put(endpoint+"task",data);
   }
 

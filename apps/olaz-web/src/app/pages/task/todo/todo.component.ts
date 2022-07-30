@@ -174,8 +174,6 @@ export class TodoComponent implements OnInit {
   deleteMultiTask() {
     for (let i = 0; i < this.todos.length; i++) {
       if (this.todos[i].status == true) {
-    console.log('hi')
-
         this.todoService.deleteTodo(this.todos[i]).subscribe((message) => this.openSnackBar(message));
       }
     }

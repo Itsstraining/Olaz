@@ -13,7 +13,6 @@ export class TodoService {
         return result;
     }
     async update(updateTodo: any){
-        console.log(updateTodo)
         const result = await this.firestore.collection('users').doc(updateTodo.createdBy).collection('todos').doc(updateTodo.id).update(updateTodo);
         return result;
     }

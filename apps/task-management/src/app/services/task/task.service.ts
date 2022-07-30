@@ -21,7 +21,6 @@ export class TaskService {
     }
 
     async delete(roomId, taskId){
-        console.log(taskId)
         const result = await this.firestore.collection('rooms').doc(roomId).collection('taskList').doc(taskId).delete(); 
         return result;
     }

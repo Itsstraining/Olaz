@@ -18,7 +18,6 @@ export class PickUserDialogComponent implements OnInit {
   }
 
   handleError(e: any) {
-    console.log(e)
     e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
   }
 }

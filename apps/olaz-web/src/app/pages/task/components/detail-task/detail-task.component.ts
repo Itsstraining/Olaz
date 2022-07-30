@@ -101,7 +101,6 @@ export class DetailTaskComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result)
         if(result.type == 'reporter'){
           this.newReporter = result.data;
           this.newReporter.displayName = result.data.displayName.split(" ", 1)
@@ -140,6 +139,10 @@ export class DetailTaskComponent implements OnInit, OnChanges {
       this.newReporterId = this.taskData.reporter;
     };
     this.getParticipantList();
+  }
+
+  handleError(e: any) {
+    e.target.src = "https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"
   }
 
   async getParticipantList(){

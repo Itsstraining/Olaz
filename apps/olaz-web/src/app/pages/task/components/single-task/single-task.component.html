@@ -11,7 +11,7 @@
             <i class="uil uil-calender"></i>
             <p>Deadline: {{deadline }}</p>
         </div>
-        <img *ngIf="assignee !== undefined" class="user-Img"
+        <img *ngIf="assignee !== undefined" class="user-Img" alt="User Ava" (error)="handleError($event)"
             src={{assignee.photoURL}}>
     </div>
 <!-- </div> -->

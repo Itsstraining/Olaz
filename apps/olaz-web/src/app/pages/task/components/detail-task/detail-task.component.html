@@ -50,7 +50,7 @@
           <!-- <div class="detail-row-data"> -->
           <button (click)="openDialog(newAssignee, 'assignee')" class="detail-row-data">
             <div style="display:flex; flex-direction: row; align-items: center;">
-              <img *ngIf="newAssignee !== undefined" class="user-img"
+              <img *ngIf="newAssignee !== undefined" class="user-img" alt="User Ava" (error)="handleError($event)"
                 src={{newAssignee.photoURL}}>
               <img *ngIf="newAssignee === undefined" class="user-img" src="https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"/>
                 <p>{{newAssignee !== undefined ? newAssignee.displayName : 'Unknown'}}</p>
@@ -64,7 +64,7 @@
           <!-- <div class="detail-row-data"> -->
           <button (click)="openDialog(newReporter, 'reporter')" class="detail-row-data">
             <div style="display:flex; flex-direction: row; align-items: center;">
-              <img *ngIf="newReporter !== undefined" class="user-img"
+              <img *ngIf="newReporter !== undefined" class="user-img" alt="User Ava" (error)="handleError($event)"
               src={{newReporter.photoURL}}>
               <img *ngIf="newReporter === undefined" class="user-img" src="https://cdyduochopluc.edu.vn/wp-content/uploads/2019/07/anh-dai-dien-FB-200-1.jpg"/>
                 <p>{{newReporter !== undefined ? newReporter.displayName : 'Unknown'}}</p>

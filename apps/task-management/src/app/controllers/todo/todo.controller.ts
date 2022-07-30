@@ -39,7 +39,6 @@ export class TodoController {
     }
     @Delete()
     async delete(@Body() data: any){
-        // console.log(data.id)
         try {
             const result = this.todoService.delete(data.todo);
         return {
