@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
@@ -29,14 +30,13 @@ export class TaskComponent implements OnInit {
   doing: any[] = [];
   done: any[] = [];
   tempTasks: any[] = [];
+  isLoading: boolean = true;
   panelOpenState = true;
   isShowDetail = false;
   isActiveDropdown = false;
   onSelected = 'Choose option';
   taskData: any;
-  updateTaskData!: TaskModel;
   newTaskTitle: any = '';
-  message: any;
   currentRoomId: any;
   appear: any;
   constructor(
@@ -102,7 +102,6 @@ export class TaskComponent implements OnInit {
       collection(this.firestore, `rooms`, `${this.currentRoomId}/taskList`)
     );
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      // snapshot.docs.map(data => this.taskListFull.push(data.data()))
       snapshot.docChanges().forEach((change) => {
         if (change.type === 'added') {
           this.taskListFull.unshift(change.doc.data());
@@ -122,6 +121,9 @@ export class TaskComponent implements OnInit {
         }
       });
       this.tempTasks = this.taskListFull;
+      if(this.tempTasks != undefined){
+        this.isLoading = false;
+      }
       this.filterListTask();
     });
   }
@@ -190,22 +192,9 @@ export class TaskComponent implements OnInit {
     return styleClass;
   }
 
-  showDetails(data: any) {
+  async showDetails(data: any) {
     this.isShowDetail = true;
     this.taskData = data;
-    this.updateTaskData = {
-      id: data.id,
-      title: data.title,
-      description: data.description,
-      deadline: data.description,
-      status: data.status,
-      assignee: data.assignee,
-      reporter: data.reporter,
-      priority: data.priority,
-      createdBy: data.createdBy,
-      createdDate: data.createdDate,
-      updatedDate: data.updatedDate,
-    };
   }
 
   closeShowDetails() {

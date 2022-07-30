@@ -6,13 +6,14 @@ import { EditTodoDialogComponent } from '../pages/task/todo/components/edit-todo
 import { TodoItemComponent } from '../pages/task/todo/components/todo-item/todo-item.component';
 import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { SnackBarComponent } from '../components/snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
     DeleteDialogComponent,
     EditTodoDialogComponent,
     TodoItemComponent,
+    SnackBarComponent
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MatDialogModule ],
   exports: [
@@ -23,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     DeleteDialogComponent,
     EditTodoDialogComponent,
     TodoItemComponent,
+    SnackBarComponent
   ],
 })
 export class ShareModule {}

@@ -182,8 +182,6 @@ export class TodoComponent implements OnInit {
   }
 
   editTodo(todo: any) {
-    const index = this.todos.indexOf(todo);
-
     const dialogRef = this.dialog.open(EditTodoDialogComponent, {
       width: '700px',
       data: todo,

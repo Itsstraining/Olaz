@@ -3,6 +3,10 @@ h1{
   letter-spacing: 2px;
 }
 
+.active{
+    background-color: #f0f0f0;
+}
+
 .ipt{
   width: 100%;
   padding: 10px 20px;
@@ -71,6 +75,7 @@ h1{
 
   &:hover{
       background-color: #f0f0f0;
+      cursor: pointer;
   }
 
 }

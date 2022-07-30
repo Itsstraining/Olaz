@@ -12,7 +12,10 @@
         <i class="uil uil-plus" style="font-size:150%;"></i>
       </button>
     </div>
-    <div class="dashboard">
+    <div class="dashboard" *ngIf="isLoading">
+      <olaz-snack-bar></olaz-snack-bar>
+    </div>
+    <div class="dashboard" *ngIf="!isLoading &&tempTasks !== undefined">
       <div class="dashboard-columns" cdkDropListGroup>
 
         <!-- To do column -->
