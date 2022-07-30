@@ -7,7 +7,7 @@
       <h1>Group's task list</h1>
     </div>
     <div class="add-area">
-      <input placeholder="New task title..." [(ngModel)]="newTaskTitle">
+      <input placeholder="New task title..." [(ngModel)]="newTaskTitle" (keydown.enter)="addNew()">
       <button class="addBtn" matTooltip="Add new Task" matTooltipPosition="above" (click)="addNew()">
         <i class="uil uil-plus" style="font-size:150%;"></i>
       </button>

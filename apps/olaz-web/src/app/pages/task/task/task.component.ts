@@ -119,7 +119,7 @@ export class TaskComponent implements OnInit {
           this.taskListFull.splice(index, 1);
         }
       });
-      this.tempTasks = this.taskListFull;
+      this.tempTasks = this.taskListFull.sort((a,b)=> {return b.priority-a.priority});
       if(this.tempTasks != undefined){
         this.isLoading = false;
       }
